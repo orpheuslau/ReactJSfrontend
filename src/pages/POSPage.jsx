@@ -46,7 +46,7 @@ function POSPage() {
     else {
       let addingProduct = {
         ...product,
-        'quantity': 1,
+        'quantity': 1, //this is a test
         'totalAmount': product.price,
       }
       setCart([...cart, addingProduct]);
