@@ -94,6 +94,18 @@ function POSPage() {
 
 
 
+  /**
+   * Renders the POS page UI with product list, cart, 
+   * and checkout button.
+   * 
+   * Fetches list of products on mount.
+   * Allows adding/removing products to cart.
+   * Calculates total cart amount.
+   * Allows printing cart on checkout.
+   * 
+   * Usage:
+   * <POSPage />
+  */
   return (
     <MainLayout>
       <div className='row'>
