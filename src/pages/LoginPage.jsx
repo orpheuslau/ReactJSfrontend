@@ -13,12 +13,22 @@ import { useNavigate } from "react-router-dom";
  * Stores login state and displays error on invalid login.
  * On successful login, redirects to one page.
 */
+export const setAuthToken = token => {
+  if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
+  else
+      delete axios.defaults.headers.common["Authorization"];
+}
+
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  
   
 
   const handleSubmit = async(event) => {
@@ -37,9 +47,12 @@ function Login() {
       //toast.success(`Save ${response.data.name} Successfully`);
       setError(response.data.message)
       setIsLoading(false);
-      navigate("/");
+      const token  =  response.data.token;
+      localStorage.setItem("token", token);
+      setAuthToken(token);
+      navigate("/home");
   } catch (error) {
-    setError('login not ok')  
+    setError('Username and/or password are incorrect, login unsuccessful')  
     //toast.error(error.message);
       setIsLoading(false);
   }
