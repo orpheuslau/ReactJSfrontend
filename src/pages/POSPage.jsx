@@ -5,6 +5,7 @@ import axios from "axios"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ComponentToPrint } from '../components/ComponentToPrint';
+import {Auth} from  '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
 
 
@@ -108,6 +109,7 @@ function POSPage() {
   */
   return (
     <MainLayout>
+      
       <div className='row'>
         <div className='col-lg-8'>
           {isLoading ? 'Loading' : <div className='row' >
@@ -173,6 +175,7 @@ function POSPage() {
 
         </div>
       </div>
+      
     </MainLayout>
   )
 }
