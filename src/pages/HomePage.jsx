@@ -23,9 +23,10 @@ function HomePage() {
     }
 
     try {
-     /* console.log("before decode")
+      console.log("before decode")
       const payload = decodeJWT(token);
-      if(!payload.isAdmin) {
+      console.log(payload);
+      /*if(!payload.isAdmin) {
         throw new Error('Unauthorized');
       }*/
       

@@ -7,9 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import {Auth} from  '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
+//import JwtMiddleware from './JwtMiddleware';
 
 
 function POSPage() {
+
+ 
+  
+
   const [products, setProducts] = useState([]);
   const [isLoading, setISloading] = useState(false);
   const [cart, setCart] = useState([]);
@@ -180,4 +185,4 @@ function POSPage() {
   )
 }
 
-export default POSPage
+export default POSPage;
