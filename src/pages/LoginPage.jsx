@@ -43,6 +43,7 @@ function Login() {
       setIsLoading(false);
       const token = response.data.token;
       localStorage.setItem("token", token);
+      console.log(response);
       navigate("/home");
     } catch (error) {
       setError('Username and/or password are incorrect, login unsuccessful')
