@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 
 
@@ -13,28 +13,21 @@ function HomePage() {
 
   const navigate = useNavigate();
 
-  /*
+  const [bgColor, setBgColor] = useState('');
+
   useEffect(() => {
-    //const token = localStorage.getItem('token');
-    const token = localStorage.getItem('token');   
-    console.log(localStorage.getItem('token'))
+    const colors = [
+      '#f44336', 
+      '#e91e63',
+      '#9c27b0' 
+    ];
 
-    if(!token) {
-      navigate('/login'); 
-    }
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setBgColor(randomColor);
+  }, []);
 
-    try {
-      console.log("before decode")
-      const payload = decodeJWT(token);
-      console.log(payload);
-      
-      
-    } catch {
-      console.log("oh no")
-      navigate('/login');
-    }
 
-  }, []);*/
+
 
   //const jwt = require('jsonwebtoken');
   /*
@@ -55,24 +48,23 @@ function HomePage() {
         }
     })
 });
+
+<!-- <div className="bg-light p-5 mt-4 rounded-3"> -->
 */
 
   return (
     <MainLayout>
-      <div className="bg-light p-5 mt-4 rounded-3">
+         <div style={{ backgroundColor: bgColor }}>
         <h1> welcome to the pos</h1>
         <p>this is the first line</p>
         <p>this is the second line</p>
         <Link to="/pos" className="btn btn-primary">Click me to sell product</Link>
       </div>
+     
     </MainLayout>
   )
 }
 
 
-function decodeJWT(token) {
-  const payload = token.split('.')[1];
-  const decoded = atob(payload);
-  return JSON.parse(decoded);
-}
+
 export default HomePage

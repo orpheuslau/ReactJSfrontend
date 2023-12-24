@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import { useNavigate } from "react-router-dom";
+
 
 
 /**
@@ -22,37 +23,67 @@ function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  
 
+  const [bgColor, setBgColor] = useState('');
+
+
+  useEffect(() => {
+    const colors = [
+      '#f44336', 
+      '#e91e63',
+      '#9c27b0',
+      '#f41fb4',
+      '#a09688',
+      '#00bcd4',
+      '#109668',
+      '#10acd4',
+      '#8c17b0',
+      '#a4e336', 
+      '#e91e63'
+    ];
+
+    
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setBgColor(randomColor);
+    console.log(randomColor);
+  }, []);
 
 
   const handleSubmit = async (event) => {
-
-
     event.preventDefault();
 
     if (username === "" || password === "") {
-      //toast.error('Please fill out all input completely');
-      setError("Please fill out all input completely")
+
+      setError("Please fill out all required fields")
       return;
     }
     try {
       setIsLoading(true);
       const response = await axios.post("/api/login", { username: username, password: password });
-      //toast.success(`Save ${response.data.name} Successfully`);
       setError(response.data.message)
       setIsLoading(false);
-      //const token = response.data.token;
-      //localStorage.setItem("token", token);
-      //console.log(response);
-      navigate("/home");
+      navigate("/pos");
     } catch (error) {
       setError('Username and/or password are incorrect, login unsuccessful')
-      //toast.error(error.message);
+
       setIsLoading(false);
     }
 
   };
 
+
+/*
+
+    <section className="vh-100 gradient-custom bg-primary"
+
+      //style={{ background: 'linear-gradient(to right, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5))' }}>
+style={{ background: bgColor }}>
+      
+      <div className="container py-5 h-100">
+      
+      
+          <section style={{ background: bgColor }}>*/
 
 
 
@@ -60,10 +91,13 @@ function Login() {
   return (
 
 
-    <section className="vh-100 gradient-custom bg-primary"
+    <section className="vh-100 gradient-custom bgColor"
+    
+    style={{ background: bgColor }}>
 
-      style={{ background: 'linear-gradient(to right, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5))' }}>
-      <div className="container py-5 h-100">
+
+      
+<div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
             <div className="card bg-dark text-white border-radius: 1rem">
@@ -127,8 +161,9 @@ function Login() {
       </div>
     </section>
 
-
+    
   );
+  
 }
 
 export default Login;
