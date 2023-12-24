@@ -13,6 +13,7 @@ function HomePage() {
 
   const navigate = useNavigate();
 
+  /*
   useEffect(() => {
     //const token = localStorage.getItem('token');
     const token = localStorage.getItem('token');   
@@ -26,16 +27,14 @@ function HomePage() {
       console.log("before decode")
       const payload = decodeJWT(token);
       console.log(payload);
-      /*if(!payload.isAdmin) {
-        throw new Error('Unauthorized');
-      }*/
+      
       
     } catch {
       console.log("oh no")
       navigate('/login');
     }
 
-  }, []);
+  }, []);*/
 
   //const jwt = require('jsonwebtoken');
   /*

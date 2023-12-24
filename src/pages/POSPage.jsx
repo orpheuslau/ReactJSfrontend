@@ -5,31 +5,51 @@ import axios from "axios"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ComponentToPrint } from '../components/ComponentToPrint';
-import {Auth} from  '../components/Auth';
+import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
+import { useNavigate } from'react-router-dom';
+
+
 //import JwtMiddleware from './JwtMiddleware';
 
 
 function POSPage() {
 
- 
-  
+
+
 
   const [products, setProducts] = useState([]);
   const [isLoading, setISloading] = useState(false);
+  const [isAuth, setISauth] = useState (false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState([0]);
   const toastOptions = {
     autoClose: 400,
     pauseOnHover: true,
   }
+  const navigate = useNavigate(); 
+  
+  
+
+  
 
 
   const fetchProducts = async () => {
-    const result = await axios.get('api/products')
+try{
+  
+  const result = await axios.get('api/products')
     setProducts(await result.data);
     setISloading(false);
+    //setISauth(true)
+}
+catch{
+  navigate('/login')
+     //setISauth(false)
+     //console.log(isAuth);
+
   }
+}
+
 
   const addProductToCart = async (product) => {
     //check if exist
@@ -90,6 +110,7 @@ function POSPage() {
     fetchProducts();
   }, []);
 
+
   useEffect(() => {
     let newtotalAmount = 0;
     cart.forEach(icart => {
@@ -113,10 +134,12 @@ function POSPage() {
    * <POSPage />
   */
   return (
-    <MainLayout>
-      
+   <MainLayout>
+
+
       <div className='row'>
         <div className='col-lg-8'>
+                    
           {isLoading ? 'Loading' : <div className='row' >
             {products.map((products, key) =>
               <div key={key} className='col-lg-4 mb-4'>
@@ -180,7 +203,7 @@ function POSPage() {
 
         </div>
       </div>
-      
+
     </MainLayout>
   )
 }
