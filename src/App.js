@@ -5,7 +5,8 @@ import {
 } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-import POSPage from './pages/POSPage';
+import POSPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/pos" element={<POSPage />} />
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/land" element={<LandingPage />} />
       </Routes>
     </Router>
   );

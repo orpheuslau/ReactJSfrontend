@@ -7,14 +7,14 @@ function MainLayout({ children }) {
     return (
         <div>
             <header>
-                <nav className="navbar navbar-light bg-primary">
+                <nav className="navbar navbar-light bg-info">
                     <div className="container">
-                        <Link to="/" className="navbar-brand">DevPOS</Link>
+                        <Link to="/" className="navbar-brand text-white">Case Management Online System (CMOS)</Link>
                     </div>
                 </nav>
             </header>
             <main>
-                <div className="container mt-3">
+                <div className="container-xxl mt-3">
                     {children}
                 </div>
                 <ToastContainer/>
