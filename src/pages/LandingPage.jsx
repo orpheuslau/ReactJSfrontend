@@ -136,12 +136,14 @@ catch{
    * <POSPage />
   */
   return (
-   <MainLayout>
 
-<p class="text-right"><strong>Welcome {username}</strong></p>
+<MainLayout>
       <div className='row'>
         <div className='col-lg-8'>
-          
+        <div className="h6 d-flex justify-content-end"><p>User name:  {username}  </p>
+                </div>
+      
+        
                     
           {isLoading ? 'Loading' : <div className='row' >
             {products.map((products, key) =>

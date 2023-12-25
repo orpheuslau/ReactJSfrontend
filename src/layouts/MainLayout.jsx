@@ -8,8 +8,12 @@ function MainLayout({ children }) {
         <div>
             <header>
                 <nav className="navbar navbar-light bg-info">
-                    <div className="container">
-                        <Link to="/" className="navbar-brand text-white">Case Management Online System (CMOS)</Link>
+                    <div className="container mt-3">
+                        <Link to="/" className="navbar-brand text-white nav-item flex-grow-2">Case Management Online System (CMOS)</Link>
+
+                        <button className="btn btn-light btn-sm d-flex justify-content-end">Logout</button><div></div>
+  
+       
                     </div>
                 </nav>
             </header>

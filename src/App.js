@@ -16,6 +16,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/pos" element={<POSPage />} />
         <Route path="/land" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );

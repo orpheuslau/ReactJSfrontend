@@ -72,6 +72,8 @@ function Login() {
       setError(response.data.message)
       setIsLoading(false);
       localStorage.setItem('username', response.data.username);
+      //console.log(response.data.classid);
+      //localStorage.setItem('classid', response.data.classid);
       navigate("/land");
     } catch (error) {
       setError('Username and/or password are incorrect')
