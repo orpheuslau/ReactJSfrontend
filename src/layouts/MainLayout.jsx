@@ -18,7 +18,7 @@ function MainLayout({ children }) {
                 </nav>
             </header>
             <main>
-                <div className="container-xxl mt-3">
+                <div className="container">
                     {children}
                 </div>
                 <ToastContainer/>

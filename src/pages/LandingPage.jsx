@@ -10,6 +10,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useNavigate } from'react-router-dom';
 
 
+
 //import JwtMiddleware from './JwtMiddleware';
 
 
@@ -135,79 +136,70 @@ catch{
    * Usage:
    * <POSPage />
   */
+
+  const c1 = 2;
+  const c2 = 2;
+
   return (
 
 <MainLayout>
       <div className='row'>
         <div className='col-lg-8'>
-        <div className="h6 d-flex justify-content-end"><p>User name:  {username}  </p>
-                </div>
-      
-        
-                    
-          {isLoading ? 'Loading' : <div className='row' >
-            {products.map((products, key) =>
-              <div key={key} className='col-lg-4 mb-4'>
-                <div className='pos-item px-3 text-center border' onClick={() => addProductToCart(products)}>
-                  <p>{products.name}</p>
-                  <img src={products.image} className="img-fluid" alt={products.name} />
-                  <p>${products.price}</p>
-                </div>
-              </div>
-            )}
-          </div>}
-        </div>
-        {/*<div className='col-lg-4'>
-          <div style={{ display: "none" }}>
-            <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef} />
+            <div className="h6 d-flex justify-content-end"><p>User name:  {username}  </p>
+            </div>
+       
+              <div className='row bg-light'>
+
+              <div className='pos-item col col-md-3 text-center' onClick={() => addProductToCart(products)}> 
+        <p></p>
+        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+    <p>Master file</p>
           </div>
-          <div className='table-reponsive bg-dark'>
-            <table className="table table-reponsive table-dark table-hover">
-              <thead>
-                <tr>
-                  <td>#</td>
-                  <td>Name</td>
-                  <td>Price</td>
-                  <td>Quantity</td>
-                  <td>Total amount</td>
-                  <td>Action</td>
 
-                </tr>
-              </thead>
-              <tbody>
-                {cart ? cart.map((cartProduct, key) => <tr>
-                  <td>{cartProduct.id}</td>
-                  <td>{cartProduct.name}</td>
-                  <td>{cartProduct.price}</td>
-                  <td>{cartProduct.quantity}</td>
-                  <td>{cartProduct.totalAmount}</td>
-                  <td>
-                    <button className='btn btn-danger btn-sm' onClick={() => removeProduct(cartProduct)}>Remove</button>
-                  </td>
-
-
-                </tr>)
-                  : 'No item in Cart'}
-              </tbody>
-            </table>
-            <h2 className='px-2 text-white'>Total Amount ${totalAmount}
-
-            </h2>
-          </div>
-          <div className='mt-3'>
-            {totalAmount !== 0 ? <div>
-
-              <button className='btn btn-primary' onClick={() => handlePrint()}>Checkout
-              </button>
-            </div> : 'Please add a product to the cart'
-
-            }
+          <div className='pos-item col col-md-3  text-center' onClick={() => addProductToCart(products)}>
+        <p></p>
+        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+    <p>Master file</p>
           </div>
 
 
+          <div className='pos-item col col-md-3 text-center' onClick={() => addProductToCart(products)}>
+        <p></p>
+        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+    <p>Master file</p>
+          </div>
 
-        </div>*/}
+          <div className='pos-item col col-md-3  text-center' onClick={() => addProductToCart(products)}>
+        <p></p>
+        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+    <p>Master file</p>
+          </div>
+   
+    </div>
+   
       </div>
+
+
+      <div className='col-9'>
+      <div class="row justify-content-left">
+      
+    <div class="col-3 m-3 pos-item text-center bg-info">
+    <p></p>
+        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+      <p>Master file</p>
+    </div>
+    <div class="col-3 m-3 border">
+      One of two columns
+    </div>
+    <div class="col-3 m-3 border">
+      One of two columns
+    </div>
+  </div>
+</div>
+      </div>
+
+
+
 
     </MainLayout>
   )

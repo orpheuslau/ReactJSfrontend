@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-import POSPage from './pages/LandingPage';
+import POSPage from './pages/POSPage';
 import LandingPage from './pages/LandingPage';
 
 function App() {

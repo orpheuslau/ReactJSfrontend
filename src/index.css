@@ -18,8 +18,8 @@ code {
 }
 
 .pos-item:hover{
-background:  rgb(2,85,162);
-color: white;
+background:  rgb(118, 153, 186);
+color: rgb(218, 135, 135);
 }
 
 .pos-item img{
