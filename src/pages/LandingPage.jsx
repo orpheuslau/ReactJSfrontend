@@ -7,55 +7,58 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
-import { useNavigate } from'react-router-dom';
-import imgs from '\img';
+import { useNavigate } from 'react-router-dom';
 
-const images = require.context('../../public/img', true);
-const imageList = images.keys().map(image => images(image));
+
+
+
+
 
 //import JwtMiddleware from './JwtMiddleware';
 
 
 function LandingPage() {
 
-
+  const images = require.context('../img', true);
+  const imageList = images.keys().map(image => images(image));
+  const imageLabel = ['Student Profile','Report Download','Assessment','Admin file','Setting','Analysis','Search','User setup']
+const imageLink = ['studentPage', 'ReportPage', 'AssessmentPage', 'AdminPage', 'SettingPage', 'AnalysisPage', 'SearchPage', 'UserSetupPage']
 
 
   const [products, setProducts] = useState([]);
   const [isLoading, setISloading] = useState(false);
-  const [isAuth, setISauth] = useState (false);
+  const [isAuth, setISauth] = useState(false);
   const [cart, setCart] = useState([]);
-  //const [username, setUsername] = useState('');
-  const [totalAmount, setTotalAmount] = useState([0]);
+    const [totalAmount, setTotalAmount] = useState([0]);
   const toastOptions = {
     autoClose: 400,
     pauseOnHover: true,
   }
-  const navigate = useNavigate(); 
-  const username = localStorage.getItem('username');
+  const navigate = useNavigate();
   
 
-  
+
+
 
 
   const fetchProducts = async () => {
-try{
-  
-  const result = await axios.get('api/products')
-    setProducts(await result.data);
-   console.log(imageList)
-    setISloading(false);
+    try {
+
+      const result = await axios.get('api/products')
+      setProducts(await result.data);
+
+      setISloading(false);
 
 
-    //setISauth(true)
-}
-catch{
-  navigate('/login')
-     //setISauth(false)
-     //console.log(isAuth);
+      //setISauth(true)
+    }
+    catch {
+      navigate('/login')
+      //setISauth(false)
+      //console.log(isAuth);
 
+    }
   }
-}
 
 
   const addProductToCart = async (product) => {
@@ -141,35 +144,26 @@ catch{
    * <POSPage />
   */
 
-  const c1 = 2;
-  const c2 = 2;
+
 
   return (
 
-<MainLayout>
+    <MainLayout>
       <div className='row'>
-        
+        <div className='col-10'>
+          <div class="row justify-content-left">
+            {imageList.map((image, index) =>
+              <div key={index} className='col-lg-3 mt-4 m-2'>
 
+                <div class="pos-item text-center border" onClick={() => { navigate(`/${imageLink[index]}`) }}>
+                  <p></p>
+                  <img key={index} src={image} alt={`image-${index}`} />
+                  <p>{imageLabel[index]}</p>
+                </div>
 
-      <div className='col-9'>
-      <div class="row justify-content-left">
-      
-    <div class="col-3 m-3 pos-item text-center bg-info">
-    <p></p>
-    {imageList.map((image, index) => (
-        <img key={index} src={image.default} alt={`image-${index}`} />
-      ))}
-        
-      <p>Master file</p>
-    </div>
-    <div class="col-3 m-3 border">
-      One of two columns
-    </div>
-    <div class="col-3 m-3 border">
-      One of two columns
-    </div>
-  </div>
-</div>
+              </div>
+            )}</div>
+        </div>
       </div>
 
 
