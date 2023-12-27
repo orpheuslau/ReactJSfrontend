@@ -8,8 +8,10 @@ import { ComponentToPrint } from '../components/ComponentToPrint';
 import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
 import { useNavigate } from'react-router-dom';
+import imgs from '\img';
 
-
+const images = require.context('../../public/img', true);
+const imageList = images.keys().map(image => images(image));
 
 //import JwtMiddleware from './JwtMiddleware';
 
@@ -41,8 +43,10 @@ try{
   
   const result = await axios.get('api/products')
     setProducts(await result.data);
-
+   console.log(imageList)
     setISloading(false);
+
+
     //setISauth(true)
 }
 catch{
@@ -144,40 +148,7 @@ catch{
 
 <MainLayout>
       <div className='row'>
-        <div className='col-lg-8'>
-            <div className="h6 d-flex justify-content-end"><p>User name:  {username}  </p>
-            </div>
-       
-              <div className='row bg-light'>
-
-              <div className='pos-item col col-md-3 text-center' onClick={() => addProductToCart(products)}> 
-        <p></p>
-        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
-    <p>Master file</p>
-          </div>
-
-          <div className='pos-item col col-md-3  text-center' onClick={() => addProductToCart(products)}>
-        <p></p>
-        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
-    <p>Master file</p>
-          </div>
-
-
-          <div className='pos-item col col-md-3 text-center' onClick={() => addProductToCart(products)}>
-        <p></p>
-        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
-    <p>Master file</p>
-          </div>
-
-          <div className='pos-item col col-md-3  text-center' onClick={() => addProductToCart(products)}>
-        <p></p>
-        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
-    <p>Master file</p>
-          </div>
-   
-    </div>
-   
-      </div>
+        
 
 
       <div className='col-9'>
@@ -185,7 +156,10 @@ catch{
       
     <div class="col-3 m-3 pos-item text-center bg-info">
     <p></p>
-        <img src='https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png' className="img-fluid w-50" alt="Responsive image"/>
+    {imageList.map((image, index) => (
+        <img key={index} src={image.default} alt={`image-${index}`} />
+      ))}
+        
       <p>Master file</p>
     </div>
     <div class="col-3 m-3 border">
