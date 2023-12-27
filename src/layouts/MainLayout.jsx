@@ -9,7 +9,7 @@ function MainLayout({ children }) {
     return (
         <div>
             <header>
-                <nav className="navbar navbar-light bg-info">
+                <nav className="navbar navbar-light p-3 mb-2 p-3 mb-2 bg-info text-white">
                     <div className="container mt-3">
                         <div className="row col-12">
                             <div className='col-6'>
