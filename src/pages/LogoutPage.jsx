@@ -65,6 +65,7 @@ function LogoutPage() {
                                            <p className="text-white-50 mb-5 h5">Thank you for using CMOS</p>
                       <br />
                       <br />
+                      <br />
                       
                       <Link to="/login">
                       <button className="btn btn-outline-light btn-lg px-5" type="submit">Login again</button>
