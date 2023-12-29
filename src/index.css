@@ -19,8 +19,10 @@ code {
 
 .pos-item:hover{
 background:  rgb(118, 153, 186);
-color: rgb(232, 151, 93);
+color: rgb(255, 255, 255);
+font-style: italic;
 }
+
 
 .pos-item img{
   width:30%;

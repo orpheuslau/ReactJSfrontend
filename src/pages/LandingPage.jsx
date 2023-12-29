@@ -155,10 +155,10 @@ const imageLink = ['studentPage', 'ReportPage', 'AssessmentPage', 'AdminPage', '
             {imageList.map((image, index) =>
               <div key={index} className='col-lg-3 mt-4 m-2 text-secondary'>
 
-                <div class="pos-item text-center border bg-light shadow p-3 rounded  " onClick={() => { navigate(`/${imageLink[index]}`) }}>
+                <div class=" text-center border shadow p-3 rounded pos-item " onClick={() => { navigate(`/${imageLink[index]}`) }}>
                   <p></p>
                   <img key={index} src={image} alt={`image-${index}`} />
-                  <p className="text-secondary">{imageLabel[index]}</p>
+                  <p>{imageLabel[index]}</p>
                 </div>
 
               </div>
