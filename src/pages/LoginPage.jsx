@@ -120,9 +120,7 @@ function Login() {
                     <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                     {error && <div><p></p><strong>{error}</strong></div>}
                     <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="#!" className="text-white"><i className="fab fa-facebook-f fa-lg"></i></a>
-                      <a href="#!" className="text-white"><i className="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                      <a href="#!" className="text-white"><i className="fab fa-google fa-lg"></i></a>
+                    
                     </div>
                   </form>
                 </div>
