@@ -9,6 +9,8 @@ import POSPage from './pages/POSPage';
 import LandingPage from './pages/LandingPage';
 import TestPage from './TestPage';
 import LogoutPage from './pages/LogoutPage';
+import StudentPage from './pages/StudentPage';
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="" element={<LandingPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/logout" element={<LogoutPage />} />
+        <Route path="/student" element={<StudentPage/>} />
       </Routes>
     </Router>
   );

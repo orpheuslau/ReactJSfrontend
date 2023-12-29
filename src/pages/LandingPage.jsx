@@ -22,7 +22,7 @@ function LandingPage() {
   const images = require.context('../img', true);
   const imageList = images.keys().map(image => images(image));
   const imageLabel = ['Student Profile','Report Download','Assessment','Admin file','Setting','Analysis','Search','User setup']
-const imageLink = ['studentPage', 'ReportPage', 'AssessmentPage', 'AdminPage', 'SettingPage', 'AnalysisPage', 'SearchPage', 'UserSetupPage']
+const imageLink = ['student', 'ReportPage', 'AssessmentPage', 'AdminPage', 'SettingPage', 'AnalysisPage', 'SearchPage', 'UserSetupPage']
 
 
   const [products, setProducts] = useState([]);
