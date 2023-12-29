@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import POSPage from './pages/POSPage';
 import LandingPage from './pages/LandingPage';
 import TestPage from './TestPage';
+import LogoutPage from './pages/LogoutPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/land" element={<LandingPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
       </Routes>
     </Router>
   );
