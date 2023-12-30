@@ -16,98 +16,100 @@ function StudentPage() {
 
   const [students, setStudents] = useState([]);
   const [isLoading, setISloading] = useState(false);
-  const [isAuth, setISauth] = useState (false);
+  const [isAuth, setISauth] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState([0]);
 
 
   const columns = [
     {
-        name: 'Class',
-        selector: row => row.classid,
+      name: 'Class',
+      selector: row => row.classid,
+      sortable: true,
     },
     {
-        name: 'Name',
-        selector: row => row.name,
+      name: 'Name',
+      selector: row => row.name,
+      sortable: true,
+    },
+    {
+      name: 'Class no',
+      selector: row => row.classno,
+      sortable: true,
+    },
+    {
+      name: 'Parent name',
+      selector: row => row.parentname,
     },
     {
       name: 'Contact',
-      selector: row => row.Contact,
-  },
-  {
-    name: 'Address',
-    selector: row => row.Address,
-},
-{
-  name: 'Year',
-  selector: row => row.year,
-},
+      selector: row => row.contact,
+    },
+    {
+      name: 'Address',
+      selector: row => row.address,
+      grow: 2
+    },
 
-];
 
- 
+  ];
 
-  const navigate = useNavigate(); 
+
+
+  const navigate = useNavigate();
 
   //let s1 = []
   //students.map((ss,index)=> s1[index]=ss)
   //console.log(s1[1], s1[3])
 
 
-   
-  
-    const fetchStudents = async () => {
-      try{
-    //    const s1 = []
-        const result = await axios.get('api/students')
-        //console.log(result.data[1].name)  
-        setStudents(await result.data);
-        //s1 = result.data[0].name
-        //console.log(s1)
-          setISloading(false);
-         
-       
-        //students.map((student, id)=> 
-        //s1 = student.name)
-          //  console.log(students[0].name)
-          
-          //setISauth(true)
-      }
-      catch{
-        navigate('/login')
-           //setISauth(false)
-           //console.log(isAuth);
-      
-        }
-      }
-      
-     
-      
-      
-           
-        useEffect(() => {
-          fetchStudents();
-        }, []);
-      
-      
-    
 
-      
+
+  const fetchStudents = async () => {
+    try {
+      const result = await axios.get('api/students')
+      setStudents(await result.data);
+
+      setISloading(false);
+
+    }
+    catch {
+      navigate('/login')
+    
+    }
+  }
+
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+
 
 
   return (
 
     <MainLayout>
-    
-    <DataTable
-            columns={columns}
-            data={students}
-        />
+<div className='row'>
+        <div className='col-lg-8'>
+
+      <DataTable
+        title="Student's profile"
+        direction="auto"
+        pagination
+        responsive
+        columns={columns}
+        data={students}
+        defaultSortFieldId={1} 
+        fixedHeader
+		fixedHeaderScrollHeight="300px"
+      />
+      
+</div> </div>
 
 
-     
-     </MainLayout>
-    
+    </MainLayout>
+
   )
 }
 
