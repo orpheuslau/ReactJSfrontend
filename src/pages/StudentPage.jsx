@@ -19,6 +19,7 @@ function StudentPage() {
   const [isAuth, setISauth] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState([0]);
+  const [records, setRecords] = useState(students);
 
 
   const columns = [
@@ -75,7 +76,7 @@ function StudentPage() {
     }
     catch {
       navigate('/login')
-    
+
     }
   }
 
@@ -86,29 +87,47 @@ function StudentPage() {
 
 
 
+  function quicksearch(event) {
+    if (event.target.value !=='')
+    {
+       const newData = students.filter(row => {
+        return row.name.includes(event.target.value)
+      })
+      setStudents(newData)
+    }
+        else
+        {console.log("wtf")
+        fetchStudents()
+  }
+    }
+
+
 
   return (
 
     <MainLayout>
-<div className='row'>
-        <div className='col-lg-8'>
-
-      <DataTable
-        title="Student's profile"
-        direction="auto"
-        pagination
-        responsive
-        columns={columns}
-        data={students}
-        defaultSortFieldId={1} 
-        fixedHeader
-		fixedHeaderScrollHeight="300px"
-      />
-      
-</div> </div>
-
-
+      <div className="container mt-3" >
+      <div className='col-lg-8'>
+        <div className='text-end'>Search Student's name<input type="text" onChange={quicksearch} /></div>
+        </div>
+        <div className='row'>
+          <div className='col-lg-8'>
+            <DataTable
+              title="Student's profile"
+              direction="auto"
+              pagination
+              responsive
+              columns={columns}
+              data={students}
+              defaultSortFieldId={1}
+              fixedHeader
+              fixedHeaderScrollHeight="800px"
+            />
+          </div>
+        </div>
+      </div>
     </MainLayout>
+
 
   )
 }
