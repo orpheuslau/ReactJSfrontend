@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ComponentToPrint } from '../components/ComponentToPrint';
 import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { click } from '@testing-library/user-event/dist/click';
 import ViewProfile from '../components/ViewProfile';
@@ -27,16 +27,21 @@ function StudentPage() {
   const [toggleCleared, setToggleCleared] = React.useState(false);
   const [data, setData] = React.useState(DataTable);
   const [showViewConfirmation, setShowViewConfirmation] = useState(false);
-  let selname = ""
+  const [showName, setShowName] = useState();
+
+  let titlename = ""
+  let { id } = useParams();
 
   const handleRowSelected = React.useCallback(state => {
     setSelectedRows(state.selectedRows);
-    
+
   }, []);
 
 
+
+
   const contextActions = React.useMemo(() => {
-    const handleDelete = () => {
+    const handleView = () => {
 
       /*if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
         setToggleCleared(!toggleCleared);
@@ -45,12 +50,16 @@ function StudentPage() {
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
-      
+      setShowName(selectedRows[0].name)
+
+
+
+
     };
 
     return (
-           <input className='btn btn-info' type="button" value="View profile" key="delete" onClick={()=>handleDelete()
-                      }/>
+      <input className='btn btn-info' type="button" value="View profile" key="view" onClick={() => handleView()
+      } />
 
     );
   }, [data, selectedRows, toggleCleared]);
@@ -81,13 +90,6 @@ function StudentPage() {
       selector: row => row.contact,
     },
 
-    {
-      cell: () => <button name="b1" onClick={editClick}>EDIT</button>,
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
-
-    },
   ];
 
 
@@ -114,6 +116,7 @@ function StudentPage() {
   },);
 
 
+
   const navigate = useNavigate();
 
   const fetchStudents = async () => {
@@ -131,15 +134,28 @@ function StudentPage() {
 
   useEffect(() => {
     fetchStudents();
-      }, []);
+  }, []);
 
+
+  const updateStudent = async () => {
+    //e.preventDefault();
+    try {
+      id = data._id;
+      await axios.put(`api/students/${id}`, data);
+      toast.success("Student profile updated successfully");
+      fetchStudents()//navigate("/student");
+      setShowViewConfirmation(false)
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
 
   function editClick() {
     console.log(selectedRows[0].name);
     setShowViewConfirmation(true)
-    
-    return   
+
+    return
   }
 
   function quicksearch(event) {
@@ -157,12 +173,12 @@ function StudentPage() {
 
 
   return (
-    
-    
 
-  <MainLayout>
-    
-           
+
+
+    <MainLayout>
+
+
       <div className="container mt-3" >
         <div className='col-lg-8'>
           <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
@@ -196,27 +212,75 @@ function StudentPage() {
         </div>
       </div>
 
-      <Modal show={showViewConfirmation}>
-    <Modal.Header closeButton>
-      <Modal.Title>Student Profile of {data.name}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      Are you sure you want to logout?
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="secondary" onClick={() =>setShowViewConfirmation(false)}>
-        Cancel
-      </Button>
-      <Button variant="primary" onClick={() => {
-        // Your logout logic hereba
-        navigate('/logout')
-      }}>
-        Logout
-      </Button>
-    </Modal.Footer>
-  </Modal>
+      <Modal show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
+        keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Student Profile of {showName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
 
-  </MainLayout>
+          <form onSubmit={updateStudent}>
+            <div className="form-group">
+              <label for="recipient-name" className="col-form-label">Image:</label>
+              <img className="card-img-top" src={data.image} />
+            </div>
+
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Class:</label>
+              <input type="text" className="form-control" value={data.classid}
+                onChange={(e) =>
+                  setData({ ...data, classid: e.target.value })
+                } placeholder={data.class} id="class" />
+            </div>
+            <div className="form-group mt-2">
+              <label for="name" className="col-form-label">Student Name:</label>
+              <input type="text" className="form-control" value={data.name}
+                onChange={(e) =>
+                  setData({ ...data, name: e.target.value })
+                } placeholder={data.name} id="name" />
+            </div>
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Class no.:</label>
+              <input type="text" className="form-control" value={data.classno}
+                onChange={(e) =>
+                  setData({ ...data, classno: e.target.value })
+                } placeholder={data.classno} id="classno" />
+            </div>
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Parent's Name:</label>
+              <input type="text" className="form-control" value={data.parentname}
+                onChange={(e) =>
+                  setData({ ...data, parentname: e.target.value })
+                } placeholder={data.parentname} id="parentname" />
+            </div>
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Contact number:</label>
+              <input type="text" className="form-control" value={data.contact}
+                onChange={(e) =>
+                  setData({ ...data, contact: e.target.value })
+                } placeholder={data.contact} id="contact" />
+            </div>
+            <div className="form-group mt-2">
+              <label for="message-text" className="col-form-label">Address:</label>
+              <input type="textarea" className="form-control" value={data.address}
+                onChange={(e) =>
+                  setData({ ...data, address: e.target.value })
+                } placeholder={data.address} id="address" />
+            </div>
+          </form>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowViewConfirmation(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={() => updateStudent()}>
+            Update
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+    </MainLayout>
 
 
 
