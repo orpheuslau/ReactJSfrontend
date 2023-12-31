@@ -8,7 +8,8 @@ import { ComponentToPrint } from '../components/ComponentToPrint';
 import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
 import { useNavigate } from 'react-router-dom';
-import DataTable from 'react-data-table-component';
+import DataTable, {createTheme} from 'react-data-table-component';
+import { click } from '@testing-library/user-event/dist/click';
 
 
 
@@ -23,7 +24,7 @@ function StudentPage() {
 
 
   const columns = [
-    {
+      {
       name: 'Class',
       selector: row => row.classid,
       sortable: true,
@@ -46,31 +47,46 @@ function StudentPage() {
       name: 'Contact',
       selector: row => row.contact,
     },
+  
     {
-      name: 'Address',
-      selector: row => row.address,
-      grow: 2
+      cell: () => <button onClick={editClick}>EDIT</button>,
+		ignoreRowClick: true,
+		allowOverflow: true,
+		button: true,
+            
     },
-
-
   ];
 
 
+  createTheme('solarized', {
+    text: {
+     //primary: '#FF8b66',
+     // secondary: '#FF8b66',
+    },
+    background: {
+      default: '#FFFFEE',
+    },
+    context: {
+      background: '#FFFFFF',
+      text: '#FFFFFF',
+    },
+    divider: {
+      default: '#FFFFFF',
+    },
+    action: {
+      button: 'rgba(0,1,0,.54)',
+      hover: 'rgba(55,1,0,.08)',
+      disabled: 'rgba(0,0,0,.12)',
+    },
+  }, );
+
 
   const navigate = useNavigate();
-
-  //let s1 = []
-  //students.map((ss,index)=> s1[index]=ss)
-  //console.log(s1[1], s1[3])
-
-
-
 
   const fetchStudents = async () => {
     try {
       const result = await axios.get('api/students')
       setStudents(await result.data);
-
       setISloading(false);
 
     }
@@ -86,29 +102,32 @@ function StudentPage() {
   }, []);
 
 
+  
+  function editClick()
+  {
+
+  }
 
   function quicksearch(event) {
-    if (event.target.value !=='')
-    {
-       const newData = students.filter(row => {
-        return row.name.includes(event.target.value)
+    if (event.target.value !== '') {
+      const newData = students.filter(row => {
+        //return row.name.includes(event.target.value)
+        return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
       })
       setStudents(newData)
     }
-        else
-        {console.log("wtf")
-        fetchStudents()
-  }
+    else {
+      fetchStudents()
     }
-
+  }
 
 
   return (
 
     <MainLayout>
       <div className="container mt-3" >
-      <div className='col-lg-8'>
-        <div className='text-end'>Search Student's name<input type="text" onChange={quicksearch} /></div>
+        <div className='col-lg-8'>
+          <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
         </div>
         <div className='row'>
           <div className='col-lg-8'>
@@ -119,9 +138,19 @@ function StudentPage() {
               responsive
               columns={columns}
               data={students}
-              defaultSortFieldId={1}
+              defaultSortFieldId={3}
               fixedHeader
               fixedHeaderScrollHeight="800px"
+//theme="solarized"
+              highlightOnHover
+
+              pointerOnHover
+              noContextMenu
+              selectableRows
+              selectableRowsHighlight
+              selectableRowsSingle
+              
+              striped
             />
           </div>
         </div>
