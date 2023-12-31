@@ -8,8 +8,10 @@ import { ComponentToPrint } from '../components/ComponentToPrint';
 import { Auth } from '../components/Auth';
 import { useReactToPrint } from 'react-to-print';
 import { useNavigate } from 'react-router-dom';
-import DataTable, {createTheme} from 'react-data-table-component';
+import DataTable, { createTheme } from 'react-data-table-component';
 import { click } from '@testing-library/user-event/dist/click';
+import ViewProfile from '../components/ViewProfile';
+import { Button, Modal } from 'react-bootstrap';
 
 
 
@@ -21,10 +23,41 @@ function StudentPage() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState([0]);
   const [records, setRecords] = useState(students);
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  const [toggleCleared, setToggleCleared] = React.useState(false);
+  const [data, setData] = React.useState(DataTable);
+  const [showViewConfirmation, setShowViewConfirmation] = useState(false);
+  let selname = ""
+
+  const handleRowSelected = React.useCallback(state => {
+    setSelectedRows(state.selectedRows);
+    
+  }, []);
+
+
+  const contextActions = React.useMemo(() => {
+    const handleDelete = () => {
+
+      /*if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
+        setToggleCleared(!toggleCleared);
+        setData(selectedRows);
+      }*/
+      setToggleCleared(!toggleCleared);
+      setData(selectedRows[0]);
+      setShowViewConfirmation(true);
+      
+    };
+
+    return (
+           <input className='btn btn-info' type="button" value="View profile" key="delete" onClick={()=>handleDelete()
+                      }/>
+
+    );
+  }, [data, selectedRows, toggleCleared]);
 
 
   const columns = [
-      {
+    {
       name: 'Class',
       selector: row => row.classid,
       sortable: true,
@@ -47,21 +80,21 @@ function StudentPage() {
       name: 'Contact',
       selector: row => row.contact,
     },
-  
+
     {
-      cell: () => <button onClick={editClick}>EDIT</button>,
-		ignoreRowClick: true,
-		allowOverflow: true,
-		button: true,
-            
+      cell: () => <button name="b1" onClick={editClick}>EDIT</button>,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+
     },
   ];
 
 
   createTheme('solarized', {
     text: {
-     //primary: '#FF8b66',
-     // secondary: '#FF8b66',
+      //primary: '#FF8b66',
+      // secondary: '#FF8b66',
     },
     background: {
       default: '#FFFFEE',
@@ -78,7 +111,7 @@ function StudentPage() {
       hover: 'rgba(55,1,0,.08)',
       disabled: 'rgba(0,0,0,.12)',
     },
-  }, );
+  },);
 
 
   const navigate = useNavigate();
@@ -88,7 +121,6 @@ function StudentPage() {
       const result = await axios.get('api/students')
       setStudents(await result.data);
       setISloading(false);
-
     }
     catch {
       navigate('/login')
@@ -99,13 +131,15 @@ function StudentPage() {
 
   useEffect(() => {
     fetchStudents();
-  }, []);
+      }, []);
 
 
-  
-  function editClick()
-  {
 
+  function editClick() {
+    console.log(selectedRows[0].name);
+    setShowViewConfirmation(true)
+    
+    return   
   }
 
   function quicksearch(event) {
@@ -123,8 +157,12 @@ function StudentPage() {
 
 
   return (
+    
+    
 
-    <MainLayout>
+  <MainLayout>
+    
+           
       <div className="container mt-3" >
         <div className='col-lg-8'>
           <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
@@ -141,21 +179,45 @@ function StudentPage() {
               defaultSortFieldId={3}
               fixedHeader
               fixedHeaderScrollHeight="800px"
-//theme="solarized"
+              //theme="solarized"
               highlightOnHover
 
               pointerOnHover
-              noContextMenu
+              contextActions={contextActions}
+              onSelectedRowsChange={handleRowSelected}
+              clearSelectedRows={toggleCleared}
               selectableRows
               selectableRowsHighlight
               selectableRowsSingle
-              
+
               striped
             />
           </div>
         </div>
       </div>
-    </MainLayout>
+
+      <Modal show={showViewConfirmation}>
+    <Modal.Header closeButton>
+      <Modal.Title>Student Profile of {data.name}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      Are you sure you want to logout?
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() =>setShowViewConfirmation(false)}>
+        Cancel
+      </Button>
+      <Button variant="primary" onClick={() => {
+        // Your logout logic hereba
+        navigate('/logout')
+      }}>
+        Logout
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
+  </MainLayout>
+
 
 
   )

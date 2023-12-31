@@ -23,7 +23,7 @@ function App() {
         <Route path="" element={<LandingPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/logout" element={<LogoutPage />} />
-        <Route path="/student" element={<StudentPage/>} />
+        <Route path="/student" element={<StudentPage />} />
       </Routes>
     </Router>
   );

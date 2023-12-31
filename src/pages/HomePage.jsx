@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import { Button, Modal } from 'react-bootstrap';
 
 
 
@@ -54,14 +55,26 @@ function HomePage() {
 
   return (
     <MainLayout>
-         <div style={{ backgroundColor: bgColor }}>
-        <h1> welcome to the pos</h1>
-        <p>this is the first line</p>
-        <p>this is the second line</p>
-        <Link to="/pos" className="btn btn-primary">Click me to sell product</Link>
-      </div>
-     
-    </MainLayout>
+    <Modal show='true'>
+    <Modal.Header closeButton>
+      <Modal.Title>Logout Confirmation</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      Are you sure you want to logout?
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary">
+        Cancel
+      </Button>
+      <Button variant="primary" onClick={() => {
+        // Your logout logic hereba
+        navigate('/logout')
+      }}>
+        Logout
+      </Button>
+    </Modal.Footer>
+  </Modal>
+  </MainLayout>
   )
 }
 
