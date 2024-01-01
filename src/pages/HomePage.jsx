@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Dropdown, Modal } from 'react-bootstrap';
 
 
 
@@ -54,27 +54,21 @@ function HomePage() {
 */
 
   return (
-    <MainLayout>
-    <Modal show='true'>
-    <Modal.Header closeButton>
-      <Modal.Title>Logout Confirmation</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      Are you sure you want to logout?
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="secondary">
-        Cancel
-      </Button>
-      <Button variant="primary" onClick={() => {
-        // Your logout logic hereba
-        navigate('/logout')
-      }}>
-        Logout
-      </Button>
-    </Modal.Footer>
-  </Modal>
-  </MainLayout>
+    
+ 
+
+<Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Dropdown Button
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+  
   )
 }
 

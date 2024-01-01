@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { click } from '@testing-library/user-event/dist/click';
 import ViewProfile from '../components/ViewProfile';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Dropdown, Modal } from 'react-bootstrap';
 
 
 
@@ -28,6 +28,8 @@ function StudentPage() {
   const [data, setData] = React.useState(DataTable);
   const [showViewConfirmation, setShowViewConfirmation] = useState(false);
   const [showName, setShowName] = useState();
+  const [isAdd, setIsAdd] = useState("none");
+  const [isUpdateDelete, setIsUpdateDelete] = useState("");
 
   let titlename = ""
   let { id } = useParams();
@@ -50,11 +52,9 @@ function StudentPage() {
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
-      setShowName(selectedRows[0].name)
-
-
-
-
+      setShowName(selectedRows[0].name);
+      setIsAdd("none");
+      setIsUpdateDelete("")
     };
 
     return (
@@ -138,25 +138,69 @@ function StudentPage() {
 
 
   const updateStudent = async () => {
-    //e.preventDefault();
-    try {
-      id = data._id;
-      await axios.put(`api/students/${id}`, data);
-      toast.success("Student profile updated successfully");
-      fetchStudents()//navigate("/student");
-      setShowViewConfirmation(false)
-    } catch (error) {
-      toast.error(error.message);
+
+    if (!data.name || !data.classid) {
+      if (!data.name)
+        toast.error("Student name is requried")
+      if (!data.classid)
+        toast.error("Class is requried")
+    }
+    else {
+      try {
+        id = data._id;
+        await axios.put(`api/students/${id}`, data);
+        toast.success(`Profile of student "${data.name}" updated successfully`);
+        fetchStudents()//navigate("/student");
+        setShowViewConfirmation(false)
+        setShowName("");
+        setData("")
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
 
-  function editClick() {
-    console.log(selectedRows[0].name);
-    setShowViewConfirmation(true)
+  const addStudent = async () => {
+    if (!data.name || !data.classid) {
+      if (!data.name)
+        toast.error("Student name is requried")
+      if (!data.classid)
+        toast.error("Class is requried")
+    }
+    else {
+      setToggleCleared(!toggleCleared);
+      try {
 
-    return
+        await axios.post(`api/students`, data);
+        toast.success(`Profile of new student "${data.name}" added successfully`);
+        fetchStudents()//navigate("/student");
+        setShowViewConfirmation(false)
+        setData("")
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
   }
+
+  const deleteStudent = async () => {
+
+    if (window.confirm(`Are you sure you want to delete the profile of : "${data.name}"?`)) {
+
+
+      try {
+        id = data._id;
+        await axios.delete(`api/students/${id}`, data);
+        toast.success(`Profile of student "${data.name}" deleted successfully`);
+        fetchStudents()//navigate("/student");
+        setShowViewConfirmation(false)
+        setShowName("");
+        setData("")
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
 
   function quicksearch(event) {
     if (event.target.value !== '') {
@@ -165,11 +209,36 @@ function StudentPage() {
         return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
       })
       setStudents(newData)
+
     }
     else {
       fetchStudents()
     }
   }
+
+
+  function classsearch(event) {
+
+    
+    console.log(students)
+    console.log(event.target.value)
+    
+    if (event.target.value !== '') {
+      const newData = students.filter(row => {
+        //return row.name.includes(event.target.value)
+        return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
+      })
+     
+      setStudents(newData);
+      console.log(students)
+        }
+    else {
+      fetchStudents()
+    }
+   // event.target.value = "All"
+  }
+
+
 
 
   return (
@@ -180,13 +249,53 @@ function StudentPage() {
 
 
       <div className="container mt-3" >
-        <div className='col-lg-8'>
-          <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
+        <div className="row">
+          <div className='col-sm-4'>
+
+          <div>
+
+<select onChange={classsearch}>
+
+  <option value="1A">Fruit</option>
+
+  <option value="4C">Vegetable</option>
+
+  <option value="4A">Meat</option>
+
+</select>
+
+</div>
+
+
+
+            {/*}
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Dropdown Button
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1" eventKey="1A" onSelect={classsearch('1A')}>Action</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              </Dropdown.Menu>
+  </Dropdown>*/}
+          </div>
+
+          <div className='col-sm-4'>
+            <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
+          </div>
         </div>
+
+
+
+
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
+
               title="Student's profile"
+
               direction="auto"
               pagination
               responsive
@@ -198,6 +307,7 @@ function StudentPage() {
               //theme="solarized"
               highlightOnHover
 
+
               pointerOnHover
               contextActions={contextActions}
               onSelectedRowsChange={handleRowSelected}
@@ -208,9 +318,28 @@ function StudentPage() {
 
               striped
             />
+
+
           </div>
         </div>
       </div>
+
+      <div className="container">
+        <div className="row col-8 justify-content-end">
+          <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
+            setShowViewConfirmation(true)
+            setShowName("a new entry");
+            setIsAdd("")
+            setIsUpdateDelete("none")
+          }
+          }>
+            Add Profile
+          </div>
+        </div>
+      </div>
+
+
+
 
       <Modal show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
@@ -219,21 +348,28 @@ function StudentPage() {
         </Modal.Header>
         <Modal.Body>
 
-          <form onSubmit={updateStudent}>
+          <form>
             <div className="form-group">
               <label for="recipient-name" className="col-form-label">Image:</label>
               <img className="card-img-top" src={data.image} />
+              <input type="text" className="form-control" value={data.image}
+                onChange={(e) =>
+                  setData({ ...data, image: e.target.value })
+                } placeholder={data.image} id="image" />
+
             </div>
 
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Class:</label>
+              <label for="recipient-name" className="col-form-label">* <strong>Class :</strong></label>
               <input type="text" className="form-control" value={data.classid}
                 onChange={(e) =>
                   setData({ ...data, classid: e.target.value })
-                } placeholder={data.class} id="class" />
+                } placeholder={data.classid} id="class" reqiuired />
             </div>
+
+
             <div className="form-group mt-2">
-              <label for="name" className="col-form-label">Student Name:</label>
+              <label for="name" className="col-form-label">* <strong>Student Name:</strong></label>
               <input type="text" className="form-control" value={data.name}
                 onChange={(e) =>
                   setData({ ...data, name: e.target.value })
@@ -267,20 +403,38 @@ function StudentPage() {
                   setData({ ...data, address: e.target.value })
                 } placeholder={data.address} id="address" />
             </div>
+            <div className="text-danger mt-5"><small>* requried item</small></div>
           </form>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowViewConfirmation(false)}>
+
+          <Button variant="secondary" onClick={() => {
+            setShowViewConfirmation(false)
+            fetchStudents()
+            setData("")
+            setSelectedRows("")
+          }
+          }>
             Cancel
           </Button>
-          <Button variant="primary" onClick={() => updateStudent()}>
+          <Button variant="primary" style={{ display: isUpdateDelete }} onClick={() => updateStudent()}>
             Update
           </Button>
+          <Button variant="danger" style={{ display: isUpdateDelete }} onClick={() => deleteStudent()}>
+            Delete
+          </Button>
+
+          <Button variant="success" style={{ display: isAdd }} onClick={() => addStudent()}>
+            Add
+          </Button>
+
+
         </Modal.Footer>
       </Modal>
 
     </MainLayout>
+
 
 
 
