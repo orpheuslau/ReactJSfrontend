@@ -1,28 +1,24 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import MainLayout from '../layouts/MainLayout'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ComponentToPrint } from '../components/ComponentToPrint';
-import { Auth } from '../components/Auth';
-import { useReactToPrint } from 'react-to-print';
+//import { ComponentToPrint } from '../components/ComponentToPrint';
+//import { Auth } from '../components/Auth';
+//import { useReactToPrint } from 'react-to-print';
 import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
-import { click } from '@testing-library/user-event/dist/click';
-import ViewProfile from '../components/ViewProfile';
-import { Button, Dropdown, Modal } from 'react-bootstrap';
+//import { click } from '@testing-library/user-event/dist/click';
+//import ViewProfile from '../components/ViewProfile';
+import { Button, Modal } from 'react-bootstrap';
+
 
 
 
 function StudentPage() {
 
   const [students, setStudents] = useState([]);
-  const [isLoading, setISloading] = useState(false);
-  const [isAuth, setISauth] = useState(false);
-  const [cart, setCart] = useState([]);
-  const [totalAmount, setTotalAmount] = useState([0]);
-  const [records, setRecords] = useState(students);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
   const [data, setData] = React.useState(DataTable);
@@ -30,8 +26,10 @@ function StudentPage() {
   const [showName, setShowName] = useState();
   const [isAdd, setIsAdd] = useState("none");
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
+  const inputSelect = useRef(null);
+  // reserved! const inputText = useRef(null);
 
-  let titlename = ""
+  
   let { id } = useParams();
 
   const handleRowSelected = React.useCallback(state => {
@@ -45,10 +43,7 @@ function StudentPage() {
   const contextActions = React.useMemo(() => {
     const handleView = () => {
 
-      /*if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
-        setToggleCleared(!toggleCleared);
-        setData(selectedRows);
-      }*/
+     
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
@@ -93,10 +88,11 @@ function StudentPage() {
   ];
 
 
+  /* reserved
   createTheme('solarized', {
     text: {
-      //primary: '#FF8b66',
-      // secondary: '#FF8b66',
+      primary: '#FF8b66',
+      secondary: '#FF8b66',
     },
     background: {
       default: '#FFFFEE',
@@ -114,7 +110,7 @@ function StudentPage() {
       disabled: 'rgba(0,0,0,.12)',
     },
   },);
-
+*/
 
 
   const navigate = useNavigate();
@@ -123,7 +119,7 @@ function StudentPage() {
     try {
       const result = await axios.get('api/students')
       setStudents(await result.data);
-      setISloading(false);
+           console.log("fetched")
     }
     catch {
       navigate('/login')
@@ -150,10 +146,12 @@ function StudentPage() {
         id = data._id;
         await axios.put(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" updated successfully`);
-        fetchStudents()//navigate("/student");
+        fetchStudents()
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
+        inputSelect.current.value = "All";
+       // reserved! inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
@@ -174,9 +172,12 @@ function StudentPage() {
 
         await axios.post(`api/students`, data);
         toast.success(`Profile of new student "${data.name}" added successfully`);
-        fetchStudents()//navigate("/student");
+        fetchStudents()
+        navigate("/student");
         setShowViewConfirmation(false)
         setData("")
+        inputSelect.current.value = "All";
+       // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
@@ -192,20 +193,23 @@ function StudentPage() {
         id = data._id;
         await axios.delete(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" deleted successfully`);
-        fetchStudents()//navigate("/student");
+        fetchStudents()
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
+        inputSelect.current.value = "All";
+       // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
     }
   };
 
+  /* Reserved function
   function quicksearch(event) {
     if (event.target.value !== '') {
       const newData = students.filter(row => {
-        //return row.name.includes(event.target.value)
+        
         return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
       })
       setStudents(newData)
@@ -214,28 +218,27 @@ function StudentPage() {
     else {
       fetchStudents()
     }
-  }
+  }*/
 
 
   function classsearch(event) {
 
-    
     console.log(students)
     console.log(event.target.value)
-    
-    if (event.target.value !== '') {
+
+    if (event.target.value !== 'All') {
       const newData = students.filter(row => {
-        //return row.name.includes(event.target.value)
+        
         return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
       })
-     
       setStudents(newData);
       console.log(students)
-        }
+
+    }
     else {
       fetchStudents()
     }
-   // event.target.value = "All"
+    
   }
 
 
@@ -250,42 +253,32 @@ function StudentPage() {
 
       <div className="container mt-3" >
         <div className="row">
-          <div className='col-sm-4'>
+          <div className='col-sm-8'>
 
-          <div>
+            <div className='text-end'>Filter by Class :
 
-<select onChange={classsearch}>
+              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} onClick={() => console.log("clicked")}>
+                
+                <option value="All">All</option>
+                <option value="1A">1A</option>
 
-  <option value="1A">Fruit</option>
+                <option value="4C">4C</option>
 
-  <option value="4C">Vegetable</option>
+                <option value="4A">4A</option>
+                
 
-  <option value="4A">Meat</option>
+              </select>
 
-</select>
-
-</div>
-
+            </div>
 
 
-            {/*}
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Dropdown Button
-              </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1" eventKey="1A" onSelect={classsearch('1A')}>Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-  </Dropdown>*/}
           </div>
 
-          <div className='col-sm-4'>
-            <div className='text-end'><input type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
-          </div>
-        </div>
+    {/*  reserved!     <div className='col-sm-4'>
+            <div className='text-end'><input ref={inputText} type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
+  </div>*/}
+  </div>
 
 
 
@@ -293,9 +286,7 @@ function StudentPage() {
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-
               title="Student's profile"
-
               direction="auto"
               pagination
               responsive
@@ -304,10 +295,7 @@ function StudentPage() {
               defaultSortFieldId={3}
               fixedHeader
               fixedHeaderScrollHeight="800px"
-              //theme="solarized"
-              highlightOnHover
-
-
+                            highlightOnHover
               pointerOnHover
               contextActions={contextActions}
               onSelectedRowsChange={handleRowSelected}
@@ -315,11 +303,8 @@ function StudentPage() {
               selectableRows
               selectableRowsHighlight
               selectableRowsSingle
-
               striped
             />
-
-
           </div>
         </div>
       </div>
@@ -364,7 +349,7 @@ function StudentPage() {
               <input type="text" className="form-control" value={data.classid}
                 onChange={(e) =>
                   setData({ ...data, classid: e.target.value })
-                } placeholder={data.classid} id="class" reqiuired />
+                } placeholder={data.classid} id="class" />
             </div>
 
 
