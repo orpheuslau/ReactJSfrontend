@@ -9,6 +9,7 @@ import SurveyComponent from "./components/SurveyComponent";
 
 
 const root = createRoot(document.getElementById("surveyElement"));
+//const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
 <React.StrictMode>

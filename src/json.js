@@ -47,7 +47,7 @@ export const json = {
           {
             "type": "comment",
             "name": "disappointing-experience",
-            "visibleIf": "{nps-score} <= 5",
+           // "visibleIf": "{nps-score} <= 5",
             "title": {
               "default": "How did we disappoint you and what can we do to make things right?",
               "fr": "Nous n'avons pas été a la hauteur de vos attentes, comment pouvons-nous améliorer?"
@@ -57,7 +57,7 @@ export const json = {
           {
             "type": "comment",
             "name": "improvements-required",
-            "visibleIf": "{nps-score} >= 6",
+           // "visibleIf": "{nps-score} >= 6",
             "title": {
               "default": "What can we do to make your experience more satisfying?",
               "fr": "Que pouvons-nous faire pour rendre votre expérience plus satisfaisante?"
@@ -67,7 +67,7 @@ export const json = {
           {
             "type": "checkbox",
             "name": "promoter-features",
-            "visibleIf": "{nps-score} >= 9",
+           // "visibleIf": "{nps-score} >= 9",
             "title": {
               "default": "Which of the following features do you value the most?",
               "fr": "Laquelle des fonctionnalités suivantes appréciez-vous le plus ?"

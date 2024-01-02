@@ -394,6 +394,7 @@ function StudentPage() {
             fetchStudents()
             setData("")
             setSelectedRows("")
+            inputSelect.current.value = "All";
           }
           }>
             Cancel

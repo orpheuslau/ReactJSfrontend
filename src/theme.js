@@ -76,7 +76,7 @@ export const themeJson = {
       "--sjs-article-font-medium-lineHeight": "32px",
       "--sjs-article-font-medium-paragraphIndent": "0px",
       "--sjs-article-font-medium-textCase": "none",
-      "--sjs-article-font-default-fontSize": "16px",
+      "--sjs-article-font-default-fontSize": "10px",
       "--sjs-article-font-default-textDecoration": "none",
       "--sjs-article-font-default-fontWeight": "400",
       "--sjs-article-font-default-fontStyle": "normal",
