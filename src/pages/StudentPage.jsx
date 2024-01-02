@@ -29,21 +29,20 @@ function StudentPage() {
   const inputSelect = useRef(null);
   // reserved! const inputText = useRef(null);
 
-  
+
   let { id } = useParams();
 
   const handleRowSelected = React.useCallback(state => {
+
     setSelectedRows(state.selectedRows);
 
   }, []);
 
 
-
-
   const contextActions = React.useMemo(() => {
     const handleView = () => {
 
-     
+
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
@@ -119,7 +118,6 @@ function StudentPage() {
     try {
       const result = await axios.get('api/students')
       setStudents(await result.data);
-           console.log("fetched")
     }
     catch {
       navigate('/login')
@@ -151,7 +149,7 @@ function StudentPage() {
         setShowName("");
         setData("")
         inputSelect.current.value = "All";
-       // reserved! inputText.current.value = "";
+        // reserved! inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
@@ -177,7 +175,7 @@ function StudentPage() {
         setShowViewConfirmation(false)
         setData("")
         inputSelect.current.value = "All";
-       // reserved!  inputText.current.value = "";
+        // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
@@ -198,7 +196,7 @@ function StudentPage() {
         setShowName("");
         setData("")
         inputSelect.current.value = "All";
-       // reserved!  inputText.current.value = "";
+        // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
       }
@@ -223,22 +221,19 @@ function StudentPage() {
 
   function classsearch(event) {
 
-    console.log(students)
-    console.log(event.target.value)
 
     if (event.target.value !== 'All') {
       const newData = students.filter(row => {
-        
+
         return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
       })
       setStudents(newData);
-      console.log(students)
 
     }
     else {
       fetchStudents()
     }
-    
+
   }
 
 
@@ -257,15 +252,15 @@ function StudentPage() {
 
             <div className='text-end'>Filter by Class :
 
-              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} onClick={() => console.log("clicked")}>
-                
+              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
+
                 <option value="All">All</option>
                 <option value="1A">1A</option>
 
                 <option value="4C">4C</option>
 
                 <option value="4A">4A</option>
-                
+
 
               </select>
 
@@ -275,10 +270,10 @@ function StudentPage() {
 
           </div>
 
-    {/*  reserved!     <div className='col-sm-4'>
+          {/*  reserved!     <div className='col-sm-4'>
             <div className='text-end'><input ref={inputText} type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
   </div>*/}
-  </div>
+        </div>
 
 
 
@@ -295,7 +290,7 @@ function StudentPage() {
               defaultSortFieldId={3}
               fixedHeader
               fixedHeaderScrollHeight="800px"
-                            highlightOnHover
+              highlightOnHover
               pointerOnHover
               contextActions={contextActions}
               onSelectedRowsChange={handleRowSelected}
