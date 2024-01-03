@@ -25,7 +25,7 @@ survey.applyTheme({
         "--sjs-primary-backcolor-dark": "rgba(20, 164, 139, 1)",
         "--sjs-primary-forecolor": "rgba(255, 255, 255, 1)",
         "--sjs-primary-forecolor-light": "rgba(255, 255, 255, 0.25)",
-        "--sjs-base-unit": "8px",
+        "--sjs-base-unit": "4px",
         "--sjs-corner-radius": "4px",
         "--sjs-secondary-backcolor": "rgba(255, 152, 20, 1)",
         "--sjs-secondary-backcolor-light": "rgba(255, 152, 20, 0.1)",
