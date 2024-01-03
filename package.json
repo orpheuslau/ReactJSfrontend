@@ -21,6 +21,7 @@
     "sass": "^1.69.5",
     "styled-components": "^5.3.11",
     "survey-core": "^1.9.123",
+    "survey-pdf": "^1.9.123",
     "survey-react-ui": "^1.9.123",
     "web-vitals": "^2.1.4"
   },
