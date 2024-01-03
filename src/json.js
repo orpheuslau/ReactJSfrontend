@@ -1,24 +1,4 @@
 export const json = {
-    "completedHtmlOnCondition": [
-     {
-      "expression": "{nps-score} <= 6 or {rebuy} = false",
-      "html": {
-       "default": "Thanks for your feedback! We highly value all ideas and suggestions from our customers, whether they're positive or critical. In the future, our team might reach out to you to learn more about how we can further improve our product so that it exceeds your expectations.",
-             }
-     },
-     {
-      "expression": "{nps-score} = 6 or {nps-score} = 7",
-      "html": {
-       "default": "Thanks for your feedback. Our goal is to create the best possible product, and your thoughts, ideas, and suggestions play a major role in helping us identify opportunities to improve.",
-             }
-     },
-     {
-      "expression": "{nps-score} >= 8",
-      "html": {
-       "default": "Thanks for your feedback. It's great to hear that you're a fan of our product. Your feedback helps us discover new opportunities to improve it and make sure you have the best possible experience.",
-             }
-     }
-    ],
     "pages": [
       {
         "name": "page1",
@@ -45,7 +25,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "nps-score2",
+            "name": "p1-score2",
             "isRequired": true,
             "title": {
               "default": "(2) How likely the student can speak clearly ?",
@@ -61,11 +41,11 @@ export const json = {
               "default": "Very likely",
               
             },
-            "expression": "{nps-score1}+{nps-score2}"
+            "expression": "{p1-score1}+{p1-score2}"
           },
           {
             "type": "rating",
-            "name": "nps-score3",
+            "name": "p1-score3",
             "isRequired": true,
                         "title": {
               "default": "(3) How likely the student can distinguish between common colour in daily life ?",
@@ -84,7 +64,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "nps-score4",
+            "name": "p1-score4",
             "isRequired": true,
             "title": {
               "default": "(4) How likely the student can group objects with same quantity ?",
@@ -103,7 +83,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "nps-score5",
+            "name": "p1-score5",
             "isRequired": true,
             "title": { 
               "default": "(5) How likely the student feel interested to listen to story or song ?",
@@ -123,13 +103,13 @@ export const json = {
           {
             "type": "html",
             "name": "htmlpage1Total",
-                      "html": "<h4>Sub-total : {page1Total}</h4>",
+                      "html": "<h5>sub-total score : {page1Total}<h5>",
           },
           {
             "type": "expression",
             "name": "page1Total",
             "title": "Sub-total",
-            "expression": "{nps-score1}+{nps-score2}+{nps-score3}+{nps-score4}+{nps-score5}",
+            "expression": "{p1-score1}+{p1-score2}+{p1-score3}+{p1-score4}+{p1-score5}",
             "visible": false,
           }
           
@@ -137,46 +117,164 @@ export const json = {
       },
       {
         "name": "page2",
+        "title": "Emotion and Social development",
         "elements": [
           {
-            "type": "boolean",
-            "name": "rebuy",
+            "type": "rating",
+            "name": "p2-score1",
+            "isRequired": true,
             "title": {
-              "default": "Would you buy our product again?",
+              "default": "(1) How likely the student bahave joyfully during class ?",
+              
+            },
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
               
             }
           },
+          {
+            "type": "rating",
+            "name": "p2-score2",
+            "isRequired": true,
+            "title": {
+              "default": "(2) How likely the student can concentrate in learning and playing games ?",
+              
+            },
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
+              
+            }
+          },
+          {
+            "type": "rating",
+            "name": "p2-score3",
+            "isRequired": true,
+            "title": {
+              "default": "(3) How likely the students will pick up after themselves ?",
+              
+            },
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
+              
+            }
+          },
+         
+          {
+            "type": "boolean",
+            "name": "p2-satis",
+            "title": {
+              "default": "In general, the student's emotion and social development is satisfactory ?",
+              
+            }
+          },
+          {
+            "type": "html",
+            "name": "htmlpage2Total",
+                      "html": "<h5>sub-total score : {page2Total}</h5>",
+          },
+          {
+            "type": "expression",
+            "name": "page2Total",
+            "title": "Sub-total",
+            "expression": "{p2-score1}+{p2-score2}+{p2-score3}",
+            "visible": false,
+          }
         ]
       },
       {
         "name": "page3",
+        "title": "Physical and artistic development",
         "elements": [
           {
-            "type": "comment",
-            "name": "disappointing-experience",
-           // "visibleIf": "{nps-score} <= 5",
+            "type": "rating",
+            "name": "p3-score1",
+            "isRequired": true,
             "title": {
-              "default": "How did we disappoint you and what can we do to make things right?",
+              "default": "(1) How likely the student shows proper balance and coordination in daily activity?",
               
             },
-            "maxLength": 300
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
+              
+            }
           },
           {
-            "type": "comment",
-            "name": "improvements-required",
-           // "visibleIf": "{nps-score} >= 6",
+            "type": "rating",
+            "name": "p3-score2",
+            "isRequired": true,
             "title": {
-              "default": "What can we do to make your experience more satisfying?",
+              "default": "(2) How likely the student can sing a simple song ?",
               
             },
-            "maxLength": 300
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
+              
+            }
+          },
+          {
+            "type": "rating",
+            "name": "p3-score3",
+            "isRequired": true,
+            "title": {
+              "default": "(3) How likely the student can paint with different colour ?",
+              
+            },
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": {
+              "default": "Very unlikely",
+              
+            },
+            "maxRateDescription": {
+              "default": "Very likely",
+              
+            }
+          },
+         
+          {
+            "type": "boolean",
+            "name": "p3-satis",
+            "title": {
+              "default": "In general, the student's physical and artistic development is satisfactory ?",
+              
+            }
           },
           {
             "type": "checkbox",
             "name": "promoter-features",
            // "visibleIf": "{nps-score} >= 9",
             "title": {
-              "default": "Which of the following features do you value the most?",
+              "default": "Which of the following virtue and value do the student acquire?",
               
             },
             "description": {
@@ -186,43 +284,28 @@ export const json = {
             "isRequired": true,
             "choices": [
               {
-                "value": "performance",
-                "text": "Performance"
+                "value": "Honesty",
+                "text": "Honesty"
               },
               {
-                "value": "stability",
-                "text": {
-                  "default": "Stability",
-                  
-                }
+                "value": "Respect",
+                "text": "Respect",                
               },
               {
-                "value": "ui",
-                "text": {
-                  "default": "User interface",
-                  
-                }
+                "value": "Caring",
+                "text": "Caring",
+                            },
+              {
+                "value": "Patience",
+                "text": "Patience",
               },
               {
-                "value": "complete-functionality",
-                "text": {
-                  "default": "Complete functionality",
-                  
-                }
+                "value": "Friendship",
+                "text": "Friendship",
               },
               {
-                "value": "learning-materials",
-                "text": {
-                  "default": "Learning materials (documentation, demos, code examples)",
-                  
-                }
-              },
-              {
-                "value": "support",
-                "text": {
-                  "default": "Quality support",
-                  
-                }
+                "value": "Initiative",
+                "text": "Initiative",
               }
             ],
             "showOtherItem": true,
@@ -241,14 +324,14 @@ export const json = {
             "type": "radiogroup",
             "name": "testimonial",
             "title": {
-              "default": "Would you mind providing us a brief testimonial for the website?",
+              "default": "Would you please further elaborate with an occaion or observation ?",
               
             },
             "choices": [
               {
                 "value": "yes",
                 "text": {
-                  "default": "Sure!",
+                  "default": "Yes",
                   
                 }
               },
@@ -260,33 +343,57 @@ export const json = {
                 }
               }
             ]
-          },
+          },         
           {
-            "type": "text",
-            "name": "email",
+            "type": "comment",
+            "name": "elaboration",
             "visibleIf": "{testimonial} = 'yes'",
-            "title": {
+           /* "title": {
               "default": "What is your email address?",
               
-            },
-            "validators": [
-              {
-                "type": "email"
-              }
-            ],
+            },*/
+            "maxLength": 300,
+          
             "placeholder": {
-              "default": "Enter your email here",
+              "default": "Your elaboration",
               
             }
-          }
+          },
+          {
+            "type": "html",
+            "name": "htmlpage3Total",
+                      "html": "<h5>sub-total score : {page3Total}</h5>",
+          },
+          {
+            "type": "expression",
+            "name": "page3Total",
+            "title": "Sub-total",
+            "expression": "{p3-score1}+{p3-score2}+{p3-score3}",
+            "visible": false,
+          },
+          {
+            "type": "html",
+            "name": "htmlpageALLTotal",
+                      "html": "<h4>Total score: {pageALLTotal}</h4>",
+          },
+          {
+            "type": "expression",
+            "name": "pageALLTotal",
+            "title": "Total",
+            "expression": "{page1Total}+{page2Total}+{page3Total}",
+            "visible": false,
+          },
+       
         ]
+      
       }
     ],
     "showPrevButton": true,
     "showQuestionNumbers": "off",
-    "completeText": {
-     "fr": "Envoyer"
-    },
+    "showProgressBar": "bottom",
+    "completeText": "Submit",
     "widthMode": "static",
-    "width": "1000px"
+    "width": "1000px",
+    "completedHtml": "<h3><font color=green>Assessment successfully submitted!</font></h3>",
+    "showPreviewBeforeComplete": "showAnsweredQuestions",
    };

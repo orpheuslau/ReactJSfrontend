@@ -369,7 +369,7 @@ function AssessPage() {
             inputSelect.current.value = "All";
           }
           }>
-            Cancel
+            Exit
           </Button>
 
 
