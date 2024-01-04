@@ -5,17 +5,30 @@ import "survey-core/defaultV2.min.css";
 import "../index.css";
 import { json } from "../json";
 import { SurveyPDF } from "survey-pdf";
+import { useEffect, useState, useRef } from 'react'
 
 
-function SurveyComponent() {
+function SurveyComponent(props) {
     const survey = new Model(json);
     const surveyJson = { /* ... */ };
+    
+    survey.setVariable("assesstitle", props.name);
+    survey.setVariable("page1", props.classno);
+    survey.setVariable("page2", props.classid);
+    survey.setVariable("page3", props.username);
+     
+    console.log(props.username)
     const pdfDocOptions = {
         fontSize: 12
       };
 
       const savePdf = function (surveyData) {
         const surveyPdf = new SurveyPDF(json, pdfDocOptions);
+        surveyPdf.setVariable("assesstitle", props.name);
+        surveyPdf.setVariable("page1", props.classno);
+        surveyPdf.setVariable("page2", props.classid);
+        surveyPdf.setVariable("page3", props.username);
+
         surveyPdf.data = surveyData;
         surveyPdf.save();
       };
@@ -105,7 +118,8 @@ survey.applyTheme({
         "--sjs-article-font-medium-lineHeight": "32px",
         "--sjs-article-font-medium-paragraphIndent": "0px",
         "--sjs-article-font-medium-textCase": "none",
-        "--sjs-article-font-default-fontSize": "10px",
+//        "--sjs-article-font-default-fontSize": "10px",
+"--sjs-article-font-default-fontSize": "20px",
         "--sjs-article-font-default-textDecoration": "none",
         "--sjs-article-font-default-fontWeight": "400",
         "--sjs-article-font-default-fontStyle": "normal",
@@ -114,7 +128,9 @@ survey.applyTheme({
         "--sjs-article-font-default-lineHeight": "28px",
         "--sjs-article-font-default-paragraphIndent": "0px",
         "--sjs-article-font-default-textCase": "none",
-        "--sjs-font-size": "12px",
+        "--sjs-font-size": "14px",
+       // "--sjs-font-headerdescription-size": "20px",
+       // "--sjs-font-headertitle-size": "140px",
       },
       "isPanelless": false,
       "themeName": "default",

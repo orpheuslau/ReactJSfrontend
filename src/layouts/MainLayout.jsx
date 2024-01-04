@@ -24,7 +24,7 @@ function MainLayout({ children }) {
                                 <Link to="/land" className="navbar-brand text-white nav-item">Case Management Online System (CMOS)</Link>
                             </div>
                             <div className='col-1'>
-                                <div className="navbar-text h6 text-warning"> User name: {username}
+                                <div className="navbar-text h6 text-warning">{username}
                                 </div>
                             </div>
                             <div className='col-1'>

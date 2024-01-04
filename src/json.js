@@ -1,4 +1,7 @@
 export const json = {
+  "title": "Annual Assessment",
+  "name":"assesstitle",
+  "description": "Student :  {assesstitle}, {page2} ({page1})",
     "pages": [
       {
         "name": "page1",
@@ -6,7 +9,7 @@ export const json = {
         "elements": [
           {
             "type": "rating",
-            "name": "nps-score1",
+            "name": "p1-score1",
             "isRequired": true,
             "title": {
               "default": "(1) How likely the student can understand verbal instruction and communication ?",
@@ -383,10 +386,28 @@ export const json = {
             "expression": "{page1Total}+{page2Total}+{page3Total}",
             "visible": false,
           },
-       
+                   ]
+      },
+      {
+        "name": "page4",
+        "title": "Sign Off",
+        "elements": [ {
+          "type": "text",
+          "name": "assessmentdate",
+          "title": "Assessment Date",            
+                      "defaultValueExpression": "today()",
+                  "inputType": "date",
+          "placeholder": "Assessment date"
+         },
+         {
+          "type": "html",
+          "name": "htmlpage4",
+                    "html": "<h5 style=color:darkred>Assessed by : {page3}</h5>",
+        },
         ]
-      
+
       }
+  
     ],
     "showPrevButton": true,
     "showQuestionNumbers": "off",
@@ -395,5 +416,5 @@ export const json = {
     "widthMode": "static",
     "width": "1000px",
     "completedHtml": "<h3><font color=green>Assessment successfully submitted!</font></h3>",
-    "showPreviewBeforeComplete": "showAnsweredQuestions",
+    "showPreviewBeforeComplete": "showAllQuestions",
    };

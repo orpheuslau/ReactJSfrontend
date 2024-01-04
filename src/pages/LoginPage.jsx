@@ -71,8 +71,8 @@ function Login() {
       const response = await axios.post("/api/login", { username: username, password: password });
       setError(response.data.message)
       setIsLoading(false);
-      localStorage.setItem('username', response.data.username);
-      localStorage.setItem('classid', response.data.classid);
+      localStorage.setItem('username', response.data.name);
+      //localStorage.setItem('c', response.data.name);
       //console.log(response.data.classid);
       //localStorage.setItem('classid', response.data.classid);
       navigate("/land");

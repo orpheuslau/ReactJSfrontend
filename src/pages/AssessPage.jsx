@@ -20,6 +20,7 @@ import Assessment from '../components/SurveyComponent'
 function AssessPage() {
 
   const [students, setStudents] = useState([]);
+  const [users, setUsers] = useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
   const [data, setData] = React.useState(DataTable);
@@ -119,6 +120,9 @@ function AssessPage() {
     try {
       const result = await axios.get('api/students')
       setStudents(await result.data);
+      const resultuser = await axios.get('api/users')
+      setUsers(await resultuser.data);
+      console.log(users)
     }
     catch {
       navigate('/login')
@@ -305,7 +309,7 @@ function AssessPage() {
         </div>
       </div>
 
-      <div className="container">
+     {/* <div className="container">
         <div className="row col-8 justify-content-end">
           <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
             setShowViewConfirmation(true)
@@ -317,24 +321,16 @@ function AssessPage() {
             Add Profile
           </div>
         </div>
-      </div>
+        </div>*/}
 
 
 
 
       <Modal className="modal-lg" show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
-        <Modal.Header>
-          <Modal.Title>
-            <div className="row col-20 text-secondary">
-             
-                <h5>ANNUAL ASSESSMENT</h5>
-             
-            </div>
-          </Modal.Title>
-        </Modal.Header>
+   
         <Modal.Body>
-          <div className="row col-12 mb-4">
+         {/* <div className="row col-12 mb-4">
 
             <div className="form-group col-4">
               <label for="recipient-name" className="col-form-label text-muted">Student image:</label>
@@ -356,8 +352,14 @@ function AssessPage() {
               <input type="text" className="form-control" placeholder={data.classno} id="classno" readOnly />
             </div>
 
-          </div>
-          <Assessment />
+        </div>*/}
+        <Assessment
+          name={data.name}
+          classno={data.classno}
+          classid={data.classid}
+          username={localStorage.getItem("username")}
+                    
+          />
         </Modal.Body>
         <Modal.Footer>
 
