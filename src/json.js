@@ -9,7 +9,7 @@ export const json = {
         "elements": [
           {
             "type": "rating",
-            "name": "p1-score1",
+            "name": "p1score1",
             "isRequired": true,
             "title": {
               "default": "(1) How likely the student can understand verbal instruction and communication ?",
@@ -28,7 +28,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p1-score2",
+            "name": "p1score2",
             "isRequired": true,
             "title": {
               "default": "(2) How likely the student can speak clearly ?",
@@ -44,11 +44,11 @@ export const json = {
               "default": "Very likely",
               
             },
-            "expression": "{p1-score1}+{p1-score2}"
+            "expression": "{p1score1}+{p1score2}"
           },
           {
             "type": "rating",
-            "name": "p1-score3",
+            "name": "p1score3",
             "isRequired": true,
                         "title": {
               "default": "(3) How likely the student can distinguish between common colour in daily life ?",
@@ -67,7 +67,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p1-score4",
+            "name": "p1score4",
             "isRequired": true,
             "title": {
               "default": "(4) How likely the student can group objects with same quantity ?",
@@ -86,7 +86,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p1-score5",
+            "name": "p1score5",
             "isRequired": true,
             "title": { 
               "default": "(5) How likely the student feel interested to listen to story or song ?",
@@ -112,7 +112,7 @@ export const json = {
             "type": "expression",
             "name": "page1Total",
             "title": "Sub-total",
-            "expression": "{p1-score1}+{p1-score2}+{p1-score3}+{p1-score4}+{p1-score5}",
+            "expression": "{p1score1}+{p1score2}+{p1score3}+{p1score4}+{p1score5}",
             "visible": false,
           }
           
@@ -124,7 +124,7 @@ export const json = {
         "elements": [
           {
             "type": "rating",
-            "name": "p2-score1",
+            "name": "p2score1",
             "isRequired": true,
             "title": {
               "default": "(1) How likely the student bahave joyfully during class ?",
@@ -143,7 +143,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p2-score2",
+            "name": "p2score2",
             "isRequired": true,
             "title": {
               "default": "(2) How likely the student can concentrate in learning and playing games ?",
@@ -162,7 +162,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p2-score3",
+            "name": "p2score3",
             "isRequired": true,
             "title": {
               "default": "(3) How likely the students will pick up after themselves ?",
@@ -182,7 +182,7 @@ export const json = {
          
           {
             "type": "boolean",
-            "name": "p2-satis",
+            "name": "p2satis",
             "title": {
               "default": "In general, the student's emotion and social development is satisfactory ?",
               
@@ -197,7 +197,7 @@ export const json = {
             "type": "expression",
             "name": "page2Total",
             "title": "Sub-total",
-            "expression": "{p2-score1}+{p2-score2}+{p2-score3}",
+            "expression": "{p2score1}+{p2score2}+{p2score3}",
             "visible": false,
           }
         ]
@@ -208,7 +208,7 @@ export const json = {
         "elements": [
           {
             "type": "rating",
-            "name": "p3-score1",
+            "name": "p3score1",
             "isRequired": true,
             "title": {
               "default": "(1) How likely the student shows proper balance and coordination in daily activity?",
@@ -227,7 +227,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p3-score2",
+            "name": "p3score2",
             "isRequired": true,
             "title": {
               "default": "(2) How likely the student can sing a simple song ?",
@@ -246,7 +246,7 @@ export const json = {
           },
           {
             "type": "rating",
-            "name": "p3-score3",
+            "name": "p3score3",
             "isRequired": true,
             "title": {
               "default": "(3) How likely the student can paint with different colour ?",
@@ -266,7 +266,7 @@ export const json = {
          
           {
             "type": "boolean",
-            "name": "p3-satis",
+            "name": "p3satis",
             "title": {
               "default": "In general, the student's physical and artistic development is satisfactory ?",
               
@@ -274,7 +274,7 @@ export const json = {
           },
           {
             "type": "checkbox",
-            "name": "promoter-features",
+            "name": "vfeature",
            // "visibleIf": "{nps-score} >= 9",
             "title": {
               "default": "Which of the following virtue and value do the student acquire?",
@@ -371,7 +371,7 @@ export const json = {
             "type": "expression",
             "name": "page3Total",
             "title": "Sub-total",
-            "expression": "{p3-score1}+{p3-score2}+{p3-score3}",
+            "expression": "{p3score1}+{p3score2}+{p3score3}",
             "visible": false,
           },
           {

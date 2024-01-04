@@ -23,18 +23,21 @@ function MainLayout({ children }) {
                             <div className='col-6'>
                                 <Link to="/land" className="navbar-brand text-white nav-item">Case Management Online System (CMOS)</Link>
                             </div>
-                            <div className='col-1'>
-                                <div className="navbar-text h6 text-warning">{username}
-                                </div>
-                            </div>
-                            <div className='col-1'>
-                                {/*<button className="btn btn-light bt-sm" onClick={() => { navigate(`/logout`) }}>Logout</button>*/}
+                            <div className='col-4 navbar-text h6 text-warning'>{username+ " "}
+                            {/*<button className="btn btn-light bt-sm" onClick={() => { navigate(`/logout`) }}>Logout</button>*/}
 
-                                <button className="btn btn-light bt-sm" onClick={() => setShowLogoutConfirmation(true)}>Logout</button>
+                            <button className="btn btn-light bt-sm" onClick={() => setShowLogoutConfirmation(true)}>Logout</button>
                                 <LogoutBox show={showLogoutConfirmation}
                                     onClose={() => setShowLogoutConfirmation(false)}
                                 />
                             </div>
+                         {/*   <div className='col-1'>
+                                
+                                <button className="btn btn-light bt-sm" onClick={() => setShowLogoutConfirmation(true)}>Logout</button>
+                                <LogoutBox show={showLogoutConfirmation}
+                                    onClose={() => setShowLogoutConfirmation(false)}
+                                />
+    </div>*/}
                         </div>
                     </div>
                 </nav>

@@ -122,7 +122,7 @@ function AssessPage() {
       setStudents(await result.data);
       const resultuser = await axios.get('api/users')
       setUsers(await resultuser.data);
-      console.log(users)
+
     }
     catch {
       navigate('/login')

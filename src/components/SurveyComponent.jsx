@@ -17,7 +17,7 @@ function SurveyComponent(props) {
     survey.setVariable("page2", props.classid);
     survey.setVariable("page3", props.username);
      
-    console.log(props.username)
+    
     const pdfDocOptions = {
         fontSize: 12
       };
@@ -137,7 +137,8 @@ survey.applyTheme({
       "colorPalette": "light"
     });
     survey.onComplete.add((sender, options) => {
-        console.log(JSON.stringify(sender.data, null, 3));
+      console.log(sender.data)  
+      console.log(JSON.stringify(sender.data, null, 3));
     });
     return (<Survey model={survey} id="surveyContainer" />);
 }
