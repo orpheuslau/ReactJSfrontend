@@ -13,7 +13,7 @@ import DataTable, { createTheme } from 'react-data-table-component';
 //import ViewProfile from '../components/ViewProfile';
 import { Button, Modal } from 'react-bootstrap';
 import Assessment from '../components/SurveyComponent'
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -82,9 +82,22 @@ function AssessPage() {
       selector: row => row.parentname,
     },
     {
-      name: 'Contact',
-      selector: row => row.contact,
-    },
+      key: "action",
+      text: "Action",
+      className: "action",
+      width: 100,
+      align: "left",
+      sortable: false,
+      cell: (record) => {
+        return (
+          
+           
+                        <Link to={`/report/${record._id}`}>Go to My Page</Link>
+           
+          
+        );
+       },
+      },
 
   ];
 

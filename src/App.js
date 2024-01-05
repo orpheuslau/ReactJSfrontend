@@ -11,6 +11,7 @@ import TestPage from './TestPage';
 import LogoutPage from './pages/LogoutPage';
 import StudentPage from './pages/StudentPage';
 import AssessPage from './pages/AssessPage';
+import ReportPage from './pages/ReportPage';
 
 
 function App() {
@@ -25,7 +26,9 @@ function App() {
         <Route path="/test" element={<TestPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/student" element={<StudentPage />} />
-        <Route path="/assessmentPage" element={<AssessPage />} />
+        <Route path="/assessment" element={<AssessPage />} />
+        <Route path="/report/:postId" element={<ReportPage />} />
+        <Route path="/report" element={<ReportPage />} />
       </Routes>
     </Router>
   );
