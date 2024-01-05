@@ -78,21 +78,28 @@ function AssessPage() {
       sortable: true,
     },
     {
-      name: 'Parent name',
-      selector: row => row.parentname,
+     name: 'Image' ,
+            Text: "Image",
+      wiith: 150,
+      cell: (record) => {
+      return (
+        <img 
+        width="50%" height="auto" src={record.image}></img>
+      );
+    },
     },
     {
       key: "action",
       text: "Action",
       className: "action",
-      width: 100,
+      width: 200,
       align: "left",
       sortable: false,
       cell: (record) => {
         return (
           
            
-                        <Link to={`/report/${record._id}`}>Go to My Page</Link>
+                        <Link to={`/report/${record._id}`}>View Assessment</Link>
            
           
         );

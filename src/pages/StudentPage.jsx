@@ -76,9 +76,16 @@ function StudentPage() {
       sortable: true,
     },
     {
-      name: 'Parent name',
-      selector: row => row.parentname,
-    },
+      name: 'Image' ,
+             Text: "Image",
+       wiith: 150,
+       cell: (record) => {
+       return (
+         <img 
+         width="50%" height="auto" src={record.image}></img>
+       );
+     },
+     },
     {
       name: 'Contact',
       selector: row => row.contact,
