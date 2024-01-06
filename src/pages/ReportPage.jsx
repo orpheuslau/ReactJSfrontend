@@ -64,11 +64,9 @@ function ReportPage(props) {
 
 
     try {
-      console.log(`ID: ${postId}`)
-
-      const result = await axios.get('/api/assesss')
-      setStudents(await result.data)
-      setAssesss(result.data.filter(assess => assess.studentid === postId))
+        const result = await axios.get('/api/assesss')
+        setStudents(await result.data)
+        setAssesss(result.data.filter(assess => assess.studentid === postId))
 
     }
     catch {
