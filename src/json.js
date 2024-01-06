@@ -311,15 +311,15 @@ export const json = {
                 "text": "Initiative",
               }
             ],
-            "showOtherItem": true,
-            "otherPlaceholder": {
+         //   "showOtherItem": true,
+         /*   "otherPlaceholder": {
               "default": "Please specify...",
               
             },
             "otherText": {
               "default": "Other features",
               
-            },
+            },*/
             "colCount": 2,
             "maxSelectedChoices": 3
           },

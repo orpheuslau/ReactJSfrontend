@@ -288,7 +288,7 @@ function StudentPage() {
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-              title="Student's profile"
+              title="Student profile"
               direction="auto"
               pagination
               responsive

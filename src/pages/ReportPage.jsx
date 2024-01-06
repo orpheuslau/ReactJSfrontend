@@ -20,7 +20,7 @@ function ReportPage(props) {
 
 
   let { postId } = useParams();
-  // const { id } = props; 
+  
 
   const [assesss, setAssesss] = useState([]);
   const [students, setStudents] = useState([]);
@@ -90,13 +90,32 @@ function ReportPage(props) {
 
 
 
+  function classsearch(event) {
+
+
+    if (event.target.value !== 'All') {
+      const newData = students.filter(row => {
+
+        return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
+      })
+      setStudents(newData);
+
+    }
+    else {
+      fetchAssesss()
+    }
+
+  }
+
+
   const fetchAssesss = async (postId) => {
 
 
     try {
-        const result = await axios.get('/api/assesss')
-        setStudents(await result.data)
-        setAssesss(result.data.filter(assess => assess.studentid === postId))
+      const result = await axios.get('/api/assesss')
+      setStudents(await result.data)
+   
+     setAssesss(result.data.filter(assess => assess.studentid === postId))
 
     }
     catch {
@@ -126,7 +145,7 @@ function ReportPage(props) {
           <div className='col-sm-8'>
 
             <DataTable
-              title="Student's profile"
+              title="Assessment record"
               direction="auto"
               pagination
               responsive
@@ -152,24 +171,24 @@ function ReportPage(props) {
       </div>
       <Modal className="modal-lg" show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
-   
+
         <Modal.Body>
 
-        <Assessment
-          //name={data.studentname}
-          //classno={data.classno}
-          //classid={data.classid}
-          AssessResult={data} 
-          username={localStorage.getItem("username")}
-                    
+          <Assessment
+            //name={data.studentname}
+            //classno={data.classno}
+            //classid={data.classid}
+            AssessResult={data}
+            username={localStorage.getItem("username")}
+
           />
         </Modal.Body>
         <Modal.Footer>
 
           <Button variant="secondary" onClick={() => {
             setShowViewConfirmation(false)
-           // fetchStudents()
-           fetchAssesss(postId)
+            // fetchStudents()
+            fetchAssesss(postId)
             setData("")
             setSelectedRows("")
             //inputSelect.current.value = "All";

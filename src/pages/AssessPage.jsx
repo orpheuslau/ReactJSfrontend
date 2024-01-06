@@ -78,15 +78,15 @@ function AssessPage() {
       sortable: true,
     },
     {
-     name: 'Image' ,
-            Text: "Image",
+      name: 'Image',
+      Text: "Image",
       wiith: 150,
       cell: (record) => {
-      return (
-        <img 
-        width="50%" height="auto" src={record.image}></img>
-      );
-    },
+        return (
+          <img
+            width="50%" height="auto" src={record.image}></img>
+        );
+      },
     },
     {
       key: "action",
@@ -97,14 +97,14 @@ function AssessPage() {
       sortable: false,
       cell: (record) => {
         return (
-          
-           
-                        <Link to={`/report/${record._id}`}>View Assessment</Link>
-           
-          
+
+
+          <Link to={`/report/${record._id}`}>Assessment record</Link>
+
+
         );
-       },
       },
+    },
 
   ];
 
@@ -140,13 +140,9 @@ function AssessPage() {
     try {
       const result = await axios.get('api/students')
       setStudents(await result.data);
-      const resultuser = await axios.get('api/users')
-      setUsers(await resultuser.data);
-
     }
-    catch {
+    catch (error) {
       navigate('/login')
-
     }
   }
 
@@ -156,92 +152,6 @@ function AssessPage() {
   }, []);
 
 
-  const updateStudent = async () => {
-
-    if (!data.name || !data.classid) {
-      if (!data.name)
-        toast.error("Student name is requried")
-      if (!data.classid)
-        toast.error("Class is requried")
-    }
-    else {
-      try {
-        id = data._id;
-        await axios.put(`api/students/${id}`, data);
-        toast.success(`Profile of student "${data.name}" updated successfully`);
-        fetchStudents()
-        setShowViewConfirmation(false)
-        setShowName("");
-        setData("")
-        inputSelect.current.value = "All";
-        // reserved! inputText.current.value = "";
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-  };
-
-
-  const addStudent = async () => {
-    if (!data.name || !data.classid) {
-      if (!data.name)
-        toast.error("Student name is requried")
-      if (!data.classid)
-        toast.error("Class is requried")
-    }
-    else {
-      setToggleCleared(!toggleCleared);
-      try {
-
-        await axios.post(`api/students`, data);
-        toast.success(`Profile of new student "${data.name}" added successfully`);
-        fetchStudents()
-        navigate("/student");
-        setShowViewConfirmation(false)
-        setData("")
-        inputSelect.current.value = "All";
-        // reserved!  inputText.current.value = "";
-      } catch (error) {
-        toast.error(error.message);
-      }
-    };
-  }
-
-  const deleteStudent = async () => {
-
-    if (window.confirm(`Are you sure you want to delete the profile of : "${data.name}"?`)) {
-
-
-      try {
-        id = data._id;
-        await axios.delete(`api/students/${id}`, data);
-        toast.success(`Profile of student "${data.name}" deleted successfully`);
-        fetchStudents()
-        setShowViewConfirmation(false)
-        setShowName("");
-        setData("")
-        inputSelect.current.value = "All";
-        // reserved!  inputText.current.value = "";
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-  };
-
-  /* Reserved function
-  function quicksearch(event) {
-    if (event.target.value !== '') {
-      const newData = students.filter(row => {
-        
-        return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
-      })
-      setStudents(newData)
-
-    }
-    else {
-      fetchStudents()
-    }
-  }*/
 
 
   function classsearch(event) {
@@ -277,7 +187,7 @@ function AssessPage() {
 
             <div className='text-end'>Filter by Class :
 
-              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
+              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents}>
 
                 <option value="All">All</option>
                 <option value="1A">1A</option>
@@ -306,7 +216,7 @@ function AssessPage() {
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-              title="Student's assessment"
+              title="Assessment"
               direction="auto"
               pagination
               responsive
@@ -329,7 +239,7 @@ function AssessPage() {
         </div>
       </div>
 
-     {/* <div className="container">
+      {/* <div className="container">
         <div className="row col-8 justify-content-end">
           <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
             setShowViewConfirmation(true)
@@ -348,9 +258,9 @@ function AssessPage() {
 
       <Modal className="modal-lg" show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
-   
+
         <Modal.Body>
-         {/* <div className="row col-12 mb-4">
+          {/* <div className="row col-12 mb-4">
 
             <div className="form-group col-4">
               <label for="recipient-name" className="col-form-label text-muted">Student image:</label>
@@ -373,13 +283,13 @@ function AssessPage() {
             </div>
 
         </div>*/}
-        <Assessment
-          name={data.name}
-          classno={data.classno}
-          classid={data.classid}
-          studentid={data._id}
-          username={localStorage.getItem("username")}
-                    
+          <Assessment
+            name={data.name}
+            classno={data.classno}
+            classid={data.classid}
+            studentid={data._id}
+            username={localStorage.getItem("username")}
+
           />
         </Modal.Body>
         <Modal.Footer>

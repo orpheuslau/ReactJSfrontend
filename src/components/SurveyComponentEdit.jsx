@@ -6,6 +6,7 @@ import "../index.css";
 import { json } from "../json";
 import { SurveyPDF } from "survey-pdf";
 import { useEffect, useState, useRef } from 'react'
+import { toast } from "react-toastify";
 
 
 function SurveyComponent(props) {
@@ -14,9 +15,9 @@ function SurveyComponent(props) {
 
   //console.log(props.AssessResult.studentname);
   //survey.setVariable("assesstitle", props.AssessResult.studentname);
-  //survey.setVariable("page1", props.AssessResult.studentclassno);
-  //survey.setVariable("page2", props.AssessResult.studentclassid);
-  //survey.setVariable("page3", props.AssessResult.username);
+  survey.setVariable("page1", props.AssessResult.studentclassno);
+  survey.setVariable("page2", props.AssessResult.studentclassid);
+  survey.setVariable("page3", props.username);
 
   // survey.setVariable("p1score1.defaultValue", props.AssessResult.p1score1);
   //survey.setVariable("page1Total", props.AssessResult.page1Total);
@@ -142,10 +143,26 @@ function SurveyComponent(props) {
     "colorPalette": "light"
   });
   survey.onComplete.add((sender, options) => {
-    console.log(sender.data)
-    console.log(JSON.stringify(sender.data, null, 3));
+    //console.log(sender.data)
+    //console.log(JSON.stringify(sender.data, null, 3));
+    const newrecord = JSON.stringify(sender.data)
+    fetch(`/api/assesss/${props.AssessResult._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: newrecord
+    })
+    .then(response => {
+      toast.success("Assessment update Successful");
+    })
+    .catch(error => {
+      toast.error(error.message);
+    });
+
   });
   survey.data = {
+    _id:props.AssessResult._id,
     assesstitle: props.AssessResult.studentname,
     p1score1: props.AssessResult.p1score1,
     studentid:props.AssessResult.studentid,
