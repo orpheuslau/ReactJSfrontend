@@ -377,6 +377,7 @@ function AssessPage() {
           name={data.name}
           classno={data.classno}
           classid={data.classid}
+          studentid={data._id}
           username={localStorage.getItem("username")}
                     
           />

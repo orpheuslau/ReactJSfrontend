@@ -6,16 +6,31 @@ import "../index.css";
 import { json } from "../json";
 import { SurveyPDF } from "survey-pdf";
 import { useEffect, useState, useRef } from 'react'
+import axios from "axios";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 
 function SurveyComponent(props) {
     const survey = new Model(json);
     const surveyJson = { /* ... */ };
     
+    survey.data = {
+      studentid:props.studentid,
+      studentclassno:props.classno,
+      studentcalssid:props.classid,
+      studentname:props.name
+    }
+    
+    const navigate = useNavigate();
+    
+    //console.log(props.AssessResult.studentname);
     survey.setVariable("assesstitle", props.name);
     survey.setVariable("page1", props.classno);
     survey.setVariable("page2", props.classid);
     survey.setVariable("page3", props.username);
+    survey.setVariable("page4", props.studentid); 
+    
      
     
     const pdfDocOptions = {
@@ -136,9 +151,40 @@ survey.applyTheme({
       "themeName": "default",
       "colorPalette": "light"
     });
-    survey.onComplete.add((sender, options) => {
-      console.log(sender.data)  
+    survey.onComplete.add( (sender, options) => {
+      console.log(`this is the first line ${sender.data}`)  
       console.log(JSON.stringify(sender.data, null, 3));
+      const newrecord = JSON.stringify(sender.data)
+
+
+      fetch('/api/assesss', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: newrecord
+      })
+      .then(response => {
+        // handle response 
+      })
+      .catch(error => {
+        // handle error
+      });
+
+      /*
+  try {
+  
+  onsole.log(newrecord)
+    axios.post(`api/assesss`, newr3);
+    toast.success(`Profile of new student added successfully`);
+    //fetchStudents()
+    //navigate("/student");
+    //    setData("")
+    } catch (error) {
+    toast.error(error.message);
+  }
+*/
+
     });
     return (<Survey model={survey} id="surveyContainer" />);
 }

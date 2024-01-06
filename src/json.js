@@ -349,7 +349,7 @@ export const json = {
           },         
           {
             "type": "comment",
-            "name": "Supplementary information",
+            "name": "suppInfo",
             "visibleIf": "{testimonial} = 'yes'",
            /* "title": {
               "default": "What is your email address?",

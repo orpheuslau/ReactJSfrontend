@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { Button, Modal } from 'react-bootstrap';
+import Assessment from '../components/SurveyComponentEdit'
+import { Link } from 'react-router-dom';
 
 function ReportPage(props) {
   //const { state } = useParams();
@@ -60,6 +62,34 @@ function ReportPage(props) {
 
   const navigate = useNavigate();
 
+
+  const handleRowSelected = React.useCallback(state => {
+    setSelectedRows(state.selectedRows);
+    console.log(selectedRows)
+  }, []);
+
+
+  const contextActions = React.useMemo(() => {
+    const handleView = () => {
+
+      setToggleCleared(!toggleCleared);
+      setData(selectedRows[0]);
+      console.log(selectedRows[0])
+      setShowViewConfirmation(true);
+      //setShowName(selectedRows[0].studentname);
+      setIsAdd("none");
+      setIsUpdateDelete("")
+    };
+
+    return (
+      <input className='btn btn-danger' type="button" value="View" key="view" onClick={() => handleView()
+      } />
+
+    );
+  }, [data, selectedRows, toggleCleared]);
+
+
+
   const fetchAssesss = async (postId) => {
 
 
@@ -89,7 +119,7 @@ function ReportPage(props) {
 
 
     <MainLayout>
-      <button className='btn' onClick={() => console.log(assesss, students)}>wtf</button>
+      {/*<button className='btn' onClick={() => console.log(assesss, students)}>wtf</button>*/}
 
       <div className="container mt-3" >
         <div className="row">
@@ -107,15 +137,51 @@ function ReportPage(props) {
               fixedHeaderScrollHeight="800px"
               highlightOnHover
               pointerOnHover
+              contextActions={contextActions}
+              onSelectedRowsChange={handleRowSelected}
+              clearSelectedRows={toggleCleared}
               selectableRows
               selectableRowsHighlight
               selectableRowsSingle
               striped
             />
+
+
           </div>
         </div>
       </div>
+      <Modal className="modal-lg" show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
+        keyboard={false}>
+   
+        <Modal.Body>
 
+        <Assessment
+          //name={data.studentname}
+          //classno={data.classno}
+          //classid={data.classid}
+          AssessResult={data} 
+          username={localStorage.getItem("username")}
+                    
+          />
+        </Modal.Body>
+        <Modal.Footer>
+
+          <Button variant="secondary" onClick={() => {
+            setShowViewConfirmation(false)
+           // fetchStudents()
+           fetchAssesss(postId)
+            setData("")
+            setSelectedRows("")
+            //inputSelect.current.value = "All";
+          }
+          }>
+            Exit
+          </Button>
+
+
+
+        </Modal.Footer>
+      </Modal>
     </MainLayout>
 
   )
