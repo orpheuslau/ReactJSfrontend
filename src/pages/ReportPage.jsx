@@ -8,77 +8,118 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import { Button, Modal } from 'react-bootstrap';
 
 function ReportPage(props) {
-    //const { state } = useParams();
-   
+  //const { state } = useParams();
 
-   
-    const [assesss, setAssesss] = useState([]);
-   
-   // const [data, setData] = React.useState(DataTable);
 
-    
-      
-    let { postId } = useParams();
-   // const { id } = props; 
-   console.log(postId)
-    
 
-    const columns = [
-      {
-        name: 'Name',
-        selector: row => row.studentname,
-        sortable: true,
-      },
-      {
-        name: 'Class',
-        selector: row => row.studentclassid,
-        sortable: true,
-      },
-      {
-        name: 'Class no',
-        selector: row => row.studentclassno,
-        sortable: true,
-      },
-      {
-        name: 'Assessment Date',
-        selector: row => row.assessmentdate,
-        sortable: true,
-       },
-      
-  
-    ];
 
-   
 
-    const fetchAssesss = async (postId) => {
-      try {
-        console.log(`ID: ${postId}`)
-        const result = await axios.post("/api/assesss", {studentid: postId})
-        toast.success(`Profile of student updated successfully`);
-        setAssesss(await result.data)
+  // const [data, setData] = React.useState(DataTable);
 
-               }
-      catch {
-      
-  
-      }
+
+  let { postId } = useParams();
+  // const { id } = props; 
+
+  const [assesss, setAssesss] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  const [toggleCleared, setToggleCleared] = React.useState(false);
+  const [data, setData] = React.useState(DataTable);
+  const [showViewConfirmation, setShowViewConfirmation] = useState(false);
+  const [showName, setShowName] = useState();
+  const [isAdd, setIsAdd] = useState("none");
+  const [isUpdateDelete, setIsUpdateDelete] = useState("");
+  const inputSelect = useRef(null);
+
+
+
+  const columns = [
+    {
+      name: 'Name',
+      selector: row => row.studentname,
+      sortable: true,
+    },
+    {
+      name: 'Class',
+      selector: row => row.studentclassid,
+      sortable: true,
+    },
+    {
+      name: 'Class no',
+      selector: row => row.studentclassno,
+      sortable: true,
+    },
+    {
+      name: 'Assessment Date',
+      selector: row => row.assessmentdate,
+      sortable: true,
+    },
+
+
+  ];
+
+  const navigate = useNavigate();
+
+  const fetchAssesss = async (postId) => {
+
+
+    try {
+      console.log(`ID: ${postId}`)
+
+      const result = await axios.get('/api/assesss')
+      setStudents(await result.data)
+      setAssesss(result.data.filter(assess => assess.studentid === postId))
+
     }
+    catch {
 
 
-  /*
-   
-    useEffect(() => {
-          fetchAssesss(postId) 
-      }, []);
-*/
-  
+    }
+  }
+
+
+
+
+  useState(async () => {
+
+    fetchAssesss(postId)
+
+  },);
 
   return (
- 
- <div><button onClick={fetchAssesss("6592bb6ab5e289e82fe9d2df")}>click me</button></div>
-    
-    
-             
+
+
+
+    <MainLayout>
+      <button className='btn' onClick={() => console.log(assesss, students)}>wtf</button>
+
+      <div className="container mt-3" >
+        <div className="row">
+          <div className='col-sm-8'>
+
+            <DataTable
+              title="Student's profile"
+              direction="auto"
+              pagination
+              responsive
+              columns={columns}
+              data={assesss}
+              defaultSortFieldId={3}
+              fixedHeader
+              fixedHeaderScrollHeight="800px"
+              highlightOnHover
+              pointerOnHover
+              selectableRows
+              selectableRowsHighlight
+              selectableRowsSingle
+              striped
+            />
+          </div>
+        </div>
+      </div>
+
+    </MainLayout>
+
   )
 }
 
