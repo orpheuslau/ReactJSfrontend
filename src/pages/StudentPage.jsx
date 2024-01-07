@@ -26,6 +26,7 @@ function StudentPage() {
   const [showName, setShowName] = useState();
   const [isAdd, setIsAdd] = useState("none");
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
+  const [isUpdateDeleteNameprotect, setIsUpdateDeleteNameprotect] = useState(false);
   const inputSelect = useRef(null);
   // reserved! const inputText = useRef(null);
 
@@ -49,6 +50,7 @@ function StudentPage() {
       setShowName(selectedRows[0].name);
       setIsAdd("none");
       setIsUpdateDelete("")
+      setIsUpdateDeleteNameprotect(false)
     };
 
     return (
@@ -76,16 +78,16 @@ function StudentPage() {
       sortable: true,
     },
     {
-      name: 'Image' ,
-             Text: "Image",
-       wiith: 150,
-       cell: (record) => {
-       return (
-         <img 
-         width="50%" height="auto" src={record.image}></img>
-       );
-     },
-     },
+      name: 'Image',
+      Text: "Image",
+      wiith: 150,
+      cell: (record) => {
+        return (
+          <img
+            width="50%" height="auto" src={record.image}></img>
+        );
+      },
+    },
     {
       name: 'Contact',
       selector: row => row.contact,
@@ -318,6 +320,7 @@ function StudentPage() {
             setShowName("a new entry");
             setIsAdd("")
             setIsUpdateDelete("none")
+            setIsUpdateDeleteNameprotect(true)
           }
           }>
             Add Profile
@@ -346,22 +349,38 @@ function StudentPage() {
 
             </div>
 
+
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">* <strong>Class :</strong></label>
+              <label for="recipient-name" className="col-form-label text-danger">* <strong>Class :</strong></label>
               <input type="text" className="form-control" value={data.classid}
+                placeholder={data.classid} id="class"
+
                 onChange={(e) =>
                   setData({ ...data, classid: e.target.value })
-                } placeholder={data.classid} id="class" />
+                }
+              />
             </div>
 
+            {isUpdateDeleteNameprotect
+              ?
+              <div className="form-group mt-2">
+                <label for="name" className="col-form-label text-primary"># <strong>Student Name:</strong></label>
+                <input type="text" className="form-control" value={data.name}
+                  onChange={(e) =>
+                    setData({ ...data, name: e.target.value })
+                  } placeholder={data.name} id="name" />
+              </div>
 
-            <div className="form-group mt-2">
-              <label for="name" className="col-form-label">* <strong>Student Name:</strong></label>
-              <input type="text" className="form-control" value={data.name}
-                onChange={(e) =>
-                  setData({ ...data, name: e.target.value })
-                } placeholder={data.name} id="name" />
-            </div>
+              :
+              <div className="form-group mt-2">
+                <label for="name" className="col-form-label text-primary"># <strong>Student Name:</strong></label>
+                <input disabled type="text" className="form-control" value={data.name}
+                  onChange={(e) =>
+                    setData({ ...data, name: e.target.value })
+                  } placeholder={data.name} id="name" />
+              </div>
+            }
+
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Class no.:</label>
               <input type="text" className="form-control" value={data.classno}
@@ -391,6 +410,7 @@ function StudentPage() {
                 } placeholder={data.address} id="address" />
             </div>
             <div className="text-danger mt-5"><small>* requried item</small></div>
+            <div className="text-primary"><small># item cannot change</small></div>
           </form>
 
         </Modal.Body>
