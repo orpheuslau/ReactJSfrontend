@@ -12,6 +12,7 @@ import LogoutPage from './pages/LogoutPage';
 import StudentPage from './pages/StudentPage';
 import AssessPage from './pages/AssessPage';
 import ReportPage from './pages/ReportPage';
+import ExportPage from './pages/ExportPage';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/assessment" element={<AssessPage />} />
         <Route path="/report/:postId" element={<ReportPage />} />
         <Route path="/report" element={<ReportPage />} />
+        <Route path="/export" element={<ExportPage />} />
       </Routes>
     </Router>
   );

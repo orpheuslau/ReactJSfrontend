@@ -65,7 +65,7 @@ function ReportPage(props) {
 
   const handleRowSelected = React.useCallback(state => {
     setSelectedRows(state.selectedRows);
-    console.log(selectedRows)
+    //console.log(selectedRows)
   }, []);
 
 
@@ -74,7 +74,7 @@ function ReportPage(props) {
 
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
-      console.log(selectedRows[0])
+      //console.log(selectedRows[0])
       setShowViewConfirmation(true);
       //setShowName(selectedRows[0].studentname);
       setIsAdd("none");
