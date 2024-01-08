@@ -13,6 +13,7 @@ import StudentPage from './pages/StudentPage';
 import AssessPage from './pages/AssessPage';
 import ReportPage from './pages/ReportPage';
 import ExportPage from './pages/ExportPage';
+import UserPage from './pages/UserPage';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/pos" element={<POSPage />} />
         <Route path="/land" element={<LandingPage />} />
-        <Route path="" element={<LandingPage />} />
+        <Route path="" element={<StudentPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/student" element={<StudentPage />} />
@@ -31,6 +32,7 @@ function App() {
         <Route path="/report/:postId" element={<ReportPage />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/export" element={<ExportPage />} />
+        <Route path="/usersetup" element={<UserPage />} />
       </Routes>
     </Router>
   );

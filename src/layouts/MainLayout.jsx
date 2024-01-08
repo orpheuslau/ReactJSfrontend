@@ -18,10 +18,6 @@ const [mLabel, setMlLabel] = useState([]);
 const [mLink, setMlLink] = useState([]);
 
 
-    menuLink.map((mlcontent, index)=>{
-        console.log(`content ${mlcontent}`);
-    console.log(menuLabel[index])
-    })
 
     const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
 
@@ -103,7 +99,7 @@ setMlLink(menuLink)
                     <div className="container mt-3">
                         <div className="row col-8 align-items-start">
                             <div className='col-6'>
-                                <Link to="/land" className="navbar-brand text-white nav-item"><h3>Student Management Online System (SMOS)</h3></Link>
+                                <Link to="/student" className="navbar-brand text-white nav-item"><h3>Student Management Online System (SMOS)</h3></Link>
                             </div>
                             <div className='col-2 offset-md-2'></div>
                            

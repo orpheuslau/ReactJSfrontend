@@ -16,9 +16,11 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 
-function StudentPage() {
+function UserPage() {
 
-  const [students, setStudents] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [Allusers, setAllUsers] = useState([]);
+  const [allusername, setAllusername] = useState([])
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
   const [data, setData] = React.useState(DataTable);
@@ -62,35 +64,26 @@ function StudentPage() {
 
 
   const columns = [
-    {
-      name: 'Class',
-      selector: row => row.classid,
-      sortable: true,
-    },
+
     {
       name: 'Name',
       selector: row => row.name,
       sortable: true,
     },
     {
-      name: 'Class no',
-      selector: row => row.classno,
+      name: 'User name',
+      selector: row => row.username,
       sortable: true,
     },
     {
-      name: 'Image',
-      Text: "Image",
-      wiith: 150,
-      cell: (record) => {
-        return (
-          <img
-            width="50%" height="auto" src={record.image}></img>
-        );
-      },
+      name: 'Class teacher',
+      selector: row => row.classid,
+      sortable: true,
     },
     {
-      name: 'Contact',
-      selector: row => row.contact,
+      name: 'Role',
+      selector: row => row.role,
+      sortable: true,
     },
 
   ];
@@ -125,8 +118,10 @@ function StudentPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('api/students')
-      setStudents(await result.data);
+      const result = await axios.get('api/users')
+      setUsers(await result.data);
+      setAllusername(await result.data.username);
+
     }
     catch {
       navigate('/login')
@@ -151,7 +146,7 @@ function StudentPage() {
     else {
       try {
         id = data._id;
-        await axios.put(`api/students/${id}`, data);
+        await axios.put(`api/users/${id}`, data);
         toast.success(`Profile of student "${data.name}" updated successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
@@ -177,7 +172,7 @@ function StudentPage() {
       setToggleCleared(!toggleCleared);
       try {
 
-        await axios.post(`api/students`, data);
+        await axios.post(`api/users`, data);
         toast.success(`Profile of new student "${data.name}" added successfully`);
         fetchStudents()
         navigate("/student");
@@ -198,7 +193,7 @@ function StudentPage() {
 
       try {
         id = data._id;
-        await axios.delete(`api/students/${id}`, data);
+        await axios.delete(`api/users/${id}`, data);
         toast.success(`Profile of student "${data.name}" deleted successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
@@ -215,11 +210,11 @@ function StudentPage() {
   /* Reserved function
   function quicksearch(event) {
     if (event.target.value !== '') {
-      const newData = students.filter(row => {
+      const newData = users.filter(row => {
         
         return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
       })
-      setStudents(newData)
+      setUsers(newData)
 
     }
     else {
@@ -228,23 +223,29 @@ function StudentPage() {
   }*/
 
 
-  function classsearch(event) {
 
-
-    if (event.target.value !== 'All') {
-      const newData = students.filter(row => {
-
-        return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
-      })
-      setStudents(newData);
-
+  const checkname = () => {
+    try {
+      var isAdd = false
+      {
+        users.map((content, index) => {
+          if (data.username === content.username) {
+            toast.error("login name has been used!")
+            throw new Error('repeated login name');
+          }
+          else
+            isAdd = true;
+        }
+        )
+      }
     }
-    else {
-      fetchStudents()
+    catch (error) {
+      console.log(error)
+      return
     }
-
+    if (isAdd)
+      addStudent()
   }
-
 
 
 
@@ -259,22 +260,6 @@ function StudentPage() {
         <div className="row">
           <div className='col-sm-8'>
 
-            <div className='text-end'>Filter by Class :
-
-              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
-
-                <option value="All">All</option>
-                <option value="1A">1A</option>
-
-                <option value="4C">4C</option>
-
-                <option value="4A">4A</option>
-
-
-              </select>
-
-            </div>
-
 
 
           </div>
@@ -283,19 +268,15 @@ function StudentPage() {
             <div className='text-end'><input ref={inputText} type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
   </div>*/}
         </div>
-
-
-
-
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-              title="Student profile"
+              title="User profile"
               direction="auto"
               pagination
               responsive
               columns={columns}
-              data={students}
+              data={users}
               defaultSortFieldId={3}
               fixedHeader
               fixedHeaderScrollHeight="800px"
@@ -339,21 +320,20 @@ function StudentPage() {
         <Modal.Body>
 
           <form>
-            <div className="form-group">
-              <label for="recipient-name" className="col-form-label">Image:</label>
-              <img className="card-img-top" src={data.image} />
-              <input type="text" className="form-control" value={data.image}
+            <div className="form-group mt-2">
+              <label for="username" className="col-form-label text-danger">* <strong>Login Name:</strong></label>
+              <input type="text" className="form-control" value={data.username}
                 onChange={(e) =>
-                  setData({ ...data, image: e.target.value })
-                } placeholder={data.image} id="image" />
+                  setData({ ...data, username: e.target.value })
 
+                } placeholder={data.username} id="username" />
             </div>
 
 
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label text-danger">* <strong>Class :</strong></label>
+              <label for="recipient-name" className="col-form-label text-danger">* <strong>Classid :</strong></label>
               <input type="text" className="form-control" value={data.classid}
-                placeholder={data.classid} id="class"
+                placeholder={data.classid} id="classid"
 
                 onChange={(e) =>
                   setData({ ...data, classid: e.target.value })
@@ -382,18 +362,19 @@ function StudentPage() {
             }
 
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Class no.:</label>
-              <input type="text" className="form-control" value={data.classno}
+              <label for="recipient-name" className="col-form-label">Password:</label>
+              <input type="text" className="form-control" value={data.password}
                 onChange={(e) =>
-                  setData({ ...data, classno: e.target.value })
-                } placeholder={data.classno} id="classno" />
+                  setData({ ...data, password: e.target.value })
+                } placeholder={data.password} id="password" />
+
             </div>
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Parent's Name:</label>
-              <input type="text" className="form-control" value={data.parentname}
+              <label for="recipient-name" className="col-form-label">Role:</label>
+              <input type="text" className="form-control" value={data.role}
                 onChange={(e) =>
-                  setData({ ...data, parentname: e.target.value })
-                } placeholder={data.parentname} id="parentname" />
+                  setData({ ...data, role: e.target.value })
+                } placeholder={data.role} id="role" />
             </div>
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Contact number:</label>
@@ -413,8 +394,8 @@ function StudentPage() {
             {isUpdateDeleteNameprotect
               ?
               <div></div>
-            : 
-            <div className="text-primary"><small># item cannot change</small></div>
+              :
+              <div className="text-primary"><small># item cannot change</small></div>
             }
           </form>
 
@@ -426,7 +407,7 @@ function StudentPage() {
             fetchStudents()
             setData("")
             setSelectedRows("")
-            inputSelect.current.value = "All";
+            //inputSelect.current.value = "All";
           }
           }>
             Cancel
@@ -438,7 +419,9 @@ function StudentPage() {
             Delete
           </Button>
 
-          <Button variant="success" style={{ display: isAdd }} onClick={() => addStudent()}>
+          <Button variant="success" style={{ display: isAdd }} onClick={() =>
+            checkname()
+          }>
             Add
           </Button>
 
@@ -454,4 +437,4 @@ function StudentPage() {
   )
 }
 
-export default StudentPage
+export default UserPage
