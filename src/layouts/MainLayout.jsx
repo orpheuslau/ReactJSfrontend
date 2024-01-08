@@ -21,7 +21,7 @@ function MainLayout({ children }) {
                     <div className="container mt-3">
                         <div className="row col-12">
                             <div className='col-6'>
-                                <Link to="/land" className="navbar-brand text-white nav-item">Case Management Online System (CMOS)</Link>
+                                <Link to="/land" className="navbar-brand text-white nav-item">Student Management Online System (SMOS)</Link>
                             </div>
                             <div className='col-4 navbar-text h6 text-warning'>{username+ "  "}
                             {/*<button className="btn btn-light bt-sm" onClick={() => { navigate(`/logout`) }}>Logout</button>*/}
