@@ -230,7 +230,6 @@ function UserPage() {
       {
         users.map((content, index) => {
           if (data.username === content.username) {
-            toast.error("login name has been used!")
             throw new Error('repeated login name');
           }
           else
@@ -240,7 +239,7 @@ function UserPage() {
       }
     }
     catch (error) {
-      console.log(error)
+      toast.error("login name has been used!")
       return
     }
     if (isAdd)
