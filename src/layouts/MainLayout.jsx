@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LogoutBox from '../components/LogoutConfirm';
 import React, { useState, useEffect } from 'react';
 import { Button, Dropdown, Modal } from 'react-bootstrap';
-
+import {MdCarRepair} from 'react-icons/md';
 
 
 
@@ -99,7 +99,7 @@ setMlLink(menuLink)
                     <div className="container mt-3">
                         <div className="row col-8 align-items-start">
                             <div className='col-6'>
-                                <Link to="/student" className="navbar-brand text-white nav-item"><h3>Student Management Online System (SMOS)</h3></Link>
+                                <Link to="/student" className="navbar-brand text-warning nav-item"><h3>Student Management Online System (SMOS)</h3></Link>
                             </div>
                             <div className='col-2 offset-md-2'></div>
                            
@@ -108,13 +108,13 @@ setMlLink(menuLink)
                         <div className="row col-12 mt-3">
                             <div className='col-6'>
                                 <Dropdown>
-                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic" direction="dropstart">
                                         MENU
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
                                     {mLabel.map((mlcontent, index)=>
-                                        <Dropdown.Item href={mLink[index]}>{mlcontent}</Dropdown.Item>
+                                        <Dropdown.Item href={mLink[index]} icon={MdCarRepair}>{mlcontent}</Dropdown.Item>
 
                                     )}
 
@@ -123,7 +123,7 @@ setMlLink(menuLink)
                                 </Dropdown>
                             </div>
 
-                            <div className='col-2 h6 align-items-end mx-5 text-warning '>{username + "  "}
+                            <div className='col-2 h6 align-items-end mx-5 text-info '>{username + "  "}
 
                                 <button className="btn btn-light bt-sm" onClick={() => setShowLogoutConfirmation(true)}>Logout</button>
                                 <LogoutBox show={showLogoutConfirmation}
