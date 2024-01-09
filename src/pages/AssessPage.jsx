@@ -31,6 +31,16 @@ function AssessPage() {
   const inputSelect = useRef(null);
   // reserved! const inputText = useRef(null);
 
+  const class1digit = ["1", "2", "3", "4"];
+  const class2digit = ["A", "B", "C", "D", "E"];
+  var classlist = [];
+  var k = 1;
+  class1digit.map((d1, index) => {
+    class2digit.map((d2, index2) => {
+      classlist[k] = [d1 + class2digit[index2]]
+      k += 1
+    })
+  })
 
   let { id } = useParams();
 
@@ -190,11 +200,9 @@ function AssessPage() {
               <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents}>
 
                 <option value="All">All</option>
-                <option value="1A">1A</option>
-
-                <option value="4C">4C</option>
-
-                <option value="4A">4A</option>
+                {classlist.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
 
 
               </select>

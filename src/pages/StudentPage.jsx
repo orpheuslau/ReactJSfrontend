@@ -30,6 +30,16 @@ function StudentPage() {
   const inputSelect = useRef(null);
   // reserved! const inputText = useRef(null);
 
+  const class1digit = ["1", "2", "3", "4"];
+  const class2digit = ["A", "B", "C", "D", "E"];
+  var classlist = [];
+  var k = 1;
+  class1digit.map((d1, index) => {
+    class2digit.map((d2, index2) => {
+      classlist[k] = [d1 + class2digit[index2]]
+      k += 1
+    })
+  })
 
   let { id } = useParams();
 
@@ -263,13 +273,10 @@ function StudentPage() {
 
               <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
 
-                <option value="All">All</option>
-                <option value="1A">1A</option>
-
-                <option value="4C">4C</option>
-
-                <option value="4A">4A</option>
-
+              <option value="All">All</option>
+              {classlist.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
 
               </select>
 
@@ -317,7 +324,7 @@ function StudentPage() {
         <div className="row col-8 justify-content-end">
           <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
             setShowViewConfirmation(true)
-            setShowName("a new entry");
+            setShowName("new comer");
             setIsAdd("")
             setIsUpdateDelete("none")
             setIsUpdateDeleteNameprotect(true)

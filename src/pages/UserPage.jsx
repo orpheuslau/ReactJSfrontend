@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
 //import { click } from '@testing-library/user-event/dist/click';
 //import ViewProfile from '../components/ViewProfile';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Dropdown, Modal } from 'react-bootstrap';
 
 
 
@@ -32,6 +32,20 @@ function UserPage() {
   const inputSelect = useRef(null);
   // reserved! const inputText = useRef(null);1
 
+  const class1digit = ["1", "2", "3", "4"];
+  const class2digit = ["A", "B", "C", "D", "E"];
+  var classlist = [];
+  var k = 1;
+  class1digit.map((d1, index) => {
+    class2digit.map((d2, index2) => {
+      classlist[k] = [d1 + class2digit[index2]]
+      k += 1
+    })
+  })
+
+  const userrole = ["Admin", "User"]
+
+
 
   let { id } = useParams();
 
@@ -47,6 +61,9 @@ function UserPage() {
 
 
       setToggleCleared(!toggleCleared);
+
+
+      selectedRows[0].password = "" //make sure new password will be entered, or user will be prompted
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
       setShowName(selectedRows[0].name);
@@ -137,13 +154,15 @@ function UserPage() {
 
   const updateStudent = async () => {
 
-    if (!data.name || !data.classid || !data.password) {
+    if (!data.name || !data.classid || !data.password || !data.role) {
       if (!data.name)
-        toast.error("Student name is requried")
+        toast.error("User name is requried")
       if (!data.classid)
         toast.error("Class is requried")
-        if (!data.password)
+      if (!data.password)
         toast.error("Password is requried")
+      if (!data.role)
+        toast.error("Role is requried")
     }
     else {
       try {
@@ -164,11 +183,15 @@ function UserPage() {
 
 
   const addStudent = async () => {
-    if (!data.name || !data.classid) {
+    if (!data.name || !data.classid || !data.password || !data.role) {
       if (!data.name)
-        toast.error("Student name is requried")
+        toast.error("User name is requried")
       if (!data.classid)
         toast.error("Class is requried")
+      if (!data.password)
+        toast.error("Password is requried")
+      if (!data.role)
+        toast.error("Role is requried")
     }
     else {
       setToggleCleared(!toggleCleared);
@@ -201,7 +224,7 @@ function UserPage() {
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        inputSelect.current.value = "All";
+        //inputSelect.current.value = "All";
         // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -227,27 +250,30 @@ function UserPage() {
 
 
   const checkname = () => {
-    try {
-      var isAdd = false
-      {
-        users.map((content, index) => {
-          if (data.username === content.username) {
-            throw new Error('repeated login name');
+
+    if (!data.username)
+      toast.error("Login name is requried")
+    else
+      try {
+        var isAdd = false
+        {
+          users.map((content, index) => {
+            if (data.username === content.username) {
+              throw new Error('repeated login name');
+            }
+            else
+              isAdd = true;
           }
-          else
-            isAdd = true;
+          )
         }
-        )
       }
-    }
-    catch (error) {
-      toast.error("login name has been used!")
-      return
-    }
+      catch (error) {
+        toast.error("login name has been used!")
+        return
+      }
     if (isAdd)
       addStudent()
   }
-
 
 
   return (
@@ -299,13 +325,13 @@ function UserPage() {
         <div className="row col-8 justify-content-end">
           <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
             setShowViewConfirmation(true)
-            setShowName("a new entry");
+            setShowName("new teacher");
             setIsAdd("")
             setIsUpdateDelete("none")
             setIsUpdateDeleteNameprotect(true)
           }
           }>
-            Add Profile
+            Add User
           </div>
         </div>
       </div>
@@ -344,16 +370,20 @@ function UserPage() {
             }
 
 
-            <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label text-danger">* <strong>Class teacher :</strong></label>
-              <input type="text" className="form-control" value={data.classid}
-                placeholder={data.classid} id="classid"
 
-                onChange={(e) =>
-                  setData({ ...data, classid: e.target.value })
-                }
-              />
+            <div className="form-group mt-2">
+              <label for="name" className="col-form-label text-danger">* <strong>Class teacher:</strong></label>
+              <select class="form-select" onChange={(e) =>
+                setData({ ...data, classid: e.target.value })
+              }>
+                <option selected>{data.classid}</option>
+                {classlist.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
+              </select>
             </div>
+
+
 
             {isUpdateDeleteNameprotect
               ?
@@ -385,23 +415,52 @@ function UserPage() {
                   } placeholder={data.password} id="password" />
               </div>
               :
-              
+
               <div className="form-group mt-2">
                 <label for="recipient-name" className="col-form-label text-danger">* <strong>New Password:</strong></label>
                 <input type="text" className="form-control"
                   onChange={(e) =>
                     setData({ ...data, password: e.target.value })
-                  }  id="password" />
+                  } id="password" />
               </div>
             }
 
-            <div className="form-group mt-2">
+            {/*  <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label text-danger">* <strong>Role:</strong></label>
               <input type="text" className="form-control" value={data.role}
                 onChange={(e) =>
                   setData({ ...data, role: e.target.value })
                 } placeholder={data.role} id="role" />
+              </div>*/}
+
+
+            {isUpdateDeleteNameprotect
+              ?
+            <div className="form-group mt-2">
+                <label for="name" className="col-form-label text-danger">* <strong>Role:</strong></label>
+                <select class="form-select" onChange={(e) =>
+                  setData({ ...data, role: e.target.value })
+                }>
+                  <option selected>{data.role}</option>
+                  {userrole.map((content, key) =>
+                    <option value={content}>{content}</option>
+                  )}
+                </select>
+              </div>
+              :
+              <div className="form-group mt-2">
+              <label for="name" className="col-form-label text-primary"># <strong>Role:</strong></label>
+              <select disabled class="form-select" onChange={(e) =>
+                setData({ ...data, role: e.target.value })
+              }>
+                <option selected>{data.role}</option>
+                {userrole.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
+              </select>
             </div>
+}
+
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Contact number:</label>
               <input type="text" className="form-control" value={data.contact}
