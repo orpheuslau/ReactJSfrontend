@@ -137,11 +137,13 @@ function UserPage() {
 
   const updateStudent = async () => {
 
-    if (!data.name || !data.classid) {
+    if (!data.name || !data.classid || !data.password) {
       if (!data.name)
         toast.error("Student name is requried")
       if (!data.classid)
         toast.error("Class is requried")
+        if (!data.password)
+        toast.error("Password is requried")
     }
     else {
       try {
@@ -152,7 +154,7 @@ function UserPage() {
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        inputSelect.current.value = "All";
+        // inputSelect.current.value = "All";
         // reserved! inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -173,12 +175,12 @@ function UserPage() {
       try {
 
         await axios.post(`api/users`, data);
-        toast.success(`Profile of new student "${data.name}" added successfully`);
+        toast.success(`Profile of student "${data.name}" added successfully`);
         fetchStudents()
-        navigate("/student");
+        // navigate("/student");
         setShowViewConfirmation(false)
         setData("")
-        inputSelect.current.value = "All";
+        // inputSelect.current.value = "All";
         // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -314,23 +316,36 @@ function UserPage() {
       <Modal show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
         <Modal.Header>
-          <Modal.Title>Student Profile of {showName}</Modal.Title>
+          <Modal.Title>User Profile of {showName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
           <form>
+            {isUpdateDeleteNameprotect
+              ?
+              <div className="form-group mt-2">
+                <label for="username" className="col-form-label text-danger">* <strong>Login Name:</strong></label>
+                <input type="text" className="form-control" value={data.username}
+                  onChange={(e) =>
+                    setData({ ...data, username: e.target.value })
+
+                  } placeholder={data.username} id="username" />
+              </div>
+              :
+
+              <div className="form-group mt-2">
+                <label for="username" className="col-form-label text-primary"># <strong>Login Name:</strong></label>
+                <input disabled type="text" className="form-control" value={data.username}
+                  onChange={(e) =>
+                    setData({ ...data, username: e.target.value })
+
+                  } placeholder={data.username} id="username" />
+              </div>
+            }
+
+
             <div className="form-group mt-2">
-              <label for="username" className="col-form-label text-danger">* <strong>Login Name:</strong></label>
-              <input type="text" className="form-control" value={data.username}
-                onChange={(e) =>
-                  setData({ ...data, username: e.target.value })
-
-                } placeholder={data.username} id="username" />
-            </div>
-
-
-            <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label text-danger">* <strong>Classid :</strong></label>
+              <label for="recipient-name" className="col-form-label text-danger">* <strong>Class teacher :</strong></label>
               <input type="text" className="form-control" value={data.classid}
                 placeholder={data.classid} id="classid"
 
@@ -343,7 +358,7 @@ function UserPage() {
             {isUpdateDeleteNameprotect
               ?
               <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-danger">* <strong>Student Name:</strong></label>
+                <label for="name" className="col-form-label text-danger">* <strong>User Name:</strong></label>
                 <input type="text" className="form-control" value={data.name}
                   onChange={(e) =>
                     setData({ ...data, name: e.target.value })
@@ -352,7 +367,7 @@ function UserPage() {
 
               :
               <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-primary"># <strong>Student Name:</strong></label>
+                <label for="name" className="col-form-label text-primary"># <strong>User Name:</strong></label>
                 <input disabled type="text" className="form-control" value={data.name}
                   onChange={(e) =>
                     setData({ ...data, name: e.target.value })
@@ -360,16 +375,28 @@ function UserPage() {
               </div>
             }
 
-            <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Password:</label>
-              <input type="text" className="form-control" value={data.password}
-                onChange={(e) =>
-                  setData({ ...data, password: e.target.value })
-                } placeholder={data.password} id="password" />
+            {isUpdateDeleteNameprotect
+              ?
+              <div className="form-group mt-2">
+                <label for="recipient-name" className="col-form-label text-danger">* <strong>Password:</strong></label>
+                <input type="text" className="form-control" value={data.password}
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  } placeholder={data.password} id="password" />
+              </div>
+              :
+              
+              <div className="form-group mt-2">
+                <label for="recipient-name" className="col-form-label text-danger">* <strong>New Password:</strong></label>
+                <input type="text" className="form-control"
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }  id="password" />
+              </div>
+            }
 
-            </div>
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Role:</label>
+              <label for="recipient-name" className="col-form-label text-danger">* <strong>Role:</strong></label>
               <input type="text" className="form-control" value={data.role}
                 onChange={(e) =>
                   setData({ ...data, role: e.target.value })
