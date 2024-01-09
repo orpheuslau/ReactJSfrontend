@@ -30,7 +30,7 @@ function UserPage() {
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
   const [isUpdateDeleteNameprotect, setIsUpdateDeleteNameprotect] = useState(false);
   const inputSelect = useRef(null);
-  // reserved! const inputText = useRef(null);
+  // reserved! const inputText = useRef(null);1
 
 
   let { id } = useParams();
