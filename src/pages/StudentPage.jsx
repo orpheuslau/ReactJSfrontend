@@ -136,7 +136,7 @@ function StudentPage() {
   const fetchStudents = async () => {
     try {
       const result = await axios.get('api/students')
-      setStudents(await result.data);
+           setStudents(await result.data);
     }
     catch {
       navigate('/login')

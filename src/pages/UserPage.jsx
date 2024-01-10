@@ -26,10 +26,12 @@ function UserPage() {
   const [data, setData] = React.useState(DataTable);
   const [showViewConfirmation, setShowViewConfirmation] = useState(false);
   const [showName, setShowName] = useState();
+  const [name, setName] = useState();
   const [isAdd, setIsAdd] = useState("none");
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
   const [isUpdateDeleteNameprotect, setIsUpdateDeleteNameprotect] = useState(false);
   const inputSelect = useRef(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   // reserved! const inputText = useRef(null);1
 
   const class1digit = ["1", "2", "3", "4"];
@@ -135,9 +137,42 @@ function UserPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('api/users')
-      setUsers(await result.data);
-      setAllusername(await result.data.username);
+      const result2 = await axios.get('api/roles')
+      const tempname = (await result2.data.username)
+
+      if ((await result2.data.role) === `Admin`) {
+        setIsAdmin(true)
+        const result = await axios.get('api/users')
+        setUsers(await result.data);
+        setAllusername(await result.data.username);
+      }
+      else {//process for non-admin
+        const resulttemp = await axios.get('api/users')
+        //console.log(resulttemp.data)
+        
+        const  temp = resulttemp.data.filter(row =>row.username == tempname)
+        //console.log(result)
+      
+        setUsers(temp);
+        
+        {/*
+        resulttemp.data.map(async (content, index) => {
+         
+          const tempname = await result2.data.username//console.log(name)
+          if (content.username === tempname) {
+            console.log(content)
+            //setUsers(content);
+          console.log("set")
+            
+            
+            //  setAllusername(tempname)
+          }
+        })*/}
+        //const result = await axios.get('api/users')
+        // setUsers(await result.data);
+        // setAllusername(await result.data.username);
+      }
+
 
     }
     catch {
@@ -321,20 +356,27 @@ function UserPage() {
         </div>
       </div>
 
-      <div className="container">
-        <div className="row col-8 justify-content-end">
-          <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
-            setShowViewConfirmation(true)
-            setShowName("new teacher");
-            setIsAdd("")
-            setIsUpdateDelete("none")
-            setIsUpdateDeleteNameprotect(true)
-          }
-          }>
-            Add User
+      {isAdmin ?
+
+        <div className="container">
+          <div className="row col-8 justify-content-end">
+            <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
+              setShowViewConfirmation(true)
+              setShowName("new teacher");
+              setIsAdd("")
+              setIsUpdateDelete("none")
+              setIsUpdateDeleteNameprotect(true)
+            }
+            }>
+              Add User
+            </div>
           </div>
+
+
         </div>
-      </div>
+        :
+        <div></div>
+      }
 
 
 
@@ -436,7 +478,7 @@ function UserPage() {
 
             {isUpdateDeleteNameprotect
               ?
-            <div className="form-group mt-2">
+              <div className="form-group mt-2">
                 <label for="name" className="col-form-label text-danger">* <strong>Role:</strong></label>
                 <select class="form-select" onChange={(e) =>
                   setData({ ...data, role: e.target.value })
@@ -449,17 +491,17 @@ function UserPage() {
               </div>
               :
               <div className="form-group mt-2">
-              <label for="name" className="col-form-label text-primary"># <strong>Role:</strong></label>
-              <select disabled class="form-select" onChange={(e) =>
-                setData({ ...data, role: e.target.value })
-              }>
-                <option selected>{data.role}</option>
-                {userrole.map((content, key) =>
-                  <option value={content}>{content}</option>
-                )}
-              </select>
-            </div>
-}
+                <label for="name" className="col-form-label text-primary"># <strong>Role:</strong></label>
+                <select disabled class="form-select" onChange={(e) =>
+                  setData({ ...data, role: e.target.value })
+                }>
+                  <option selected>{data.role}</option>
+                  {userrole.map((content, key) =>
+                    <option value={content}>{content}</option>
+                  )}
+                </select>
+              </div>
+            }
 
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Contact number:</label>

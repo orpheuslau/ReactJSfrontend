@@ -72,6 +72,7 @@ function Login() {
       setError(response.data.message)
       setIsLoading(false);
       localStorage.setItem('username', response.data.name);
+      localStorage.setItem('role', response.data.role);
       //localStorage.setItem('c', response.data.name);
       //console.log(response.data.classid);
       //localStorage.setItem('classid', response.data.classid);
