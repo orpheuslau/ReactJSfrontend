@@ -14,6 +14,7 @@ import AssessPage from './pages/AssessPage';
 import ReportPage from './pages/ReportPage';
 import ExportPage from './pages/ExportPage';
 import UserPage from './pages/UserPage';
+import AnalysisPage from './pages/AnalysisPage';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/report" element={<ReportPage />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/usersetup" element={<UserPage />} />
+        <Route path="/analysis" element={<AnalysisPage />} />
       </Routes>
     </Router>
   );

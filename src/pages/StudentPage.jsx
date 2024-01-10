@@ -358,15 +358,17 @@ function StudentPage() {
 
 
             <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label text-danger">* <strong>Class :</strong></label>
-              <input type="text" className="form-control" value={data.classid}
-                placeholder={data.classid} id="class"
-
-                onChange={(e) =>
-                  setData({ ...data, classid: e.target.value })
-                }
-              />
+              <label for="name" className="col-form-label text-danger">* <strong>Class teacher:</strong></label>
+              <select class="form-select" onChange={(e) =>
+                setData({ ...data, classid: e.target.value })
+              }>
+                <option selected>{data.classid}</option>
+                {classlist.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
+              </select>
             </div>
+
 
             {isUpdateDeleteNameprotect
               ?
@@ -395,6 +397,8 @@ function StudentPage() {
                   setData({ ...data, classno: e.target.value })
                 } placeholder={data.classno} id="classno" />
             </div>
+
+
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Parent's Name:</label>
               <input type="text" className="form-control" value={data.parentname}

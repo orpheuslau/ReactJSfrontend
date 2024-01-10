@@ -26,7 +26,6 @@ function UserPage() {
   const [data, setData] = React.useState(DataTable);
   const [showViewConfirmation, setShowViewConfirmation] = useState(false);
   const [showName, setShowName] = useState();
-  const [name, setName] = useState();
   const [isAdd, setIsAdd] = useState("none");
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
   const [isUpdateDeleteNameprotect, setIsUpdateDeleteNameprotect] = useState(false);
@@ -140,7 +139,7 @@ function UserPage() {
       const result2 = await axios.get('api/roles')
       const tempname = (await result2.data.username)
 
-      if ((await result2.data.role) === `Admin`) {
+      if ((await result2.data.role) === `Admin`) { //process for Admin
         setIsAdmin(true)
         const result = await axios.get('api/users')
         setUsers(await result.data);
@@ -148,32 +147,9 @@ function UserPage() {
       }
       else {//process for non-admin
         const resulttemp = await axios.get('api/users')
-        //console.log(resulttemp.data)
-        
-        const  temp = resulttemp.data.filter(row =>row.username == tempname)
-        //console.log(result)
-      
-        setUsers(temp);
-        
-        {/*
-        resulttemp.data.map(async (content, index) => {
-         
-          const tempname = await result2.data.username//console.log(name)
-          if (content.username === tempname) {
-            console.log(content)
-            //setUsers(content);
-          console.log("set")
-            
-            
-            //  setAllusername(tempname)
-          }
-        })*/}
-        //const result = await axios.get('api/users')
-        // setUsers(await result.data);
-        // setAllusername(await result.data.username);
+             const temp = resulttemp.data.filter(row => row.username == tempname)
+                setUsers(temp);   
       }
-
-
     }
     catch {
       navigate('/login')
