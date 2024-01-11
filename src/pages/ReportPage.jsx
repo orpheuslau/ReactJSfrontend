@@ -19,7 +19,7 @@ function ReportPage(props) {
   // const [data, setData] = React.useState(DataTable);
 
 
-  let { postId } = useParams();
+  let { stdID } = useParams();
   
 
   const [assesss, setAssesss] = useState([]);
@@ -89,39 +89,22 @@ function ReportPage(props) {
   }, [data, selectedRows, toggleCleared]);
 
 
-
-  function classsearch(event) {
-
-
-    if (event.target.value !== 'All') {
-      const newData = students.filter(row => {
-
-        return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
-      })
-      setStudents(newData);
-
-    }
-    else {
-      fetchAssesss()
-    }
-
-  }
-
-
-  const fetchAssesss = async (postId) => {
+  const fetchAssesss = async (stdID) => {
 
 
     try {
       const result = await axios.get('/api/assesss')
       setStudents(await result.data)
-   
-     setAssesss(result.data.filter(assess => assess.studentid === postId))
+      setAssesss(result.data.filter(assess => assess.studentid === stdID)) 
+
 
     }
     catch {
 
 
     }
+    
+
   }
 
 
@@ -129,9 +112,10 @@ function ReportPage(props) {
 
   useState(async () => {
 
-    fetchAssesss(postId)
-
+    fetchAssesss(stdID)
+    
   },);
+
 
   return (
 
@@ -145,7 +129,7 @@ function ReportPage(props) {
           <div className='col-sm-8'>
 
             <DataTable
-              title="Assessment record"
+              title="Assessment -> Assessment record"
               direction="auto"
               pagination
               responsive
@@ -188,7 +172,7 @@ function ReportPage(props) {
           <Button variant="secondary" onClick={() => {
             setShowViewConfirmation(false)
             // fetchStudents()
-            fetchAssesss(postId)
+            fetchAssesss(stdID)
             setData("")
             setSelectedRows("")
             //inputSelect.current.value = "All";
@@ -201,6 +185,19 @@ function ReportPage(props) {
 
         </Modal.Footer>
       </Modal>
+
+      <div className="container">
+        <div className="row col-8 justify-content-start">
+          <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
+        navigate('/assessment')
+          }
+          }>
+            Back
+          </div>
+        </div>
+      </div>
+
+
     </MainLayout>
 
   )

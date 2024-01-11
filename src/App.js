@@ -30,7 +30,7 @@ function App() {
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/student" element={<StudentPage />} />
         <Route path="/assessment" element={<AssessPage />} />
-        <Route path="/report/:postId" element={<ReportPage />} />
+        <Route path="/report/:stdID" element={<ReportPage />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/usersetup" element={<UserPage />} />

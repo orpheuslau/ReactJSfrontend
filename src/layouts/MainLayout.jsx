@@ -13,7 +13,7 @@ function MainLayout({ children }) {
     const username = localStorage.getItem('username');
     const navigate = useNavigate();
     const menuLabel = ['Student Profile','Assessment','Export assessment','Admin file','Setting','Analysis','Search','User setup'];
-    const menuLink = ['student', 'assessment','export', 'admin', 'setting', 'analysis', 'search', 'usersetup'];
+    const menuLink = ['/student', '/assessment','/export', '/admin', '/setting', '/analysis', '/search', '/usersetup'];
 const [mLabel, setMlLabel] = useState([]);
 const [mLink, setMlLink] = useState([]);
 

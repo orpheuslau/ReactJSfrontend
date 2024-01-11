@@ -86,7 +86,7 @@ const ExportPage = () => {
         return (
                     <button className="btn btn-sm bg-secondary text-white" onClick={() =>
             handleExport(record._id)
-          }>Download</button>
+          }>Export</button>
                   );
       },
     },

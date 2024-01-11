@@ -18,7 +18,7 @@ function SurveyComponent(props) {
     survey.data = {
       studentid:props.studentid,
       studentclassno:props.classno,
-      studentcalssid:props.classid,
+      studentclassid:props.classid,
       studentname:props.name
     }
     
