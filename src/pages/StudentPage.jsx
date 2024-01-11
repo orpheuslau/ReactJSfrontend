@@ -186,7 +186,6 @@ function StudentPage() {
     else {
       setToggleCleared(!toggleCleared);
       try {
-
         await axios.post(`api/students`, data);
         toast.success(`Profile of new student "${data.name}" added successfully`);
         fetchStudents()
@@ -204,8 +203,6 @@ function StudentPage() {
   const deleteStudent = async () => {
 
     if (window.confirm(`Are you sure you want to delete the profile of : "${data.name}"?`)) {
-
-
       try {
         id = data._id;
         await axios.delete(`api/students/${id}`, data);
@@ -239,20 +236,15 @@ function StudentPage() {
 
 
   function classsearch(event) {
-
-
     if (event.target.value !== 'All') {
       const newData = students.filter(row => {
-
         return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
       })
       setStudents(newData);
-
     }
     else {
       fetchStudents()
     }
-
   }
 
 
@@ -358,7 +350,7 @@ function StudentPage() {
 
 
             <div className="form-group mt-2">
-              <label for="name" className="col-form-label text-danger">* <strong>Class teacher:</strong></label>
+              <label for="name" className="col-form-label text-danger">* <strong>Class:</strong></label>
               <select class="form-select" onChange={(e) =>
                 setData({ ...data, classid: e.target.value })
               }>
@@ -369,7 +361,6 @@ function StudentPage() {
               </select>
             </div>
 
-
             {isUpdateDeleteNameprotect
               ?
               <div className="form-group mt-2">
@@ -379,7 +370,6 @@ function StudentPage() {
                     setData({ ...data, name: e.target.value })
                   } placeholder={data.name} id="name" />
               </div>
-
               :
               <div className="form-group mt-2">
                 <label for="name" className="col-form-label text-primary"># <strong>Student Name:</strong></label>
@@ -397,6 +387,19 @@ function StudentPage() {
                   setData({ ...data, classno: e.target.value })
                 } placeholder={data.classno} id="classno" />
             </div>
+
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Sex:</label>
+              <select class="form-select" onChange={(e) =>
+                setData({ ...data, sex: e.target.value })
+              }>
+              <option selected>{data.sex}</option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+              
+            </select>
+            </div>
+
 
 
             <div className="form-group mt-2">

@@ -19,15 +19,18 @@ function AnalysisPage() {
     })
   })
 
+  const [assesss, setAssesss] = useState([]);
   const [students, setStudents] = useState([]);
   const [score, setScore] = useState([]);
   const navigate = useNavigate();
 
 
-  const fetchStudents = async () => {
+  const fetchAssesss = async () => {
     try {
       const result = await axios.get('api/assesss')
-      setStudents(await result.data);
+      setAssesss(await result.data);
+      const result2 = await axios.get('api/students')
+      setStudents(await result2.data);
     }
     catch {
       navigate('/login')
@@ -36,101 +39,169 @@ function AnalysisPage() {
 
 
   useEffect(() => {
-    fetchStudents();
+    fetchAssesss();
   }, []);
 
   var temp = [];
   var temp2 = [];
   var temp3 = [];
-  var temp4=[];
+  var temp4 = [];
   var tmp = 0;
+  var satis2_T = 0
+  var satis2_F = 0
+  var satis2 = []
+  var satis3_T = 0
+  var satis3_F = 0
+  var satis3 = []
+  var sex_M = 0
+  var sex_F = 0
+  var sex = []
+
+
+
   classlist.map((item, key) => { //initiatelize the array value to zero
     temp[item] = ""
   })
-console.log(temp)
-  
 
-  const classscore = (students.map((content, index) => {
+
+
+  const classscore = (assesss.map((content, index) => {
     classlist.map((classcontent, key) => {
-      if (content.studentclassid === classcontent[0])
-       { temp[classcontent[0]] = Number(content.pageALLTotal) + Number(temp[classcontent[0]])
-console.log(classcontent[0])       
+      if (content.studentclassid === classcontent[0]) { //calculate the accumulated socre of each class
+        temp[classcontent[0]] = Number(content.pageALLTotal) + Number(temp[classcontent[0]])
       }
-//console.log(classcontent[0],temp[classcontent[0]])
-
     })
-    
-    classlist.map((item, index)=>{
-           temp2[index] = [item.toString(), temp[item]]
-    }
-    )
-    
-    temp3 = temp2.filter(element => element)
-  
-
-  
-
+    classlist.map((item, index) => { //trasnform the array into proper format for google chart
+      temp2[index] = [item.toString(), temp[item]]
+    })
+    temp3 = temp2.filter(element => element)// remove empty element in array, if any
     return temp3
   }));
 
+  const satispage2 = (assesss.map((content, index) => {
+    classlist.map((classcontent, key) => {
+      if (content.studentclassid === classcontent[0]) { //calculate the accumulated socre of each class
+        if (content.p2satis === "true")
+          satis2_T = satis2_T + 1
+        else
+          satis2_F = satis2_F + 1
+        //temp[classcontent[0]] = Number(content.pageALLTotal) + Number(temp[classcontent[0]])
+      }
+    })
+    satis2 = [["True", satis2_T], ["False", satis2_F]]
+    return satis2
+  }));
 
 
-  const data = [["Satisfactory", "Class"]].concat(students.map((content, index) => {
-    return ([content.vfeature[0], classscore])
+  const satispage3 = (assesss.map((content, index) => {
+    classlist.map((classcontent, key) => {
+      if (content.studentclassid === classcontent[0]) { //calculate the accumulated socre of each class
+        if (content.p3satis === "true")
+          satis3_T = satis3_T + 1
+        else
+          satis3_F = satis3_F + 1
+        //temp[classcontent[0]] = Number(content.pageALLTotal) + Number(temp[classcontent[0]])
+      }
+    })
+    satis3 = [["True", satis3_T], ["False", satis3_F]]
+    return satis3
+  }));
+
+
+  const sexdist = (students.map((content, index) => {
+    if (content.sex === "M")
+      sex_M = sex_M + 1
+    else
+      sex_F = sex_F + 1
+    //temp[classcontent[0]] = Number(content.pageALLTotal) + Number(temp[classcontent[0]])
+
+    sex = [["Male", sex_M], ["Female", sex_F]]
+    return sex
+  }));
+
+
+  const data = [["Class", "Total Score"]].concat(temp3)
+
+
+
+
+  const data2 = [["Answer", "frequency"]].concat(satis2)
+  const data3 = [["Answer", "frequency"]].concat(satis3)
+  const data4 = [["Answer", "frequency"]].concat(sex)
+
+  const data5 = [["Name", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
+    return ([content.studentname, content.page1Total, content.page2Total, content.page3Total])
+
   }))
 
-  const data3 = [["Class", "Total Score"]].concat(temp3)
-  
-console.log(data3)
-
-
-  const data2 = [["Name", "Total score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(students.map((content, index) => {
+  const data1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
     return ([content.studentname, content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
 
   }))
 
-  //console.log(data2)
 
   const options = {
-    title: "Correlation between life expectancy, fertility rate " +
-      "and population of some world countries (2010)",
-    hAxis: { title: "Total Score" },
+    title: "In general, the student's emotion and social development is satisfactory ?",
+    hAxis: { title: "Total Assessment Score" },
     vAxis: { title: "Class" },
     bubble: { textStyle: { fontSize: 11 } }
-
   };
 
   const options2 = {
-    title:
+    title: "In general, the student's emotion and social development is satisfactory ?",
+  };
 
-      "Correlation between life expectancy, fertility rate " +
-      "and population of some world countries (2010)",
-    hAxis: { title: "Score" },
-    vAxis: { title: "Name" },
+  const options3 = {
+    title:
+      "In general, the student's physical and artistic development is satisfactory ?"
+  };
+
+  const options4 = {
+    title:
+      "Sex distribution in students"
+  };
+
+
+  const options5 = {
+    title: "Assessment score distribution in Part 1, Part 2 and Part 3",
+    hAxis: { title: "Part 1 Score" },
+    vAxis: { title: "Part 2 Score" },
+    bubble: { textStyle: { fontSize: 11 } },
+    colorAxis: { colors: ["red", "purple"] },
+  };
+
+  const options6 = {
+    title: "Total assessment score by class",
+    hAxis: { title: "Class" },
+    vAxis: { title: "Total Score" },
     bubble: { textStyle: { fontSize: 11 } }
 
   };
 
 
-  //console.log(data)
+
 
   return (
     <MainLayout >
-      <div className="container mt-3">
-        <div className="row col-12 align-items-start">
+      <div className="text-secondary text-center mt-4 mb-5"><h3>Student analytics Dashboard</h3></div>
+      <div className="container">
+        <div className="row col-12 mt-2">
           <Chart
             width={"100%"}
             height={500}
             chartType="BarChart"
             loader={<div>Loading Chart</div>}
-            data={data2}
+            data={data1}
             rootProps={{ "data-testid": "6" }}
             chartPackages={["corechart", "controls"]}
             render={({ renderControl, renderChart }) => {
               return (
-                <div style={{ display: "flex" }}>
+                <div>
+                  <div className='row'>{renderControl(() => true)}</div>
+                  <div className='row'>{renderChart()}</div>
+                  {/*<div style={{ display: "flex" }}>
                   <div style={{ width: "25%" }}>{renderControl(() => true)}</div>
-                  <div style={{ width: "75%" }}>{renderChart()}</div>
+                  <div style={{ width: "100%" }}>{renderChart()}</div>*/}
                 </div>
               );
             }}
@@ -160,29 +231,60 @@ console.log(data3)
               },
             ]}
           /></div>
-        <div className="row col-12 align-items-start">
-          <div className='col-4'>
-            <Chart
-              chartType="BarChart"
-              data={data3}
-              options={options}
-              width={"100%"}
-              height={"100%"}
-            />
-          </div>
-          <div className='col-4'>
+        <div className="row col-12 mt-5">
+          <div className="col-4">
             <Chart
               chartType="PieChart"
-              data={data3}
-              options={options}
+              data={data2} //page2satis
+              options={options2}
               width={"100%"}
               height={"100%"}
             />
           </div>
 
+          <div className="col-4">
+            <Chart
+              chartType="PieChart"
+              data={data3} //page3satis
+              options={options3}
+              width={"100%"}
+              height={"100%"}
+            />
+          </div>
+          <div className="col-4">
+            <Chart
+              chartType="PieChart"
+              data={data4}
+              options={options4}
+              width={"100%"}
+              height={"100%"}
+            />
+          </div>
+
+        </div>
+
+      </div>
+      <Chart
+        chartType="BubbleChart"
+        data={data5}
+        options={options5}
+        width={"100%"}
+        height={500}
+      />
+      <Chart
+        chartType="ComboChart"
+        data={data}
+        options={options6}
+        width={"100%"}
+        height={500}
+      />
 
 
-        </div></div>
+
+
+
+
+
     </MainLayout>
   )
 }
