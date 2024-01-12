@@ -258,6 +258,7 @@ const scorehigh = (assesss.map((item, index)=>{
     title: "Total assessment score by class",
     hAxis: { title: "Class" },
     vAxis: { title: "Total Score" },
+    colors: ["#9dad34", "#ffab91"],
     
     seriesType: "bars",
   series: { 1: { type: "line" } },
@@ -268,6 +269,7 @@ const scorehigh = (assesss.map((item, index)=>{
     title:
       "Virtue and value do the student acquire",
     is3D: true,
+    
   };
 
 

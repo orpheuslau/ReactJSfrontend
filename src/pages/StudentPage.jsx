@@ -295,7 +295,7 @@ function StudentPage() {
               responsive
               columns={columns}
               data={students}
-              defaultSortFieldId={3}
+              defaultSortFieldId={1}
               fixedHeader
               fixedHeaderScrollHeight="800px"
               highlightOnHover

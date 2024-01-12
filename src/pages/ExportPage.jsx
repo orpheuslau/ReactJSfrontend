@@ -84,10 +84,10 @@ const ExportPage = () => {
 
       cell: (record) => {
         return (
-                    <button className="btn btn-sm bg-secondary text-white" onClick={() =>
+          <button className="btn btn-sm bg-secondary text-white" onClick={() =>
             handleExport(record._id)
           }>Export</button>
-                  );
+        );
       },
     },
   ];
