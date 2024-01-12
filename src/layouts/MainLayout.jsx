@@ -13,8 +13,8 @@ import { MdCarRepair } from 'react-icons/md';
 function MainLayout({ children }) {
     const username = localStorage.getItem('username');
     const navigate = useNavigate();
-    const menuLabel = ['Student Profile', 'Assessment', 'Export assessment', 'Admin file', 'Setting', 'Analysis', 'Search', 'User setup'];
-    const menuLink = ['/student', '/assessment', '/export', '/admin', '/setting', '/analysis', '/search', '/usersetup'];
+    const menuLabel = ['Student Profile', 'Assessment', 'Export assessment', 'Admin file', 'Analysis', 'Search', 'User setup'];
+    const menuLink = ['/student', '/assessment', '/export', '/admin', '/analysis', '/search', '/usersetup'];
     const [mLabel, setMlLabel] = useState([]);
     const [mLink, setMlLink] = useState([]);
 
@@ -40,7 +40,7 @@ function MainLayout({ children }) {
                     <div className='container'>
                         <div className='row col-12'>
                             <div className='col col-md-auto m-3'>
-                            <a href="/student"><img src='school.png' alt='school logo' title='Home' width='100px' height='100px' /></a>
+                            <a href="/student"><img src='/school.png' alt='school logo' title='Home' width='100px' height='100px' /></a>
                             </div>
                             <div className='col col-md-9 my-auto align-items-center text-warning'><h4>Student Management Information System</h4></div>
                         </div>
