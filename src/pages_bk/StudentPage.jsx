@@ -135,7 +135,7 @@ function StudentPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://node-api-bxak.onrender.com/api/students')
+      const result = await axios.get('api/students')
            setStudents(await result.data);
     }
     catch {
@@ -161,7 +161,7 @@ function StudentPage() {
     else {
       try {
         id = data._id;
-        await axios.put(`https://node-api-bxak.onrender.com/api/students/${id}`, data);
+        await axios.put(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" updated successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
@@ -186,7 +186,7 @@ function StudentPage() {
     else {
       setToggleCleared(!toggleCleared);
       try {
-        await axios.post(`https://node-api-bxak.onrender.com/api/students`, data);
+        await axios.post(`api/students`, data);
         toast.success(`Profile of new student "${data.name}" added successfully`);
         fetchStudents()
         navigate("/student");
@@ -205,7 +205,7 @@ function StudentPage() {
     if (window.confirm(`Are you sure you want to delete the profile of : "${data.name}"?`)) {
       try {
         id = data._id;
-        await axios.delete(`https://node-api-bxak.onrender.com/api/students/${id}`, data);
+        await axios.delete(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" deleted successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
