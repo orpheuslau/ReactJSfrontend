@@ -28,9 +28,9 @@ function AnalysisPage() {
 
   const fetchAssesss = async () => {
     try {
-      const result = await axios.get('https://node-api-bxak.onrender.com/api/assesss')
+      const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/assesss')
       setAssesss(await result.data);
-      const result2 = await axios.get('https://node-api-bxak.onrender.com/api/students')
+      const result2 = await axios.get('https://seemly-cattle-production.up.railway.app/api/students')
       setStudents(await result2.data);
     }
     catch {

@@ -166,9 +166,9 @@ const ExportPage = () => {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://node-api-bxak.onrender.com/api/students')
+      const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/students')
       setStudents(await result.data);
-      const result2 = await axios.get('hhttps://node-api-bxak.onrender.com/api/assesss')
+      const result2 = await axios.get('hhttps://seemly-cattle-production.up.railway.app/api/assesss')
       setAssesss(await result2.data);
       //setAssesss(result2.data.filter(assess => assess.studentid === "658fa3389d27312da355c790"))
     }

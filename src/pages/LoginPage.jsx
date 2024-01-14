@@ -68,7 +68,7 @@ function Login() {
     }
     try {
       setIsLoading(true);
-      const response = await axios.post("https://node-api-bxak.onrender.com/api/login", { username: username, password: password });
+      const response = await axios.post("https://seemly-cattle-production.up.railway.app/api/login", { username: username, password: password });
       setError(response.data.message)
       setIsLoading(false);
       localStorage.setItem('username', response.data.name);

@@ -148,7 +148,7 @@ function AssessPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://node-api-bxak.onrender.com/api/students')
+      const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/students')
       setStudents(await result.data);
     }
     catch (error) {

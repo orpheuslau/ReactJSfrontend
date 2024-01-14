@@ -136,17 +136,17 @@ function UserPage() {
 
   const fetchStudents = async () => {
     try {
-      const result2 = await axios.get('https://node-api-bxak.onrender.com/api/roles')
+      const result2 = await axios.get('https://seemly-cattle-production.up.railway.app/api/roles')
       const tempname = (await result2.data.username)
 
       if ((await result2.data.role) === `Admin`) { //process for Admin
         setIsAdmin(true)
-        const result = await axios.get('https://node-api-bxak.onrender.com/api/users')
+        const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/users')
         setUsers(await result.data);
         setAllusername(await result.data.username);
       }
       else {//process for non-admin
-        const resulttemp = await axios.get('https://node-api-bxak.onrender.com/api/users')
+        const resulttemp = await axios.get('https://seemly-cattle-production.up.railway.app/api/users')
              const temp = resulttemp.data.filter(row => row.username == tempname)
                 setUsers(temp);   
       }
@@ -178,7 +178,7 @@ function UserPage() {
     else {
       try {
         id = data._id;
-        await axios.put(`https://node-api-bxak.onrender.com/api/users/${id}`, data);
+        await axios.put(`https://seemly-cattle-production.up.railway.app/api/users/${id}`, data);
         toast.success(`Profile of student "${data.name}" updated successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
@@ -208,7 +208,7 @@ function UserPage() {
       setToggleCleared(!toggleCleared);
       try {
 
-        await axios.post(`https://node-api-bxak.onrender.com/api/users`, data);
+        await axios.post(`https://seemly-cattle-production.up.railway.app/api/users`, data);
         toast.success(`Profile of student "${data.name}" added successfully`);
         fetchStudents()
         // navigate("/student");
@@ -229,7 +229,7 @@ function UserPage() {
 
       try {
         id = data._id;
-        await axios.delete(`https://node-api-bxak.onrender.com/api/users/${id}`, data);
+        await axios.delete(`https://seemly-cattle-production.up.railway.app/api/users/${id}`, data);
         toast.success(`Profile of student "${data.name}" deleted successfully`);
         fetchStudents()
         setShowViewConfirmation(false)

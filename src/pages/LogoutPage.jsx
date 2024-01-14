@@ -32,7 +32,7 @@ function LogoutPage() {
 
     try {
 
-        const result = axios.get('https://node-api-bxak.onrender.com/api/login')
+        const result = axios.get('https://seemly-cattle-production.up.railway.app/api/login')
         localStorage.removeItem('username')
 
 
