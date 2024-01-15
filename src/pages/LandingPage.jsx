@@ -44,7 +44,7 @@ const imageLink = ['student', 'assessment','export', 'admin', 'setting', 'analys
   const fetchProducts = async () => {
     try {
 
-      const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/products')
+      const result = await axios.get('https://www.orpheuslau.dev/api/products')
       setProducts(await result.data);
 
       setISloading(false);

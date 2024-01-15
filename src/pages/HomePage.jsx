@@ -27,9 +27,9 @@ function HomePage() {
 
   const fetchAssesss = async () => {
     try {
-      const result = await axios.get('https://seemly-cattle-production.up.railway.app/api/assesss')
+      const result = await axios.get('https://www.orpheuslau.dev/api/assesss')
       setAssesss(await result.data);
-      const result2 = await axios.get('https://seemly-cattle-production.up.railway.app/api/students')
+      const result2 = await axios.get('https://www.orpheuslau.dev/api/students')
       setStudents(await result2.data);
     }
     catch {
