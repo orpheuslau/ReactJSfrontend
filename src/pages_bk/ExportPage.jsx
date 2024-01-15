@@ -14,12 +14,15 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import { Button, Modal } from 'react-bootstrap';
 import Assessment from '../components/SurveyComponent'
 import { Link } from 'react-router-dom';
+import * as XLSX from 'xlsx';
 
 
 
-function AssessPage() {
+
+const ExportPage = () => {
 
   const [students, setStudents] = useState([]);
+  const [assesss, setAssesss] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
@@ -41,34 +44,6 @@ function AssessPage() {
       k += 1
     })
   })
-
-  let { id } = useParams();
-
-  const handleRowSelected = React.useCallback(state => {
-
-    setSelectedRows(state.selectedRows);
-
-  }, []);
-
-
-  const contextActions = React.useMemo(() => {
-    const handleView = () => {
-
-
-      setToggleCleared(!toggleCleared);
-      setData(selectedRows[0]);
-      setShowViewConfirmation(true);
-      setShowName(selectedRows[0].name);
-      setIsAdd("none");
-      setIsUpdateDelete("")
-    };
-
-    return (
-      <input className='btn btn-danger' type="button" value="Assess" key="view" onClick={() => handleView()
-      } />
-
-    );
-  }, [data, selectedRows, toggleCleared]);
 
 
   const columns = [
@@ -99,25 +74,68 @@ function AssessPage() {
       },
     },
     {
+      name: "Report",
       key: "action",
       text: "Action",
       className: "action",
       width: 200,
       align: "left",
       sortable: false,
+
       cell: (record) => {
         return (
-
-
-          <Link to={`/report/${record._id}`}>Assessment record</Link>
-
-
+          <button className="btn btn-sm bg-secondary text-white" onClick={() =>
+            handleExport(record._id)
+          }>Export</button>
         );
       },
     },
-
   ];
 
+
+  function handleExport(stdid) {
+    const wb = XLSX.utils.book_new();
+
+    const selAssesss = assesss.filter(assess => assess.studentid === stdid)
+    if (selAssesss == "")
+      return toast.warning(`No assessment record found`)
+    const result = selAssesss.map(row => ({
+      class: row.studentclassid,
+      name: row.studentname,
+      class_no: row.studentclassno,
+      assessment_date: row.assessmentdate,
+      p1score1: row.p1score1,
+      p1score2: row.p1score2,
+      p1score3: row.p1score3,
+      p1score4: row.p1score4,
+      p1score5: row.p1score5,
+      page1Total: row.page1Total,
+      p2score1: row.p2score1,
+      p2score2: row.p2score2,
+      p2score3: row.p2score3,
+      page2Total: row.page2Total,
+      p2satisfactory: row.p2satis,
+      p3score1: row.p3score1,
+      p3score2: row.p3score2,
+      p3score3: row.p3score3,
+      page3Total: row.page3Total,
+      pageALLTotal: row.pageALLTotal,
+      p3satisfactory: row.p3satis,
+      optionalcomment: row.testimonial,
+      suppInfo: row.suppInfo,
+      virtue_Value: row.vfeature[0] + "," + row.vfeature[1] + "," + row.vfeature[2]
+    }))
+
+
+    const ws = XLSX.utils.json_to_sheet(result);
+    //console.log(assesss);
+    //console.log(temp);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Assessment");
+    XLSX.writeFile(wb, `${result[0].name}_export.xlsx`);
+    toast.success("Assessment export successful")
+
+  };
 
   /* reserved
   createTheme('solarized', {
@@ -148,8 +166,11 @@ function AssessPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('/api/students')
+      const result = await axios.get('api/students')
       setStudents(await result.data);
+      const result2 = await axios.get('api/assesss')
+      setAssesss(await result2.data);
+      //setAssesss(result2.data.filter(assess => assess.studentid === "658fa3389d27312da355c790"))
     }
     catch (error) {
       navigate('/login')
@@ -205,6 +226,7 @@ function AssessPage() {
                 )}
 
 
+
               </select>
 
             </div>
@@ -224,7 +246,7 @@ function AssessPage() {
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-              title="Assessment"
+              title="Export assessment"
               direction="auto"
               pagination
               responsive
@@ -235,10 +257,10 @@ function AssessPage() {
               fixedHeaderScrollHeight="800px"
               highlightOnHover
               pointerOnHover
-              contextActions={contextActions}
-              onSelectedRowsChange={handleRowSelected}
+              //contextActions={contextActions}
+              //onSelectedRowsChange={handleRowSelected}
               clearSelectedRows={toggleCleared}
-              selectableRows
+              // selectableRows
               selectableRowsHighlight
               selectableRowsSingle
               striped
@@ -263,61 +285,6 @@ function AssessPage() {
 
 
 
-
-      <Modal className="modal-lg" show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
-        keyboard={false}>
-
-        <Modal.Body>
-          {/* <div className="row col-12 mb-4">
-
-            <div className="form-group col-4">
-              <label for="recipient-name" className="col-form-label text-muted">Student image:</label>
-              <img className="card-img-top" src={data.image} />
-            </div>
-
-            <div className="form-group col-4">
-              <label for="recipient-name" className="col-form-label text-muted">Class :</label>
-              <input type="text" className="mb-4 form-control" placeholder={data.classid} id="class" readOnly />
-
-              <label for="name" className="col-form-label text-muted">Student Name:</label>
-              <input type="text" className="form-control" placeholder={data.name} id="name" readOnly />
-
-
-            </div>
-
-            <div className="form-group col-4">
-              <label for="recipient-name" className="col-form-label text-muted">Class no.:</label>
-              <input type="text" className="form-control" placeholder={data.classno} id="classno" readOnly />
-            </div>
-
-        </div>*/}
-          <Assessment
-            name={data.name}
-            classno={data.classno}
-            classid={data.classid}
-            studentid={data._id}
-            username={localStorage.getItem("username")}
-
-          />
-        </Modal.Body>
-        <Modal.Footer>
-
-          <Button variant="secondary" onClick={() => {
-            setShowViewConfirmation(false)
-            fetchStudents()
-            setData("")
-            setSelectedRows("")
-            inputSelect.current.value = "All";
-          }
-          }>
-            Exit
-          </Button>
-
-
-
-        </Modal.Footer>
-      </Modal>
-
     </MainLayout>
 
 
@@ -326,4 +293,4 @@ function AssessPage() {
   )
 }
 
-export default AssessPage
+export default ExportPage

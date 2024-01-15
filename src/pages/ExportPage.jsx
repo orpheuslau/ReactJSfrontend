@@ -84,10 +84,10 @@ const ExportPage = () => {
 
       cell: (record) => {
         return (
-                    <button className="btn btn-sm bg-secondary text-white" onClick={() =>
+          <button className="btn btn-sm bg-secondary text-white" onClick={() =>
             handleExport(record._id)
           }>Export</button>
-                  );
+        );
       },
     },
   ];
@@ -166,9 +166,9 @@ const ExportPage = () => {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('api/students')
+      const result = await axios.get('/api/students')
       setStudents(await result.data);
-      const result2 = await axios.get('api/assesss')
+      const result2 = await axios.get('h/api/assesss')
       setAssesss(await result2.data);
       //setAssesss(result2.data.filter(assess => assess.studentid === "658fa3389d27312da355c790"))
     }

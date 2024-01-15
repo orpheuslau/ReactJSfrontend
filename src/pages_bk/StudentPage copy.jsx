@@ -11,16 +11,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
 //import { click } from '@testing-library/user-event/dist/click';
 //import ViewProfile from '../components/ViewProfile';
-import { Button, Dropdown, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 
 
 
-function UserPage() {
+function StudentPage() {
 
-  const [users, setUsers] = useState([]);
-  const [Allusers, setAllUsers] = useState([]);
-  const [allusername, setAllusername] = useState([])
+  const [students, setStudents] = useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
   const [data, setData] = React.useState(DataTable);
@@ -30,8 +28,7 @@ function UserPage() {
   const [isUpdateDelete, setIsUpdateDelete] = useState("");
   const [isUpdateDeleteNameprotect, setIsUpdateDeleteNameprotect] = useState(false);
   const inputSelect = useRef(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  // reserved! const inputText = useRef(null);1
+  // reserved! const inputText = useRef(null);
 
   const class1digit = ["1", "2", "3", "4"];
   const class2digit = ["A", "B", "C", "D", "E"];
@@ -43,10 +40,6 @@ function UserPage() {
       k += 1
     })
   })
-
-  const userrole = ["Admin", "User"]
-
-
 
   let { id } = useParams();
 
@@ -62,9 +55,6 @@ function UserPage() {
 
 
       setToggleCleared(!toggleCleared);
-
-
-      selectedRows[0].password = "" //make sure new password will be entered, or user will be prompted
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
       setShowName(selectedRows[0].name);
@@ -82,26 +72,35 @@ function UserPage() {
 
 
   const columns = [
-
+    {
+      name: 'Class',
+      selector: row => row.classid,
+      sortable: true,
+    },
     {
       name: 'Name',
       selector: row => row.name,
       sortable: true,
     },
     {
-      name: 'User name',
-      selector: row => row.username,
+      name: 'Class no',
+      selector: row => row.classno,
       sortable: true,
     },
     {
-      name: 'Class teacher',
-      selector: row => row.classid,
-      sortable: true,
+      name: 'Image',
+      Text: "Image",
+      wiith: 150,
+      cell: (record) => {
+        return (
+          <img
+            width="50%" height="auto" src={record.image}></img>
+        );
+      },
     },
     {
-      name: 'Role',
-      selector: row => row.role,
-      sortable: true,
+      name: 'Contact',
+      selector: row => row.contact,
     },
 
   ];
@@ -136,20 +135,8 @@ function UserPage() {
 
   const fetchStudents = async () => {
     try {
-      const result2 = await axios.get('/api/roles')
-      const tempname = (await result2.data.username)
-
-      if ((await result2.data.role) === `Admin`) { //process for Admin
-        setIsAdmin(true)
-        const result = await axios.get('/api/users')
-        setUsers(await result.data);
-        setAllusername(await result.data.username);
-      }
-      else {//process for non-admin
-        const resulttemp = await axios.get('/api/users')
-             const temp = resulttemp.data.filter(row => row.username == tempname)
-                setUsers(temp);   
-      }
+      const result = await axios.get('api/students')
+           setStudents(await result.data);
     }
     catch {
       navigate('/login')
@@ -165,26 +152,22 @@ function UserPage() {
 
   const updateStudent = async () => {
 
-    if (!data.name || !data.classid || !data.password || !data.role) {
+    if (!data.name || !data.classid) {
       if (!data.name)
-        toast.error("User name is requried")
+        toast.error("Student name is requried")
       if (!data.classid)
         toast.error("Class is requried")
-      if (!data.password)
-        toast.error("Password is requried")
-      if (!data.role)
-        toast.error("Role is requried")
     }
     else {
       try {
         id = data._id;
-        await axios.put(`/api/users/${id}`, data);
+        await axios.put(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" updated successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        // inputSelect.current.value = "All";
+        inputSelect.current.value = "All";
         // reserved! inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -194,27 +177,22 @@ function UserPage() {
 
 
   const addStudent = async () => {
-    if (!data.name || !data.classid || !data.password || !data.role) {
+    if (!data.name || !data.classid) {
       if (!data.name)
-        toast.error("User name is requried")
+        toast.error("Student name is requried")
       if (!data.classid)
         toast.error("Class is requried")
-      if (!data.password)
-        toast.error("Password is requried")
-      if (!data.role)
-        toast.error("Role is requried")
     }
     else {
       setToggleCleared(!toggleCleared);
       try {
-
-        await axios.post(`/api/users`, data);
-        toast.success(`Profile of student "${data.name}" added successfully`);
+        await axios.post(`api/students`, data);
+        toast.success(`Profile of new student "${data.name}" added successfully`);
         fetchStudents()
-        // navigate("/student");
+        navigate("/student");
         setShowViewConfirmation(false)
         setData("")
-        // inputSelect.current.value = "All";
+        inputSelect.current.value = "All";
         // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -225,17 +203,15 @@ function UserPage() {
   const deleteStudent = async () => {
 
     if (window.confirm(`Are you sure you want to delete the profile of : "${data.name}"?`)) {
-
-
       try {
         id = data._id;
-        await axios.delete(`/api/users/${id}`, data);
+        await axios.delete(`api/students/${id}`, data);
         toast.success(`Profile of student "${data.name}" deleted successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        //inputSelect.current.value = "All";
+        inputSelect.current.value = "All";
         // reserved!  inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -246,11 +222,11 @@ function UserPage() {
   /* Reserved function
   function quicksearch(event) {
     if (event.target.value !== '') {
-      const newData = users.filter(row => {
+      const newData = students.filter(row => {
         
         return row.name && row.name.toLowerCase().includes(event.target.value.toLowerCase())
       })
-      setUsers(newData)
+      setStudents(newData)
 
     }
     else {
@@ -259,32 +235,19 @@ function UserPage() {
   }*/
 
 
-
-  const checkname = () => {
-
-    if (!data.username)
-      toast.error("Login name is requried")
-    else
-      try {
-        var isAdd = false
-        {
-          users.map((content, index) => {
-            if (data.username === content.username) {
-              throw new Error('repeated login name');
-            }
-            else
-              isAdd = true;
-          }
-          )
-        }
-      }
-      catch (error) {
-        toast.error("login name has been used!")
-        return
-      }
-    if (isAdd)
-      addStudent()
+  function classsearch(event) {
+    if (event.target.value !== 'All') {
+      const newData = students.filter(row => {
+        return row.classid && row.classid.toLowerCase().includes(event.target.value.toLowerCase())
+      })
+      setStudents(newData);
+    }
+    else {
+      fetchStudents()
+    }
   }
+
+
 
 
   return (
@@ -298,6 +261,19 @@ function UserPage() {
         <div className="row">
           <div className='col-sm-8'>
 
+            <div className='text-end'>Filter by Class :
+
+              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
+
+              <option value="All">All</option>
+              {classlist.map((content, key) =>
+                  <option value={content}>{content}</option>
+                )}
+
+              </select>
+
+            </div>
+
 
 
           </div>
@@ -306,16 +282,20 @@ function UserPage() {
             <div className='text-end'><input ref={inputText} type="text" placeholder="Filter by Student's name" onChange={quicksearch} /></div>
   </div>*/}
         </div>
+
+
+
+
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
-              title="User profile"
+              title="Student profile"
               direction="auto"
               pagination
               responsive
               columns={columns}
-              data={users}
-              defaultSortFieldId={3}
+              data={students}
+              defaultSortFieldId={1}
               fixedHeader
               fixedHeaderScrollHeight="800px"
               highlightOnHover
@@ -332,27 +312,20 @@ function UserPage() {
         </div>
       </div>
 
-      {isAdmin ?
-
-        <div className="container">
-          <div className="row col-8 justify-content-end">
-            <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
-              setShowViewConfirmation(true)
-              setShowName("new teacher");
-              setIsAdd("")
-              setIsUpdateDelete("none")
-              setIsUpdateDeleteNameprotect(true)
-            }
-            }>
-              Add User
-            </div>
+      <div className="container">
+        <div className="row col-8 justify-content-end">
+          <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
+            setShowViewConfirmation(true)
+            setShowName("new comer");
+            setIsAdd("")
+            setIsUpdateDelete("none")
+            setIsUpdateDeleteNameprotect(true)
+          }
+          }>
+            Add Profile
           </div>
-
-
         </div>
-        :
-        <div></div>
-      }
+      </div>
 
 
 
@@ -360,37 +333,24 @@ function UserPage() {
       <Modal show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
         <Modal.Header>
-          <Modal.Title>User Profile of {showName}</Modal.Title>
+          <Modal.Title>Student Profile of {showName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
           <form>
-            {isUpdateDeleteNameprotect
-              ?
-              <div className="form-group mt-2">
-                <label for="username" className="col-form-label text-danger">* <strong>Login Name:</strong></label>
-                <input type="text" className="form-control" value={data.username}
-                  onChange={(e) =>
-                    setData({ ...data, username: e.target.value })
+            <div className="form-group">
+              <label for="recipient-name" className="col-form-label">Image:</label>
+              <img className="card-img-top" src={data.image} />
+              <input type="text" className="form-control" value={data.image}
+                onChange={(e) =>
+                  setData({ ...data, image: e.target.value })
+                } placeholder={data.image} id="image" />
 
-                  } placeholder={data.username} id="username" />
-              </div>
-              :
-
-              <div className="form-group mt-2">
-                <label for="username" className="col-form-label text-primary"># <strong>Login Name:</strong></label>
-                <input disabled type="text" className="form-control" value={data.username}
-                  onChange={(e) =>
-                    setData({ ...data, username: e.target.value })
-
-                  } placeholder={data.username} id="username" />
-              </div>
-            }
-
+            </div>
 
 
             <div className="form-group mt-2">
-              <label for="name" className="col-form-label text-danger">* <strong>Class teacher:</strong></label>
+              <label for="name" className="col-form-label text-danger">* <strong>Class:</strong></label>
               <select class="form-select" onChange={(e) =>
                 setData({ ...data, classid: e.target.value })
               }>
@@ -401,21 +361,18 @@ function UserPage() {
               </select>
             </div>
 
-
-
             {isUpdateDeleteNameprotect
               ?
               <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-danger">* <strong>User Name:</strong></label>
+                <label for="name" className="col-form-label text-danger">* <strong>Student Name:</strong></label>
                 <input type="text" className="form-control" value={data.name}
                   onChange={(e) =>
                     setData({ ...data, name: e.target.value })
                   } placeholder={data.name} id="name" />
               </div>
-
               :
               <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-primary"># <strong>User Name:</strong></label>
+                <label for="name" className="col-form-label text-primary"># <strong>Student Name:</strong></label>
                 <input disabled type="text" className="form-control" value={data.name}
                   onChange={(e) =>
                     setData({ ...data, name: e.target.value })
@@ -423,62 +380,35 @@ function UserPage() {
               </div>
             }
 
-            {isUpdateDeleteNameprotect
-              ?
-              <div className="form-group mt-2">
-                <label for="recipient-name" className="col-form-label text-danger">* <strong>Password:</strong></label>
-                <input type="text" className="form-control" value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  } placeholder={data.password} id="password" />
-              </div>
-              :
-
-              <div className="form-group mt-2">
-                <label for="recipient-name" className="col-form-label text-danger">* <strong>New Password:</strong></label>
-                <input type="text" className="form-control"
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  } id="password" />
-              </div>
-            }
-
-            {/*  <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label text-danger">* <strong>Role:</strong></label>
-              <input type="text" className="form-control" value={data.role}
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Class no.:</label>
+              <input type="text" className="form-control" value={data.classno}
                 onChange={(e) =>
-                  setData({ ...data, role: e.target.value })
-                } placeholder={data.role} id="role" />
-              </div>*/}
+                  setData({ ...data, classno: e.target.value })
+                } placeholder={data.classno} id="classno" />
+            </div>
+
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Sex:</label>
+              <select class="form-select" onChange={(e) =>
+                setData({ ...data, sex: e.target.value })
+              }>
+              <option selected>{data.sex}</option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+              
+            </select>
+            </div>
 
 
-            {isUpdateDeleteNameprotect
-              ?
-              <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-danger">* <strong>Role:</strong></label>
-                <select class="form-select" onChange={(e) =>
-                  setData({ ...data, role: e.target.value })
-                }>
-                  <option selected>{data.role}</option>
-                  {userrole.map((content, key) =>
-                    <option value={content}>{content}</option>
-                  )}
-                </select>
-              </div>
-              :
-              <div className="form-group mt-2">
-                <label for="name" className="col-form-label text-primary"># <strong>Role:</strong></label>
-                <select disabled class="form-select" onChange={(e) =>
-                  setData({ ...data, role: e.target.value })
-                }>
-                  <option selected>{data.role}</option>
-                  {userrole.map((content, key) =>
-                    <option value={content}>{content}</option>
-                  )}
-                </select>
-              </div>
-            }
 
+            <div className="form-group mt-2">
+              <label for="recipient-name" className="col-form-label">Parent's Name:</label>
+              <input type="text" className="form-control" value={data.parentname}
+                onChange={(e) =>
+                  setData({ ...data, parentname: e.target.value })
+                } placeholder={data.parentname} id="parentname" />
+            </div>
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Contact number:</label>
               <input type="text" className="form-control" value={data.contact}
@@ -497,8 +427,8 @@ function UserPage() {
             {isUpdateDeleteNameprotect
               ?
               <div></div>
-              :
-              <div className="text-primary"><small># item cannot change</small></div>
+            : 
+            <div className="text-primary"><small># item cannot change</small></div>
             }
           </form>
 
@@ -510,7 +440,7 @@ function UserPage() {
             fetchStudents()
             setData("")
             setSelectedRows("")
-            //inputSelect.current.value = "All";
+            inputSelect.current.value = "All";
           }
           }>
             Cancel
@@ -522,9 +452,7 @@ function UserPage() {
             Delete
           </Button>
 
-          <Button variant="success" style={{ display: isAdd }} onClick={() =>
-            checkname()
-          }>
+          <Button variant="success" style={{ display: isAdd }} onClick={() => addStudent()}>
             Add
           </Button>
 
@@ -540,4 +468,4 @@ function UserPage() {
   )
 }
 
-export default UserPage
+export default StudentPage

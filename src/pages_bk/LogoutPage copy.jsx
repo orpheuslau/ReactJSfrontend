@@ -32,7 +32,7 @@ function LogoutPage() {
 
     try {
 
-        const result = axios.get('/api/login')
+        const result = axios.get('api/login')
         localStorage.removeItem('username')
 
 
