@@ -93,7 +93,7 @@ function ReportPage(props) {
 
 
     try {
-      const result = await axios.get('/https://www.orpheuslau.dev/api/assesss')
+      const result = await axios.get('/https://api2.orpheuslau.dev/api/assesss')
       setStudents(await result.data)
       setAssesss(result.data.filter(assess => assess.studentid === stdID)) 
 

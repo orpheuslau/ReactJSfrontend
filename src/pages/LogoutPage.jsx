@@ -32,7 +32,7 @@ function LogoutPage() {
 
     try {
 
-        const result = axios.get('https://www.orpheuslau.dev/api/login')
+        const result = axios.get('https://api2.orpheuslau.dev/api/login')
         localStorage.removeItem('username')
 
 
