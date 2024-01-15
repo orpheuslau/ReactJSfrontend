@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/ReactJSfrontend/static/css/main.26505bae.css",
-    "main.js": "/ReactJSfrontend/static/js/main.6731db9f.js",
-    "static/js/498.d8ae7d8c.chunk.js": "/ReactJSfrontend/static/js/498.d8ae7d8c.chunk.js",
-    "static/js/703.8444d92c.chunk.js": "/ReactJSfrontend/static/js/703.8444d92c.chunk.js",
-    "static/js/379.7fda2521.chunk.js": "/ReactJSfrontend/static/js/379.7fda2521.chunk.js",
-    "static/js/787.9a8ecb25.chunk.js": "/ReactJSfrontend/static/js/787.9a8ecb25.chunk.js",
-    "static/media/a (5).png": "/ReactJSfrontend/static/media/a (5).956370b014b7f95e8c94.png",
-    "static/media/a (1).png": "/ReactJSfrontend/static/media/a (1).33e9d553ed3eef84df51.png",
-    "static/media/a (6).png": "/ReactJSfrontend/static/media/a (6).a23433a74ff7d66bb84b.png",
-    "static/media/school.png": "/ReactJSfrontend/static/media/school.6378b5ac634d86eec7b3.png",
-    "static/media/a (7).png": "/ReactJSfrontend/static/media/a (7).cd8acf3c4ca93d78238c.png",
-    "static/media/a (2).png": "/ReactJSfrontend/static/media/a (2).20f1c4543f12f3a5675f.png",
-    "static/media/a (8).png": "/ReactJSfrontend/static/media/a (8).5ba525d8eeef57237bc4.png",
-    "static/media/a (4).png": "/ReactJSfrontend/static/media/a (4).53c394f32ef3e51493bf.png",
-    "static/media/a (3).png": "/ReactJSfrontend/static/media/a (3).00b91a6efa0951d3d534.png",
-    "index.html": "/ReactJSfrontend/index.html",
-    "main.26505bae.css.map": "/ReactJSfrontend/static/css/main.26505bae.css.map",
-    "main.6731db9f.js.map": "/ReactJSfrontend/static/js/main.6731db9f.js.map",
-    "498.d8ae7d8c.chunk.js.map": "/ReactJSfrontend/static/js/498.d8ae7d8c.chunk.js.map",
-    "703.8444d92c.chunk.js.map": "/ReactJSfrontend/static/js/703.8444d92c.chunk.js.map",
-    "379.7fda2521.chunk.js.map": "/ReactJSfrontend/static/js/379.7fda2521.chunk.js.map",
-    "787.9a8ecb25.chunk.js.map": "/ReactJSfrontend/static/js/787.9a8ecb25.chunk.js.map"
+    "main.css": "/static/css/main.26505bae.css",
+    "main.js": "/static/js/main.7a2ffdcb.js",
+    "static/js/498.d8ae7d8c.chunk.js": "/static/js/498.d8ae7d8c.chunk.js",
+    "static/js/703.8444d92c.chunk.js": "/static/js/703.8444d92c.chunk.js",
+    "static/js/379.7fda2521.chunk.js": "/static/js/379.7fda2521.chunk.js",
+    "static/js/787.9a8ecb25.chunk.js": "/static/js/787.9a8ecb25.chunk.js",
+    "static/media/a (5).png": "/static/media/a (5).956370b014b7f95e8c94.png",
+    "static/media/a (1).png": "/static/media/a (1).33e9d553ed3eef84df51.png",
+    "static/media/a (6).png": "/static/media/a (6).a23433a74ff7d66bb84b.png",
+    "static/media/school.png": "/static/media/school.6378b5ac634d86eec7b3.png",
+    "static/media/a (7).png": "/static/media/a (7).cd8acf3c4ca93d78238c.png",
+    "static/media/a (2).png": "/static/media/a (2).20f1c4543f12f3a5675f.png",
+    "static/media/a (8).png": "/static/media/a (8).5ba525d8eeef57237bc4.png",
+    "static/media/a (4).png": "/static/media/a (4).53c394f32ef3e51493bf.png",
+    "static/media/a (3).png": "/static/media/a (3).00b91a6efa0951d3d534.png",
+    "index.html": "/index.html",
+    "main.26505bae.css.map": "/static/css/main.26505bae.css.map",
+    "main.7a2ffdcb.js.map": "/static/js/main.7a2ffdcb.js.map",
+    "498.d8ae7d8c.chunk.js.map": "/static/js/498.d8ae7d8c.chunk.js.map",
+    "703.8444d92c.chunk.js.map": "/static/js/703.8444d92c.chunk.js.map",
+    "379.7fda2521.chunk.js.map": "/static/js/379.7fda2521.chunk.js.map",
+    "787.9a8ecb25.chunk.js.map": "/static/js/787.9a8ecb25.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.26505bae.css",
-    "static/js/main.6731db9f.js"
+    "static/js/main.7a2ffdcb.js"
   ]
 }
