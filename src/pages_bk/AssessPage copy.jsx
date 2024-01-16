@@ -148,7 +148,7 @@ function AssessPage() {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://back.orpheuslau.dev/api/students')
+      const result = await axios.get('api/students')
       setStudents(await result.data);
     }
     catch (error) {

@@ -157,7 +157,7 @@ survey.applyTheme({
       const newrecord = JSON.stringify(sender.data)
 
 
-      fetch('https://back.orpheuslau.dev/api/assesss', {
+      fetch('api/assesss', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -175,7 +175,7 @@ survey.applyTheme({
   try {
   
   onsole.log(newrecord)
-    axios.post(`https://back.orpheuslau.dev/api/assesss`, newr3);
+    axios.post(`api/assesss`, newr3);
     toast.success(`Profile of new student added successfully`);
     //fetchStudents()
     //navigate("/student");

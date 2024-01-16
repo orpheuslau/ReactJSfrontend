@@ -28,9 +28,9 @@ function AnalysisPage() {
 
   const fetchAssesss = async () => {
     try {
-      const result = await axios.get('https://back.orpheuslau.dev/api/assesss')
+      const result = await axios.get('api/assesss')
       setAssesss(await result.data);
-      const result2 = await axios.get('https://back.orpheuslau.dev/api/students')
+      const result2 = await axios.get('api/students')
       setStudents(await result2.data);
     }
     catch {

@@ -146,7 +146,7 @@ function SurveyComponent(props) {
     //console.log(sender.data)
     //console.log(JSON.stringify(sender.data, null, 3));
     const newrecord = JSON.stringify(sender.data)
-    fetch(`https://back.orpheuslau.dev/api/assesss/${props.AssessResult._id}`, {
+    fetch(`api/assesss/${props.AssessResult._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

@@ -14,7 +14,7 @@ const Product = ({ product, getProducts }) => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://back.orpheuslau.devhttps://back.orpheuslau.dev/api/products/${id}`);
+        await axios.delete(`api/products/${id}`);
         toast.success("Delete a Product Successfully");
         getProducts();
       } catch (error) {

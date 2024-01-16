@@ -166,9 +166,9 @@ const ExportPage = () => {
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://back.orpheuslau.dev/api/students')
+      const result = await axios.get('api/students')
       setStudents(await result.data);
-      const result2 = await axios.get('https://back.orpheuslau.dev/api/assesss')
+      const result2 = await axios.get('api/assesss')
       setAssesss(await result2.data);
       //setAssesss(result2.data.filter(assess => assess.studentid === "658fa3389d27312da355c790"))
     }
