@@ -224,17 +224,26 @@ function StudentPage() {
 
 
   function quicksearch(event) {
-console.log(searchholder, temp)
-    if (temp !==undefined) {
-    console.log(temp)
-          const newData = students.filter(row => {
-                
-         if (searchholder === "name") 
-         {
-        return row.name && row.name.toLowerCase().includes(temp.toLowerCase())}
-//else
-        if (searchholder === "classno") 
-          return row.classno == temp
+    console.log(searchholder, temp)
+    if (temp !== undefined) {
+      console.log(temp)
+      const newData = students.filter(row => {
+
+        if (searchholder === "name") {
+          return row.name && row.name.toLowerCase().includes(temp.toLowerCase())
+        }
+        else
+          if (searchholder === "classno")
+            return row.classno == temp
+          else
+            if (searchholder === "contact")
+              return row.contact == temp
+            else
+              if (searchholder === "address")
+                return row.address && row.address.toLowerCase().includes(temp.toLowerCase())
+              else
+                if (searchholder === "parentname")
+                  return row.parentname && row.parentname.toLowerCase().includes(temp.toLowerCase())
       })
       setStudents(newData)
 
@@ -259,10 +268,10 @@ console.log(searchholder, temp)
 
 
 
-function setholder(event) {
-  setSearchholder(event.target.value);
-  console.log(searchholder)
-}
+  function setholder(event) {
+    setSearchholder(event.target.value);
+    console.log(searchholder)
+  }
 
   return (
 
@@ -273,27 +282,29 @@ function setholder(event) {
 
       <div className="container mt-3" >
         <div className="row">
+          <div className='col-sm-8'><form>
+            <div className='text-end'>Filter by
+              <select ref={inputSelect} onChange={(e) => setSearchholder(e.target.value)} onMouseDown={fetchStudents}>
+                <option>Choose Option</option>
+                <option value="name">Name</option>
+                <option value="classno">Class No.</option>
+                <option value="contact">Contact number</option>
+                <option value="address">Address</option>
+                <option value="parentname">Parent's name</option>
+              </select></div>
+            <div className='text-end mt-1'><input ref={inputText} type="text" onChange={(e) =>
+              setTemp(e.target.value)
+            } />
+              <div>
+              </div> <input className='mt-1 btn btn-light' type="button" value="Submit" onClick={quicksearch} />
+              <input className='btn btn-light mt-1' type="reset" value="Reset" onClick={() => {
+                fetchStudents()
+                setTemp("")
+                setSearchholder("")
 
+              }}></input>
 
-        
-          <div className='col-sm-8'>
-
-          <div className='text-end'>Filter by 
-          <select ref={inputSelect} onChange={setholder}>
-
-<option value="name">Name</option>
-<option value="classno">Class No.</option>
-<option value="contact">Contact number</option>
-<option value="address">Address</option>
-
-
-</select></div>
-            <div className='text-end'><form><input ref={inputText} type="text" placeholder={searchholder} onChange={(e) =>
-                setTemp(e.target.value )
-              } />
-            
-            <input classNae='btn btn-info' type="button" value="Submit" onClick={quicksearch}/>
-            </form></div>
+            </div></form>
             {/*<div className='text-end'>Filter by Class :
 
               <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
