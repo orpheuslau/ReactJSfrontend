@@ -68,7 +68,7 @@ function Login() {
     }
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/login", { username: username, password: password });
+      const response = await axios.post("https://back.orpheuslau.dev/api/login", { username: username, password: password });
       setError(response.data.message)
       setIsLoading(false);
       localStorage.setItem('username', response.data.name);
