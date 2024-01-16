@@ -15,6 +15,7 @@ import ReportPage from './pages/ReportPage';
 import ExportPage from './pages/ExportPage';
 import UserPage from './pages/UserPage';
 import AnalysisPage from './pages/AnalysisPage';
+import SearchPage from './pages/SearchPage';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/export" element={<ExportPage />} />
         <Route path="/usersetup" element={<UserPage />} />
         <Route path="/analysis" element={<AnalysisPage />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </Router>
   );

@@ -181,7 +181,7 @@ const scorehigh = (assesss.map((item, index)=>{
 
 
     //vcountFinal = vcount.filter(element => element !==0)// remove empty element in array, if any
-    console.log(vcount)
+    
 
     return vcount
 

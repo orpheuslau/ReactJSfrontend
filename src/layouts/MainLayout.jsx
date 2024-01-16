@@ -13,8 +13,8 @@ import { MdCarRepair } from 'react-icons/md';
 function MainLayout({ children }) {
     const username = localStorage.getItem('username');
     const navigate = useNavigate();
-    const menuLabel = ['Student Profile', 'Assessment', 'Export assessment', 'Admin file', 'Analysis', 'Search', 'User setup'];
-    const menuLink = ['/student', '/assessment', '/export', '/admin', '/analysis', '/search', '/usersetup'];
+    const menuLabel = ['Student Profile', 'Assessment', 'Export assessment', 'Analysis', 'Search', 'User setup'];
+    const menuLink = ['/student', '/assessment', '/export', '/analysis', '/search', '/usersetup'];
     const [mLabel, setMlLabel] = useState([]);
     const [mLink, setMlLink] = useState([]);
 
