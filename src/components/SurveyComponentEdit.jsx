@@ -31,8 +31,8 @@ function SurveyComponent(props) {
   const savePdf = function (surveyData) {
     const surveyPdf = new SurveyPDF(json, pdfDocOptions);
     surveyPdf.setVariable("assesstitle", props.name);
-    surveyPdf.setVariable("page1", props.classno);
-    surveyPdf.setVariable("page2", props.classid);
+    surveyPdf.setVariable("page1", props.AssessResult.studentclassno);
+    surveyPdf.setVariable("page2", props.AssessResult.studentclassid);
     surveyPdf.setVariable("page3", props.username);
 
     surveyPdf.data = surveyData;
@@ -153,52 +153,52 @@ function SurveyComponent(props) {
       },
       body: newrecord
     })
-    .then(response => {
-      toast.success("Assessment update Successful");
-    })
-    .catch(error => {
-      toast.error(error.message);
-    });
+      .then(response => {
+        toast.success("Assessment update Successful");
+      })
+      .catch(error => {
+        toast.error(error.message);
+      });
 
   });
   survey.data = {
-    _id:props.AssessResult._id,
+    _id: props.AssessResult._id,
     assesstitle: props.AssessResult.studentname,
     p1score1: props.AssessResult.p1score1,
-    studentid:props.AssessResult.studentid,
-    studentclassid:props.AssessResult.studentclassid,
-    studentname:props.AssessResult.studentname,
-    studentclassno:props.AssessResult.studentclassno,
-    assessmentdate:props.AssessResult.assessmentdate,
-    page1Total:props.AssessResult.page1Total,
-    page2Total:props.AssessResult.page2Total,
-    page3Total:props.AssessResult.page3Total,
-    pageALLTotal:props.AssessResult.pageALLTotal,
-    p1score1:props.AssessResult.p1score1,
-    p1score2:props.AssessResult.p1score2,
-    p1score3:props.AssessResult.p1score3,
-    p1score4:props.AssessResult.p1score4,
-    p1score5:props.AssessResult.p1score5,
-    p2score1:props.AssessResult.p2score1,
-    p2score2:props.AssessResult.p2score2,
-    p2score3:props.AssessResult.p2score3,
-    p2satis:props.AssessResult.p2satis,
-    p3score1:props.AssessResult.p3score1,
-    p3score2:props.AssessResult.p3score2,
-    p3score3:props.AssessResult.p3score3,
+    studentid: props.AssessResult.studentid,
+    studentclassid: props.AssessResult.studentclassid,
+    studentname: props.AssessResult.studentname,
+    studentclassno: props.AssessResult.studentclassno,
+    assessmentdate: props.AssessResult.assessmentdate,
+    page1Total: props.AssessResult.page1Total,
+    page2Total: props.AssessResult.page2Total,
+    page3Total: props.AssessResult.page3Total,
+    pageALLTotal: props.AssessResult.pageALLTotal,
+    p1score1: props.AssessResult.p1score1,
+    p1score2: props.AssessResult.p1score2,
+    p1score3: props.AssessResult.p1score3,
+    p1score4: props.AssessResult.p1score4,
+    p1score5: props.AssessResult.p1score5,
+    p2score1: props.AssessResult.p2score1,
+    p2score2: props.AssessResult.p2score2,
+    p2score3: props.AssessResult.p2score3,
+    p2satis: props.AssessResult.p2satis,
+    p3score1: props.AssessResult.p3score1,
+    p3score2: props.AssessResult.p3score2,
+    p3score3: props.AssessResult.p3score3,
     p3satis: props.AssessResult.p3satis,
-    vfeature:props.AssessResult.vfeature,
-    testimonial:props.AssessResult.testimonial,
-    suppInfo:props.AssessResult.suppInfo,
-};
-survey.onValueChanged.add((sender, options) => {
-  const el = document.getElementById(options.name);
-  if (el) {
-    el.value = options.value;
-  }
+    vfeature: props.AssessResult.vfeature,
+    testimonial: props.AssessResult.testimonial,
+    suppInfo: props.AssessResult.suppInfo,
+  };
+  survey.onValueChanged.add((sender, options) => {
+    const el = document.getElementById(options.name);
+    if (el) {
+      el.value = options.value;
+    }
 
-});
-return (<Survey model={survey} id="surveyContainer" />);
+  });
+  return (<Survey model={survey} id="surveyContainer" />);
 }
 
 export default SurveyComponent;

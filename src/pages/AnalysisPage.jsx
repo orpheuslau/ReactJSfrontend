@@ -26,12 +26,16 @@ function AnalysisPage() {
   const navigate = useNavigate();
 
 
+ 
+
+
   const fetchAssesss = async () => {
     try {
       const result = await axios.get('api/assesss', { withCredentials: true })
       setAssesss(await result.data);
-      const result2 = await axios.get('api/students', { withCredentials: true })
+        const result2 = await axios.get('api/students', { withCredentials: true })
       setStudents(await result2.data);
+      
     }
     catch {
       navigate('/login')
@@ -43,6 +47,7 @@ function AnalysisPage() {
     fetchAssesss();
   }, []);
 
+  
   var temp = [];
   var temp2 = [];
   var temp3 = [];
@@ -272,7 +277,7 @@ const scorehigh = (assesss.map((item, index)=>{
     
   };
 
-
+  console.log(data1)
 
 
   return (
