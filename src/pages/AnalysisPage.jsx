@@ -30,12 +30,14 @@ const [ data1, setData1 ] = useState([]);
   const fetchAssesss = async () => {
       try {
            const result = await axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
-      setAssesss(await result.data);
+      setAssesss(await result.data)
       const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
       setStudents(await result2.data);
-      setData1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(await assesss.map((content, index) => {
+      if (await result.data !==""){
+      setData1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
         return ([content.studentname + " (" + content.studentclassid + ")", content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
       }))
+    }
     }
     catch {
       navigate('/login')
