@@ -24,19 +24,18 @@ function AnalysisPage() {
   const [students, setStudents] = useState([]);
   const [score, setScore] = useState([]);
   const navigate = useNavigate();
+const [ data1, setData1 ] = useState([]);
 
 
-  //const fetchAssesss = async () => {
-  const fetchAssesss = () => {
-    try {
-      const result = axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
-      setAssesss(result.data);
-      const result2 = axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
-      setStudents( result2.data);
-      //const result = await axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
-      //setAssesss(await result.data);
-      //const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
-      //setStudents(await result2.data);
+  const fetchAssesss = async () => {
+      try {
+           const result = await axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
+      setAssesss(await result.data);
+      const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
+      setStudents(await result2.data);
+      setData1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(await assesss.map((content, index) => {
+        return ([content.studentname + " (" + content.studentclassid + ")", content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
+      }))
     }
     catch {
       navigate('/login')
@@ -44,8 +43,8 @@ function AnalysisPage() {
   }
 
 
-  useEffect(() => {
-    fetchAssesss();
+  useEffect( () => {
+     fetchAssesss();
   }, []);
 
   var temp = [];
@@ -207,9 +206,9 @@ const scorehigh = (assesss.map((item, index)=>{
 
 
 
-  const data1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
-    return ([content.studentname + " (" + content.studentclassid + ")", content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
-  }))
+  //const data1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
+   // return ([content.studentname + " (" + content.studentclassid + ")", content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
+ // }))
   const data2 = [["Answer", "frequency"]].concat(satis2)
   const data3 = [["Answer", "frequency"]].concat(satis3)
   const data4 = [["Answer", "frequency"]].concat(sex)
