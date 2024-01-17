@@ -28,9 +28,9 @@ function AnalysisPage() {
 
   const fetchAssesss = async () => {
     try {
-      const result = await axios.get('api/assesss')
+      const result = await axios.get('api/assesss', { withCredentials: true })
       setAssesss(await result.data);
-      const result2 = await axios.get('api/students')
+      const result2 = await axios.get('api/students', { withCredentials: true })
       setStudents(await result2.data);
     }
     catch {
