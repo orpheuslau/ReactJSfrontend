@@ -26,12 +26,17 @@ function AnalysisPage() {
   const navigate = useNavigate();
 
 
-  const fetchAssesss = async () => {
+  //const fetchAssesss = async () => {
+  const fetchAssesss = () => {
     try {
-      const result = await axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
-      setAssesss(await result.data);
-      const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
-      setStudents(await result2.data);
+      const result = axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
+      setAssesss(result.data);
+      const result2 = axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
+      setStudents( result2.data);
+      //const result = await axios.get('https://back.orpheuslau.dev/api/assesss',{ withCredentials: true })
+      //setAssesss(await result.data);
+      //const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
+      //setStudents(await result2.data);
     }
     catch {
       navigate('/login')
