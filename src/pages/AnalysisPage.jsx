@@ -203,7 +203,6 @@ const scorehigh = (assesss.map((item, index)=>{
 
 
   const data1 = [["Name", "Total Assessment score", "Part 1 score", "Part 2 score", "Part 3 score"]].concat(assesss.map((content, index) => {
-    console.log(data1)
     return ([content.studentname + " (" + content.studentclassid + ")", content.pageALLTotal, content.page1Total, content.page2Total, content.page3Total])
   }))
   const data2 = [["Answer", "frequency"]].concat(satis2)
