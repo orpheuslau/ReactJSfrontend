@@ -37,7 +37,7 @@ function POSPage() {
   const fetchProducts = async () => {
 try{
   
-  const result = await axios.get('https://back.orpheuslau.dev/api/products')
+  const result = await axios.get('https://back.orpheuslau.dev/api/products',{ withCredentials: true })
     setProducts(await result.data);
     setISloading(false);
     //setISauth(true)
