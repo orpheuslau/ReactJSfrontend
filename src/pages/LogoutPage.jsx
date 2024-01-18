@@ -32,11 +32,11 @@ function LogoutPage() {
               <div className="card-body p-5 text-center">
                 <div className="mb-md-5 mt-md-4 pb-5">
                   <br />
-                  <h2 className="fw-bold mb-2 text-uppercase">CMOS</h2>
+                  <h2 className="fw-bold mb-2 text-uppercase">SMIS</h2>
                   <br />
                   <br />
                   <p className="text-white-50  mt-5 h1">Logged out !</p>
-                  <p className="text-white-50 mb-5 h5">Thank you for using CMOS</p>
+                  <p className="text-white-50 mb-5 h5">Thank you for using SMIS</p>
                   <br />
                   <br />
                   <br />

@@ -86,7 +86,7 @@ function Login() {
             <div className="card bg-dark text-white border-radius: 1rem">
               <div className="card-body p-5 text-center">
                 <div className="mb-md-5 mt-md-4 pb-5">
-                  <h2 className="fw-bold mb-2 text-uppercase">CMOS</h2>
+                  <h2 className="fw-bold mb-2 text-uppercase">SMIS</h2>
                   <form onSubmit={handleSubmit}>
                     <p className="text-white-50 mb-5">Please enter your login and password!</p>
                     <div className="form-outline form-white mb-4">
@@ -103,7 +103,7 @@ function Login() {
                         onChange={(event) => setPassword(event.target.value)} />
                       <label className="form-label" for="typePasswordX">Password</label>
                     </div>
-                    <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="mailto:support@asdfds.com">Forgot password?</a></p>
+                    <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="https://www.orpheuslau.dev">Forgot password?</a></p>
                     <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                     {error && <div><p></p><strong>{error}</strong></div>}
                     <div className="d-flex justify-content-center text-center mt-4 pt-1">                    
@@ -111,7 +111,7 @@ function Login() {
                   </form>
                 </div>
                 <div>
-                  <p className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a>
+                  <p className="mb-0">Don't have an account? <a href="https://www.orpheuslau.dev" className="text-white-50 fw-bold">Sign Up</a>
                   </p>
                 </div>
               </div>
