@@ -48,18 +48,7 @@ function Login() {
     setBgColor(randomColor);
   }, []);
 
-  /**
-   * Handle form submit event for login.
-   * 
-   * Prevent default form submission.
-   * Validate username and password are not empty.
-   * Set loading state.
-   * Make API call to /login with credentials.
-   * Handle success and error response:
-   * - On success, navigate to /pos
-   * - On error, set error message  
-   * Set loading state back to false if login is unsuccessful.
-  */
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (username === "" || password === "") {
@@ -72,10 +61,6 @@ function Login() {
       setError(response.data.message)
       setIsLoading(false);
       localStorage.setItem('username', response.data.name);
-      localStorage.setItem('role', response.data.role);
-      //localStorage.setItem('c', response.data.name);
-      //console.log(response.data.classid);
-      //localStorage.setItem('classid', response.data.classid);
       navigate("/student");
     } catch (error) {
       setError('Username and/or password are incorrect')
@@ -121,8 +106,7 @@ function Login() {
                     <p className="small mb-5 pb-lg-2"><a className="text-white-50" href="mailto:support@asdfds.com">Forgot password?</a></p>
                     <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                     {error && <div><p></p><strong>{error}</strong></div>}
-                    <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                    
+                    <div className="d-flex justify-content-center text-center mt-4 pt-1">                    
                     </div>
                   </form>
                 </div>

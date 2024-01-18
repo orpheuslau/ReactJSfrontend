@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const LogoutConfirm = ({ show, onClose }) => {
 
@@ -19,8 +20,10 @@ const LogoutConfirm = ({ show, onClose }) => {
         <Button variant="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => {
+        <Button variant="primary" onClick={async () => {
           // Your logout logic hereba
+          axios.get('https://back.orpheuslau.dev/api/login', { withCredentials: true })
+          localStorage.removeItem('username')
           navigate('/logout')
         }}>
           Logout

@@ -4,10 +4,6 @@ import {
   Route,
 } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import POSPage from './pages/POSPage';
-import LandingPage from './pages/LandingPage';
-import TestPage from './TestPage';
 import LogoutPage from './pages/LogoutPage';
 import StudentPage from './pages/StudentPage';
 import AssessPage from './pages/AssessPage';
@@ -23,11 +19,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/pos" element={<POSPage />} />
-        <Route path="/land" element={<LandingPage />} />
         <Route path="" element={<StudentPage />} />
-        <Route path="/test" element={<TestPage />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/student" element={<StudentPage />} />
         <Route path="/assessment" element={<AssessPage />} />

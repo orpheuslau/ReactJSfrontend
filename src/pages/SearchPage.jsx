@@ -4,23 +4,13 @@ import { useEffect, useState, useRef } from 'react'
 import axios from "axios"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-//import { ComponentToPrint } from '../components/ComponentToPrint';
-//import { Auth } from '../components/Auth';
-//import { useReactToPrint } from 'react-to-print';
 import { useNavigate, useParams } from 'react-router-dom';
 import DataTable, { createTheme } from 'react-data-table-component';
-//import { click } from '@testing-library/user-event/dist/click';
-//import ViewProfile from '../components/ViewProfile';
 import { Button, Modal } from 'react-bootstrap';
 
-
-
-
 function StudentPage() {
-
   const [students, setStudents] = useState([]);
   const [temp, setTemp] = useState();
-
   const [searchholder, setSearchholder] = useState();
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
@@ -47,16 +37,12 @@ function StudentPage() {
   let { id } = useParams();
 
   const handleRowSelected = React.useCallback(state => {
-
     setSelectedRows(state.selectedRows);
-
   }, []);
 
 
   const contextActions = React.useMemo(() => {
     const handleView = () => {
-
-
       setToggleCleared(!toggleCleared);
       setData(selectedRows[0]);
       setShowViewConfirmation(true);
@@ -109,36 +95,11 @@ function StudentPage() {
   ];
 
 
-  /* reserved
-  createTheme('solarized', {
-    text: {
-      primary: '#FF8b66',
-      secondary: '#FF8b66',
-    },
-    background: {
-      default: '#FFFFEE',
-    },
-    context: {
-      background: '#FFFFFF',
-      text: '#FFFFFF',
-    },
-    divider: {
-      default: '#FFFFFF',
-    },
-    action: {
-      button: 'rgba(0,1,0,.54)',
-      hover: 'rgba(55,1,0,.08)',
-      disabled: 'rgba(0,0,0,.12)',
-    },
-  },);
-*/
-
-
   const navigate = useNavigate();
 
   const fetchStudents = async () => {
     try {
-      const result = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
+      const result = await axios.get('https://back.orpheuslau.dev/api/students', { withCredentials: true })
       setStudents(await result.data);
     }
     catch {
@@ -164,13 +125,12 @@ function StudentPage() {
     else {
       try {
         id = data._id;
-        await axios.put(`https://back.orpheuslau.dev/api/students/${id}`, data,{ withCredentials: true });
+        await axios.put(`https://back.orpheuslau.dev/api/students/${id}`, data, { withCredentials: true });
         toast.success(`Profile of student "${data.name}" updated successfully`);
         fetchStudents()
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        //inputSelect.current.value = "All";
         inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -189,13 +149,12 @@ function StudentPage() {
     else {
       setToggleCleared(!toggleCleared);
       try {
-        await axios.post(`https://back.orpheuslau.dev/api/students`, data,{ withCredentials: true });
+        await axios.post(`https://back.orpheuslau.dev/api/students`, data, { withCredentials: true });
         toast.success(`Profile of new student "${data.name}" added successfully`);
         fetchStudents()
         navigate("/student");
         setShowViewConfirmation(false)
         setData("")
-        // inputSelect.current.value = "All";
         inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -214,7 +173,6 @@ function StudentPage() {
         setShowViewConfirmation(false)
         setShowName("");
         setData("")
-        // inputSelect.current.value = "All";
         inputText.current.value = "";
       } catch (error) {
         toast.error(error.message);
@@ -228,7 +186,6 @@ function StudentPage() {
     if (temp !== undefined) {
       console.log(temp)
       const newData = students.filter(row => {
-
         if (searchholder === "name") {
           return row.name && row.name.toLowerCase().includes(temp.toLowerCase())
         }
@@ -274,12 +231,7 @@ function StudentPage() {
   }
 
   return (
-
-
-
     <MainLayout>
-
-
       <div className="container mt-3" >
         <div className="row">
           <div className='col-sm-8'><form>
@@ -303,27 +255,9 @@ function StudentPage() {
                 setSearchholder("")
 
               }}></input>
-
             </div></form>
-            {/*<div className='text-end'>Filter by Class :
-
-              <select ref={inputSelect} onChange={classsearch} onMouseDown={fetchStudents} on={() => console.log("clicked")}>
-
-              <option value="All">All</option>
-              {classlist.map((content, key) =>
-                  <option value={content}>{content}</option>
-                )}
-
-              </select>
-
-              </div>*/}
           </div>
-
         </div>
-
-
-
-
         <div className='row'>
           <div className='col-lg-8'>
             <DataTable
@@ -349,33 +283,12 @@ function StudentPage() {
           </div>
         </div>
       </div>
-
-      {/*   <div className="container">
-        <div className="row col-8 justify-content-end">
-          <div className="col-2 text-white btn btn-sm bg-success" onClick={() => {
-            setShowViewConfirmation(true)
-            setShowName("new comer");
-            setIsAdd("")
-            setIsUpdateDelete("none")
-            setIsUpdateDeleteNameprotect(true)
-          }
-          }>
-            Add Profile
-          </div>
-        </div>
-      </div>
-        */}
-
-
-
-
       <Modal show={showViewConfirmation} onHide={!showViewConfirmation} backdrop="static"
         keyboard={false}>
         <Modal.Header>
           <Modal.Title>Student Profile of {showName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <form>
             <div className="form-group">
               <label for="recipient-name" className="col-form-label">Image:</label>
@@ -384,10 +297,7 @@ function StudentPage() {
                 onChange={(e) =>
                   setData({ ...data, image: e.target.value })
                 } placeholder={data.image} id="image" />
-
             </div>
-
-
             <div className="form-group mt-2">
               <label for="name" className="col-form-label text-danger">* <strong>Class:</strong></label>
               <select class="form-select" onChange={(e) =>
@@ -435,12 +345,8 @@ function StudentPage() {
                 <option selected>{data.sex}</option>
                 <option value="M">M</option>
                 <option value="F">F</option>
-
               </select>
             </div>
-
-
-
             <div className="form-group mt-2">
               <label for="recipient-name" className="col-form-label">Parent's Name:</label>
               <input type="text" className="form-control" value={data.parentname}
@@ -470,10 +376,8 @@ function StudentPage() {
               <div className="text-primary"><small># item cannot change</small></div>
             }
           </form>
-
         </Modal.Body>
         <Modal.Footer>
-
           <Button variant="secondary" onClick={() => {
             setShowViewConfirmation(false)
             fetchStudents()
@@ -490,20 +394,12 @@ function StudentPage() {
           <Button variant="danger" style={{ display: isUpdateDelete }} onClick={() => deleteStudent()}>
             Delete
           </Button>
-
           <Button variant="success" style={{ display: isAdd }} onClick={() => addStudent()}>
             Add
           </Button>
-
-
         </Modal.Footer>
       </Modal>
-
     </MainLayout>
-
-
-
-
   )
 }
 
