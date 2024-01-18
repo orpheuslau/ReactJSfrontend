@@ -26,6 +26,7 @@ function AnalysisPage() {
   const navigate = useNavigate();
 
 
+  const [isloading, setIsloading] = useState(false);
 
   const fetchAssesss = async () => {
       try {
@@ -33,6 +34,7 @@ function AnalysisPage() {
       setAssesss(await result.data)
       const result2 = await axios.get('https://back.orpheuslau.dev/api/students',{ withCredentials: true })
       setStudents(await result2.data);
+      setIsloading(true);
   
     }
     catch {
@@ -280,7 +282,7 @@ console.log(data1)
   return (
     <div> <MainLayout />
       <div className=" text-secondary text-center mt-4 mb-2"><h5><u>Student perfromance Dashboard</u></h5></div>
-
+{isloading?
       <div className='container-fluid'>
         <div className="row align-items-center m-3 mb-5">
           <div className='col-8'>
@@ -412,6 +414,7 @@ console.log(data1)
 
 
       </div>
+      : <div></div>}
 
     </div>
 
