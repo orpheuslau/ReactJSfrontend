@@ -25,6 +25,7 @@ function AnalysisPage() {
   const [score, setScore] = useState([]);
   const navigate = useNavigate();
 
+  const [isloading, setIsloading] = useState(false);
 
  
 
@@ -282,8 +283,12 @@ const scorehigh = (assesss.map((item, index)=>{
 
   return (
     <div> <MainLayout />
+
+    
+
       <div className=" text-secondary text-center mt-4 mb-2"><h5><u>Student perfromance Dashboard</u></h5></div>
 
+      {isloading?
       <div className='container-fluid'>
         <div className="row align-items-center m-3 mb-5">
           <div className='col-8'>
@@ -415,6 +420,8 @@ const scorehigh = (assesss.map((item, index)=>{
 
 
       </div>
+            : <div></div>}
+
 
     </div>
 
