@@ -350,28 +350,14 @@ function UserPage() {
                 <label for="name" className="col-form-label text-primary"># <strong>Role:</strong></label>
                 <select disabled class="form-select" onChange={(e) =>
                   setData({ ...data, role: e.target.value })
-                }>
-                  <option selected>{data.role}</option>
+                }>                  <option selected>{data.role}</option>
                   {userrole.map((content, key) =>
                     <option value={content}>{content}</option>
                   )}
                 </select>
               </div>
             }
-            <div className="form-group mt-2">
-              <label for="recipient-name" className="col-form-label">Contact number:</label>
-              <input type="text" className="form-control" value={data.contact}
-                onChange={(e) =>
-                  setData({ ...data, contact: e.target.value })
-                } placeholder={data.contact} id="contact" />
-            </div>
-            <div className="form-group mt-2">
-              <label for="message-text" className="col-form-label">Address:</label>
-              <input type="textarea" className="form-control" value={data.address}
-                onChange={(e) =>
-                  setData({ ...data, address: e.target.value })
-                } placeholder={data.address} id="address" />
-            </div>
+     
             <div className="text-danger mt-5"><small>* requried item</small></div>
             {isUpdateDeleteNameprotect
               ?
